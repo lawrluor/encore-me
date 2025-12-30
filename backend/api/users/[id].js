@@ -1,51 +1,47 @@
 const allowCors = require('../utils/cors');
 const { sendSuccess, sendError } = require('../utils/response');
-
-const users = [];
+const { findUserById, updateUser, deleteUser } = require('../../db/users');
 
 async function handler(req, res) {
-  const { id } = req.query;
+  try {
+    const { id } = req.query;
 
-  if (req.method === 'GET') {
-    const user = users.find(u => u.id === id);
+    if (req.method === 'GET') {
+      const user = await findUserById(id);
 
-    if (!user) {
-      return sendError(res, 'User not found', 404);
+      if (!user) {
+        return sendError(res, 'User not found', 404);
+      }
+
+      return sendSuccess(res, user);
     }
 
-    const { password, ...userWithoutPassword } = user;
-    return sendSuccess(res, userWithoutPassword);
-  }
+    if (req.method === 'PUT') {
+      const { email, name } = req.body;
+      const updatedUser = await updateUser(id, { email, name });
 
-  if (req.method === 'PUT') {
-    const userIndex = users.findIndex(u => u.id === id);
+      if (!updatedUser) {
+        return sendError(res, 'User not found', 404);
+      }
 
-    if (userIndex === -1) {
-      return sendError(res, 'User not found', 404);
+      return sendSuccess(res, updatedUser, 'User updated successfully');
     }
 
-    const { email, name } = req.body;
+    if (req.method === 'DELETE') {
+      const deletedUser = await deleteUser(id);
 
-    if (email) users[userIndex].email = email;
-    if (name) users[userIndex].name = name;
-    users[userIndex].updatedAt = new Date().toISOString();
+      if (!deletedUser) {
+        return sendError(res, 'User not found', 404);
+      }
 
-    const { password, ...userWithoutPassword } = users[userIndex];
-    return sendSuccess(res, userWithoutPassword, 'User updated successfully');
-  }
-
-  if (req.method === 'DELETE') {
-    const userIndex = users.findIndex(u => u.id === id);
-
-    if (userIndex === -1) {
-      return sendError(res, 'User not found', 404);
+      return sendSuccess(res, null, 'User deleted successfully');
     }
 
-    users.splice(userIndex, 1);
-    return sendSuccess(res, null, 'User deleted successfully');
+    return sendError(res, 'Method not allowed', 405);
+  } catch (error) {
+    console.error('User by ID API error:', error);
+    return sendError(res, 'Internal server error', 500);
   }
-
-  return sendError(res, 'Method not allowed', 405);
 }
 
 module.exports = allowCors(handler);

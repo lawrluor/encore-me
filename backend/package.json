@@ -4,12 +4,13 @@
   "description": "Backend API using Vercel Serverless Functions",
   "main": "index.js",
   "scripts": {
-    "dev": "vercel dev",
+    "dev": "vercel dev --listen 4200",
     "build": "vercel build",
     "deploy": "vercel --prod",
     "test": "jest"
   },
   "dependencies": {
+    "@vercel/postgres": "^0.5.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "helmet": "^7.1.0",

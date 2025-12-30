@@ -6,10 +6,34 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "source": "/api/auth/login",
+      "destination": "/api/auth/login.js"
+    },
+    {
+      "source": "/api/users",
+      "destination": "/api/users/index.js"
+    },
+    {
+      "source": "/api/users/:id",
+      "destination": "/api/users/[id].js"
+    },
+    {
+      "source": "/api/items",
+      "destination": "/api/items/index.js"
+    },
+    {
+      "source": "/api/items/:id",
+      "destination": "/api/items/[id].js"
+    },
+    {
+      "source": "/api/:path",
+      "destination": "/api/:path.js"
+    },
+    {
+      "source": "/",
+      "destination": "/api/index.js"
     }
   ],
   "env": {

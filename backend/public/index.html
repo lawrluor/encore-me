@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encore Me API Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .method-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .method-get {
+      background-color: #dcfce7;
+      color: #166534;
+    }
+
+    .method-post {
+      background-color: #dbeafe;
+      color: #1e40af;
+    }
+
+    .method-put {
+      background-color: #fef9c3;
+      color: #854d0e;
+    }
+
+    .method-delete {
+      background-color: #fee2e2;
+      color: #991b1b;
+    }
+
+    .endpoint-card {
+      background: linear-gradient(to right, #f9fafb, #ffffff);
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      transition: all 0.3s;
+      cursor: pointer;
+      border-left: 4px solid #818cf8;
+    }
+
+    .endpoint-card:hover {
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      border-left-color: #4f46e5;
+      background: linear-gradient(to right, #eef2ff, #ffffff);
+    }
+
+    .test-panel {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid #e5e7eb;
+      background-color: #f9fafb;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+    }
+
+    .code-block {
+      background-color: #111827;
+      color: #f3f4f6;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      font-size: 0.875rem;
+    }
+
+    pre {
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+  <div class="container mx-auto px-4 py-8 max-w-7xl">
+    <!-- Header -->
+    <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-4xl font-bold text-gray-800 mb-2">
+            <i class="fas fa-rocket text-indigo-600"></i> Encore Me API
+          </h1>
+          <p class="text-gray-600">Interactive API Documentation & Testing Dashboard</p>
+        </div>
+        <div class="text-right">
+          <div class="text-sm text-gray-500">Base URL</div>
+          <div class="text-lg font-mono text-indigo-600" id="baseUrl">http://localhost:4200</div>
+        </div>
+      </div>
+
+      <!-- Login Status -->
+      <div id="loginStatus" class="mt-6 pt-6 border-t border-gray-200" style="display: none;">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-user-circle text-green-600 text-2xl"></i>
+              <div>
+                <div class="text-sm text-gray-500">Logged in as</div>
+                <div class="font-semibold text-gray-800" id="userEmail"></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fas fa-key text-indigo-600"></i>
+              <div>
+                <div class="text-sm text-gray-500">Bearer Token</div>
+                <div class="font-mono text-xs text-gray-600 max-w-md truncate" id="displayToken"></div>
+              </div>
+            </div>
+          </div>
+          <button onclick="logout()"
+            class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition text-sm">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div class="bg-white rounded-lg shadow p-6">
+        <div class="text-3xl font-bold text-green-600">4</div>
+        <div class="text-gray-600">GET Endpoints</div>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6">
+        <div class="text-3xl font-bold text-blue-600">3</div>
+        <div class="text-gray-600">POST Endpoints</div>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6">
+        <div class="text-3xl font-bold text-yellow-600">2</div>
+        <div class="text-gray-600">PUT Endpoints</div>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6">
+        <div class="text-3xl font-bold text-red-600">2</div>
+        <div class="text-gray-600">DELETE Endpoints</div>
+      </div>
+    </div>
+
+
+    <!-- Endpoints -->
+    <div class="space-y-6">
+      <!-- Public Endpoints -->
+      <div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">
+          <i class="fas fa-globe"></i> Public Endpoints
+        </h2>
+
+        <!-- Hello -->
+        <div class="endpoint-card">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-3">
+              <span class="method-badge method-get">GET</span>
+              <span class="font-mono text-lg">/api/hello</span>
+            </div>
+            <button onclick="toggleTestPanel('hello', 'GET', '/api/hello')"
+              class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+              <i class="fas fa-play"></i> Test
+            </button>
+          </div>
+          <p class="text-gray-600">Simple hello world endpoint to verify API is running</p>
+
+          <!-- Inline Test Panel -->
+          <div id="test-panel-hello" class="test-panel" style="display: none;">
+            <h4 class="text-lg font-bold mb-4"><i class="fas fa-flask"></i> Test Endpoint</h4>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Authorization Token (Optional)</label>
+              <input type="text" id="auth-hello" placeholder="Bearer token..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="flex gap-4 mb-4">
+              <button onclick="sendInlineRequest('hello', 'GET', '/api/hello')"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <i class="fas fa-paper-plane"></i> Send Request
+              </button>
+              <button onclick="closeInlinePanel('hello')"
+                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                Cancel
+              </button>
+            </div>
+            <div id="response-hello" class="mt-4" style="display: none;">
+              <h4 class="text-lg font-bold mb-2">Response</h4>
+              <div class="code-block">
+                <pre id="response-content-hello"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Create User -->
+        <div class="endpoint-card">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-3">
+              <span class="method-badge method-post">POST</span>
+              <span class="font-mono text-lg">/api/users</span>
+            </div>
+            <button onclick="toggleTestPanel('createUser', 'POST', '/api/users')"
+              class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+              <i class="fas fa-play"></i> Test
+            </button>
+          </div>
+          <p class="text-gray-600">Create a new user account</p>
+
+          <div id="test-panel-createUser" class="test-panel" style="display: none;">
+            <h4 class="text-lg font-bold mb-4"><i class="fas fa-flask"></i> Test Endpoint</h4>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Request Body (JSON)</label>
+              <textarea id="body-createUser" rows="6"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-indigo-500">{"email": "user@example.com", "password": "password123", "name": "John Doe"}</textarea>
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Authorization Token (Optional)</label>
+              <input type="text" id="auth-createUser" placeholder="Bearer token..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="flex gap-4 mb-4">
+              <button onclick="sendInlineRequest('createUser', 'POST', '/api/users')"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <i class="fas fa-paper-plane"></i> Send Request
+              </button>
+              <button onclick="closeInlinePanel('createUser')"
+                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                Cancel
+              </button>
+            </div>
+            <div id="response-createUser" class="mt-4" style="display: none;">
+              <h4 class="text-lg font-bold mb-2">Response</h4>
+              <div class="code-block">
+                <pre id="response-content-createUser"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Get Users -->
+        <div class="endpoint-card">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-3">
+              <span class="method-badge method-get">GET</span>
+              <span class="font-mono text-lg">/api/users</span>
+            </div>
+            <button onclick="toggleTestPanel('getUsers', 'GET', '/api/users')"
+              class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+              <i class="fas fa-play"></i> Test
+            </button>
+          </div>
+          <p class="text-gray-600">Get all users (passwords excluded)</p>
+
+          <div id="test-panel-getUsers" class="test-panel" style="display: none;">
+            <h4 class="text-lg font-bold mb-4"><i class="fas fa-flask"></i> Test Endpoint</h4>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Authorization Token (Optional)</label>
+              <input type="text" id="auth-getUsers" placeholder="Bearer token..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="flex gap-4 mb-4">
+              <button onclick="sendInlineRequest('getUsers', 'GET', '/api/users')"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <i class="fas fa-paper-plane"></i> Send Request
+              </button>
+              <button onclick="closeInlinePanel('getUsers')"
+                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                Cancel
+              </button>
+            </div>
+            <div id="response-getUsers" class="mt-4" style="display: none;">
+              <h4 class="text-lg font-bold mb-2">Response</h4>
+              <div class="code-block">
+                <pre id="response-content-getUsers"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Login -->
+        <div class="endpoint-card">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-3">
+              <span class="method-badge method-post">POST</span>
+              <span class="font-mono text-lg">/api/auth/login</span>
+            </div>
+            <button onclick="toggleTestPanel('login', 'POST', '/api/auth/login')"
+              class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+              <i class="fas fa-play"></i> Test
+            </button>
+          </div>
+          <p class="text-gray-600">Login and receive JWT token</p>
+
+          <div id="test-panel-login" class="test-panel" style="display: none;">
+            <h4 class="text-lg font-bold mb-4"><i class="fas fa-flask"></i> Test Endpoint</h4>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Request Body (JSON)</label>
+              <textarea id="body-login" rows="4"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-indigo-500">{"email": "user@example.com", "password": "password123"}</textarea>
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Authorization Token (Optional)</label>
+              <input type="text" id="auth-login" placeholder="Bearer token..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="flex gap-4 mb-4">
+              <button onclick="sendInlineRequest('login', 'POST', '/api/auth/login')"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <i class="fas fa-paper-plane"></i> Send Request
+              </button>
+              <button onclick="closeInlinePanel('login')"
+                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                Cancel
+              </button>
+            </div>
+            <div id="response-login" class="mt-4" style="display: none;">
+              <h4 class="text-lg font-bold mb-2">Response</h4>
+              <div class="code-block">
+                <pre id="response-content-login"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Get User by ID -->
+        <div class="endpoint-card">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-3">
+              <span class="method-badge method-get">GET</span>
+              <span class="font-mono text-lg">/api/users/{'{id}'}</span>
+            </div>
+            <button onclick="toggleTestPanel('getUserById', 'GET', '/api/users')"
+              class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+              <i class="fas fa-play"></i> Test
+            </button>
+          </div>
+          <p class="text-gray-600">Get a specific user by ID</p>
+
+          <div id="test-panel-getUserById" class="test-panel" style="display: none;">
+            <h4 class="text-lg font-bold mb-4"><i class="fas fa-flask"></i> Test Endpoint</h4>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">User ID</label>
+              <input type="text" id="id-getUserById" placeholder="Enter user ID..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+              <p class="text-xs text-gray-500 mt-1">Tip: Create a user first, then copy the ID from the response</p>
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Authorization Token (Optional)</label>
+              <input type="text" id="auth-getUserById" placeholder="Bearer token..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="flex gap-4 mb-4">
+              <button onclick="sendInlineRequest('getUserById', 'GET', '/api/users')"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <i class="fas fa-paper-plane"></i> Send Request
+              </button>
+              <button onclick="closeInlinePanel('getUserById')"
+                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                Cancel
+              </button>
+            </div>
+            <div id="response-getUserById" class="mt-4" style="display: none;">
+              <h4 class="text-lg font-bold mb-2">Response</h4>
+              <div class="code-block">
+                <pre id="response-content-getUserById"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update User -->
+        <div class="endpoint-card">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-3">
+              <span class="method-badge method-put">PUT</span>
+              <span class="font-mono text-lg">/api/users/{'{id}'}</span>
+            </div>
+            <button onclick="toggleTestPanel('updateUser', 'PUT', '/api/users')"
+              class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+              <i class="fas fa-play"></i> Test
+            </button>
+          </div>
+          <p class="text-gray-600">Update user information</p>
+
+          <div id="test-panel-updateUser" class="test-panel" style="display: none;">
+            <h4 class="text-lg font-bold mb-4"><i class="fas fa-flask"></i> Test Endpoint</h4>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">User ID</label>
+              <input type="text" id="id-updateUser" placeholder="Enter user ID..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Request Body (JSON)</label>
+              <textarea id="body-updateUser" rows="4"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-indigo-500">{"email": "updated@example.com", "name": "Updated Name"}</textarea>
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Authorization Token (Optional)</label>
+              <input type="text" id="auth-updateUser" placeholder="Bearer token..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="flex gap-4 mb-4">
+              <button onclick="sendInlineRequest('updateUser', 'PUT', '/api/users')"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <i class="fas fa-paper-plane"></i> Send Request
+              </button>
+              <button onclick="closeInlinePanel('updateUser')"
+                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                Cancel
+              </button>
+            </div>
+            <div id="response-updateUser" class="mt-4" style="display: none;">
+              <h4 class="text-lg font-bold mb-2">Response</h4>
+              <div class="code-block">
+                <pre id="response-content-updateUser"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete User -->
+        <div class="endpoint-card">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-3">
+              <span class="method-badge method-delete">DELETE</span>
+              <span class="font-mono text-lg">/api/users/{'{id}'}</span>
+            </div>
+            <button onclick="toggleTestPanel('deleteUser', 'DELETE', '/api/users')"
+              class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+              <i class="fas fa-play"></i> Test
+            </button>
+          </div>
+          <p class="text-gray-600">Delete a user</p>
+
+          <div id="test-panel-deleteUser" class="test-panel" style="display: none;">
+            <h4 class="text-lg font-bold mb-4"><i class="fas fa-flask"></i> Test Endpoint</h4>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">User ID</label>
+              <input type="text" id="id-deleteUser" placeholder="Enter user ID..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Authorization Token (Optional)</label>
+              <input type="text" id="auth-deleteUser" placeholder="Bearer token..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="flex gap-4 mb-4">
+              <button onclick="sendInlineRequest('deleteUser', 'DELETE', '/api/users')"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <i class="fas fa-paper-plane"></i> Send Request
+              </button>
+              <button onclick="closeInlinePanel('deleteUser')"
+                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                Cancel
+              </button>
+            </div>
+            <div id="response-deleteUser" class="mt-4" style="display: none;">
+              <h4 class="text-lg font-bold mb-2">Response</h4>
+              <div class="code-block">
+                <pre id="response-content-deleteUser"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Protected Endpoints -->
+      <div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">
+          <i class="fas fa-lock"></i> Protected Endpoints
+          <span class="text-sm font-normal text-gray-500">(Requires Authorization Header)</span>
+        </h2>
+
+        <!-- Get Items -->
+        <div class="endpoint-card">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-3">
+              <span class="method-badge method-get">GET</span>
+              <span class="font-mono text-lg">/api/items</span>
+              <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">🔒 Auth Required</span>
+            </div>
+            <button onclick="toggleTestPanel('getItems', 'GET', '/api/items')"
+              class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+              <i class="fas fa-play"></i> Test
+            </button>
+          </div>
+          <p class="text-gray-600">Get all items for authenticated user</p>
+
+          <div id="test-panel-getItems" class="test-panel" style="display: none;">
+            <h4 class="text-lg font-bold mb-4"><i class="fas fa-flask"></i> Test Endpoint</h4>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Authorization Token (Required)</label>
+              <input type="text" id="auth-getItems" placeholder="Bearer token..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="flex gap-4 mb-4">
+              <button onclick="sendInlineRequest('getItems', 'GET', '/api/items')"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <i class="fas fa-paper-plane"></i> Send Request
+              </button>
+              <button onclick="closeInlinePanel('getItems')"
+                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                Cancel
+              </button>
+            </div>
+            <div id="response-getItems" class="mt-4" style="display: none;">
+              <h4 class="text-lg font-bold mb-2">Response</h4>
+              <div class="code-block">
+                <pre id="response-content-getItems"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Create Item -->
+        <div class="endpoint-card">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-3">
+              <span class="method-badge method-post">POST</span>
+              <span class="font-mono text-lg">/api/items</span>
+              <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">🔒 Auth Required</span>
+            </div>
+            <button onclick="toggleTestPanel('createItem', 'POST', '/api/items')"
+              class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+              <i class="fas fa-play"></i> Test
+            </button>
+          </div>
+          <p class="text-gray-600">Create a new item</p>
+
+          <div id="test-panel-createItem" class="test-panel" style="display: none;">
+            <h4 class="text-lg font-bold mb-4"><i class="fas fa-flask"></i> Test Endpoint</h4>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Request Body (JSON)</label>
+              <textarea id="body-createItem" rows="5"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-indigo-500">{"title": "My Item", "description": "Item description", "status": "active"}</textarea>
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Authorization Token (Required)</label>
+              <input type="text" id="auth-createItem" placeholder="Bearer token..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="flex gap-4 mb-4">
+              <button onclick="sendInlineRequest('createItem', 'POST', '/api/items')"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <i class="fas fa-paper-plane"></i> Send Request
+              </button>
+              <button onclick="closeInlinePanel('createItem')"
+                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                Cancel
+              </button>
+            </div>
+            <div id="response-createItem" class="mt-4" style="display: none;">
+              <h4 class="text-lg font-bold mb-2">Response</h4>
+              <div class="code-block">
+                <pre id="response-content-createItem"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Get Item by ID -->
+        <div class="endpoint-card">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-3">
+              <span class="method-badge method-get">GET</span>
+              <span class="font-mono text-lg">/api/items/{'{id}'}</span>
+              <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">🔒 Auth Required</span>
+            </div>
+            <button onclick="toggleTestPanel('getItemById', 'GET', '/api/items')"
+              class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+              <i class="fas fa-play"></i> Test
+            </button>
+          </div>
+          <p class="text-gray-600">Get a specific item by ID</p>
+
+          <div id="test-panel-getItemById" class="test-panel" style="display: none;">
+            <h4 class="text-lg font-bold mb-4"><i class="fas fa-flask"></i> Test Endpoint</h4>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Item ID</label>
+              <input type="text" id="id-getItemById" placeholder="Enter item ID..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Authorization Token (Required)</label>
+              <input type="text" id="auth-getItemById" placeholder="Bearer token..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="flex gap-4 mb-4">
+              <button onclick="sendInlineRequest('getItemById', 'GET', '/api/items')"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <i class="fas fa-paper-plane"></i> Send Request
+              </button>
+              <button onclick="closeInlinePanel('getItemById')"
+                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                Cancel
+              </button>
+            </div>
+            <div id="response-getItemById" class="mt-4" style="display: none;">
+              <h4 class="text-lg font-bold mb-2">Response</h4>
+              <div class="code-block">
+                <pre id="response-content-getItemById"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update Item -->
+        <div class="endpoint-card">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-3">
+              <span class="method-badge method-put">PUT</span>
+              <span class="font-mono text-lg">/api/items/{'{id}'}</span>
+              <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">🔒 Auth Required</span>
+            </div>
+            <button onclick="toggleTestPanel('updateItem', 'PUT', '/api/items')"
+              class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+              <i class="fas fa-play"></i> Test
+            </button>
+          </div>
+          <p class="text-gray-600">Update item information</p>
+
+          <div id="test-panel-updateItem" class="test-panel" style="display: none;">
+            <h4 class="text-lg font-bold mb-4"><i class="fas fa-flask"></i> Test Endpoint</h4>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Item ID</label>
+              <input type="text" id="id-updateItem" placeholder="Enter item ID..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Request Body (JSON)</label>
+              <textarea id="body-updateItem" rows="4"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-indigo-500">{"title": "Updated Item", "status": "inactive"}</textarea>
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Authorization Token (Required)</label>
+              <input type="text" id="auth-updateItem" placeholder="Bearer token..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="flex gap-4 mb-4">
+              <button onclick="sendInlineRequest('updateItem', 'PUT', '/api/items')"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <i class="fas fa-paper-plane"></i> Send Request
+              </button>
+              <button onclick="closeInlinePanel('updateItem')"
+                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                Cancel
+              </button>
+            </div>
+            <div id="response-updateItem" class="mt-4" style="display: none;">
+              <h4 class="text-lg font-bold mb-2">Response</h4>
+              <div class="code-block">
+                <pre id="response-content-updateItem"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete Item -->
+        <div class="endpoint-card">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-3">
+              <span class="method-badge method-delete">DELETE</span>
+              <span class="font-mono text-lg">/api/items/{'{id}'}</span>
+              <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">🔒 Auth Required</span>
+            </div>
+            <button onclick="toggleTestPanel('deleteItem', 'DELETE', '/api/items')"
+              class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+              <i class="fas fa-play"></i> Test
+            </button>
+          </div>
+          <p class="text-gray-600">Delete an item</p>
+
+          <div id="test-panel-deleteItem" class="test-panel" style="display: none;">
+            <h4 class="text-lg font-bold mb-4"><i class="fas fa-flask"></i> Test Endpoint</h4>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Item ID</label>
+              <input type="text" id="id-deleteItem" placeholder="Enter item ID..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Authorization Token (Required)</label>
+              <input type="text" id="auth-deleteItem" placeholder="Bearer token..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="flex gap-4 mb-4">
+              <button onclick="sendInlineRequest('deleteItem', 'DELETE', '/api/items')"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <i class="fas fa-paper-plane"></i> Send Request
+              </button>
+              <button onclick="closeInlinePanel('deleteItem')"
+                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                Cancel
+              </button>
+            </div>
+            <div id="response-deleteItem" class="mt-4" style="display: none;">
+              <h4 class="text-lg font-bold mb-2">Response</h4>
+              <div class="code-block">
+                <pre id="response-content-deleteItem"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-8 text-center text-gray-600">
+      <p>Built Using Vercel Serverless Functions</p>
+    </div>
+  </div>
+
+  <script>
+    function toggleTestPanel(id, method, endpoint, body = null, requiresId = false) {
+      const panel = document.getElementById(`test-panel-${id}`);
+      const isVisible = panel.style.display !== 'none';
+
+      // Close all other panels
+      document.querySelectorAll('.test-panel').forEach(p => p.style.display = 'none');
+
+      // Toggle this panel
+      panel.style.display = isVisible ? 'none' : 'block';
+
+      // Auto-populate auth token if available
+      if (!isVisible) {
+        const token = localStorage.getItem('authToken');
+        const authInput = document.getElementById(`auth-${id}`);
+        if (token && authInput && !authInput.value) {
+          authInput.value = token;
+        }
+      }
+
+      // Reset response section
+      const responseSection = document.getElementById(`response-${id}`);
+      if (responseSection) responseSection.style.display = 'none';
+    }
+
+    function closeInlinePanel(id) {
+      document.getElementById(`test-panel-${id}`).style.display = 'none';
+    }
+
+    async function sendInlineRequest(id, method, endpoint, body = null, idParam = null) {
+      const baseUrl = document.getElementById('baseUrl').textContent;
+      const authToken = document.getElementById(`auth-${id}`)?.value || '';
+      const requestBodyElem = document.getElementById(`body-${id}`);
+      const idParamElem = document.getElementById(`id-${id}`);
+      const responseSection = document.getElementById(`response-${id}`);
+      const responseContent = document.getElementById(`response-content-${id}`);
+
+      let url = baseUrl + endpoint;
+
+      // Handle ID parameter if present
+      if (idParamElem) {
+        const idValue = idParamElem.value.trim();
+        if (!idValue) {
+          responseContent.textContent = 'Error: ID parameter is required for this endpoint';
+          responseSection.style.display = 'block';
+          return;
+        }
+        url += '/' + idValue;
+      }
+
+      const options = {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+
+      if (authToken) {
+        options.headers['Authorization'] = authToken.startsWith('Bearer ') ? authToken : `Bearer ${authToken}`;
+      }
+
+      if (method !== 'GET' && requestBodyElem) {
+        try {
+          const bodyText = requestBodyElem.value;
+          if (bodyText) {
+            options.body = bodyText;
+          }
+        } catch (e) {
+          responseContent.textContent = 'Invalid JSON in request body';
+          responseSection.style.display = 'block';
+          return;
+        }
+      }
+
+      try {
+        const response = await fetch(url, options);
+        let data;
+        const contentType = response.headers.get('content-type');
+
+        if (contentType && contentType.includes('application/json')) {
+          data = await response.json();
+        } else {
+          const text = await response.text();
+          data = { error: 'Non-JSON response', body: text.substring(0, 500) };
+        }
+
+        // If this is a login request and successful, store the token
+        if (id === 'login' && data.success && data.data && data.data.token) {
+          storeAuthToken(data.data.token, data.data.user);
+        }
+
+        responseContent.textContent = JSON.stringify({
+          status: response.status,
+          statusText: response.statusText,
+          data: data
+        }, null, 2);
+
+        responseSection.style.display = 'block';
+      } catch (error) {
+        responseContent.textContent = `Error: ${error.message}`;
+        responseSection.style.display = 'block';
+      }
+    }
+
+    // Store auth token and user info
+    function storeAuthToken(token, user) {
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('userEmail', user.email);
+      localStorage.setItem('userName', user.name || '');
+      updateLoginStatus();
+    }
+
+    // Update login status display
+    function updateLoginStatus() {
+      const token = localStorage.getItem('authToken');
+      const email = localStorage.getItem('userEmail');
+      const loginStatus = document.getElementById('loginStatus');
+
+      if (token && email) {
+        loginStatus.style.display = 'block';
+        document.getElementById('userEmail').textContent = email;
+        document.getElementById('displayToken').textContent = token;
+
+        // Auto-populate all auth token fields
+        document.querySelectorAll('[id^="auth-"]').forEach(input => {
+          if (!input.value) {
+            input.value = token;
+          }
+        });
+      } else {
+        loginStatus.style.display = 'none';
+      }
+    }
+
+    // Logout function
+    function logout() {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('userName');
+      updateLoginStatus();
+
+      // Clear all auth token fields
+      document.querySelectorAll('[id^="auth-"]').forEach(input => {
+        input.value = '';
+      });
+    }
+
+    // Auto-detect base URL
+    if (window.location.hostname !== 'localhost') {
+      document.getElementById('baseUrl').textContent = window.location.origin;
+    }
+
+    // Check login status on page load
+    updateLoginStatus();
+  </script>
+</body>
+
+</html>
