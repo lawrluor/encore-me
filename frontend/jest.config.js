@@ -1,5 +1,15 @@
 import nextJest from 'next/jest.js';
 
+// threshold configuration for coverage
+const coverageThreshold = {
+  global: {
+    statements: 80,
+    branches: 80,
+    functions: 80,
+    lines: 80
+  }
+};
+
 const createJestConfig = nextJest({
   // Provide the path to your Next.js app to load next.config.js and .env files
   dir: './',
@@ -9,6 +19,10 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jest-environment-jsdom',
+  coverageThreshold: coverageThreshold,
+  collectCoverageFrom: [
+    'app/**/*.{ts,tsx}',
+  ],
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
