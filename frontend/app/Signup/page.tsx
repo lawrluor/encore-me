@@ -1,7 +1,8 @@
 'use client';
 import { JSX, useState } from 'react';
-import Form from 'next/form';
+
 import { useRouter } from 'next/navigation';
+import Form from 'next/form';
 
 type PageType = 'login' | 'signup';
 
@@ -38,24 +39,33 @@ const Signup = (): JSX.Element => {
         </header>
 
         <section className="p-10">
-          <Form action={submitForm}>
-            <label htmlFor="name" className="opacity-80">Name</label>
-            <input id="name" name="name" type="text" className="block h-44" value={name} onChange={e => setName(e.target.value)} />
+          <Form action={submitForm} className="w-1/4">
+            <div className="py-5">
+              <label htmlFor="name" className="opacity-80">Name</label>
+              <input id="name" name="name" type="text" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={name} onChange={e => setName(e.target.value)} />
+            </div>
 
-            <label htmlFor="email" className="opacity-80">Email</label>
-            <input id="email" name="email" type="email" className="block h-44" value={email} onChange={e => setEmail(e.target.value)} />
+            <div className="py-5">
+              <label htmlFor="email" className="opacity-80">Email</label>
+              <input id="email" name="email" type="email" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={email} onChange={e => setEmail(e.target.value)} />
+            </div>
 
-            <label htmlFor="password" className="opacity-80">Password</label>
-            <input id="password" name="password" type="password" className="block h-44" value={password} onChange={e => setPassword(e.target.value)} />
+            <div className="py-5">
+              <label htmlFor="password" className="opacity-80">Password</label>
+              <input id="password" name="password" type="password" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={password} onChange={e => setPassword(e.target.value)} />
+            </div>
 
-            <label htmlFor="passwordRepeat" className="opacity-80">Confirm Password</label>
-            <input id="passwordRepeat" name="passwordRepeat" type="password" className="block h-44" value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)} />
+            <div className="py-5">
+              <label htmlFor="passwordConfirm" className="opacity-80">Confirm Password</label>
+              <input id="passwordConfirm" name="passwordConfirm" type="password" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)} />
+            </div>
 
-            <button id="submit" type="submit" className="h-44 cursor-pointer">CREATE ACCOUNT</button>
-            {/*<input id="submit" type="submit" className="h-44" />*/}
+            <div className="py-5">
+              <button id="submit" type="submit" className="h-44 cursor-pointer p-10 bg-blue-500">CREATE ACCOUNT</button>
+            </div>
           </Form>
 
-          <button type="button" onClick={() => switchPageType("login")} className="h-44 cursor-pointer">
+          <button type="button" onClick={() => switchPageType("login")} className="h-44 cursor-pointer mt-5">
             <p className="opacity-80 text-sm">I already have an account</p>
           </button>
         </section>
@@ -67,19 +77,27 @@ const Signup = (): JSX.Element => {
         </header>
 
         <section className="p-10">
-          <Form action={submitForm}>
-            <label htmlFor="email" className="opacity-80">Email</label>
-            <input id="email" name="email" type="email" className="block h-44" value={email} onChange={e => setEmail(e.target.value)} />
+          <Form action={submitForm} className="w-1/4">
+            <div className="py-5">
+              <label htmlFor="email" className="opacity-80">Email</label>
+              <input id="email" name="email" type="email" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={email} onChange={e => setEmail(e.target.value)} />
+            </div>
 
-            <label htmlFor="password" className="opacity-80">Password</label>
-            <input id="password" name="password" type="password" className="block h-44" value={password} onChange={e => setPassword(e.target.value)} />
+            <div className="py-5">
+              <label htmlFor="password" className="opacity-80">Password</label>
+              <input id="password" name="password" type="password" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={password} onChange={e => setPassword(e.target.value)} />
+            </div>
 
-            <button id="submit" type="submit" className="h-44 cursor-pointer">LOG IN</button>
+            <div className="py-5">
+              <button id="submit" type="submit" className="h-44 p-10 cursor-pointer bg-blue-500">LOG IN</button>
+            </div>
           </Form>
 
-          <button type="button" className="h-44 cursor-pointer" onClick={() => switchPageType("signup")}>
-            <p className="opacity-80 text-sm">I don&apos;t have an account</p>
-          </button>
+          <div className="py-5">
+            <button type="button" className="h-44 cursor-pointer" onClick={() => switchPageType("signup")}>
+              <p className="opacity-80 text-sm">I don&apos;t have an account</p>
+            </button>
+          </div>
         </section>
       </main>
   )
