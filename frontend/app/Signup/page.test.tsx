@@ -1,4 +1,4 @@
-import Signup from './page.tsx';
+import Signup from './page';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 

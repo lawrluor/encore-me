@@ -1,4 +1,4 @@
-import { Greet } from './components/Greet.tsx';
+import { Greet } from './components/Greet';
 
 const Home = () => {
   return (
