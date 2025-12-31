@@ -61,11 +61,11 @@ const Signup = (): JSX.Element => {
             </div>
 
             <div className="py-5">
-              <button id="submit" type="submit" className="h-44 cursor-pointer p-10 bg-blue-500">CREATE ACCOUNT</button>
+              <button id="submit" type="submit" className="h-44 cursor-pointer p-10 bg-blue-500 rounded-sm">CREATE ACCOUNT</button>
             </div>
           </Form>
 
-          <button type="button" onClick={() => switchPageType("login")} className="h-44 cursor-pointer mt-5">
+          <button type="button" onClick={() => switchPageType("login")} className="h-44 cursor-pointer">
             <p className="opacity-80 text-sm">I already have an account</p>
           </button>
         </section>
@@ -89,7 +89,7 @@ const Signup = (): JSX.Element => {
             </div>
 
             <div className="py-5">
-              <button id="submit" type="submit" className="h-44 p-10 cursor-pointer bg-blue-500">LOG IN</button>
+              <button id="submit" type="submit" className="h-44 p-10 cursor-pointer bg-blue-500 rounded-sm">LOG IN</button>
             </div>
           </Form>
 
