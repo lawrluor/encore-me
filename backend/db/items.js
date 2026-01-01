@@ -56,10 +56,20 @@ const deleteItem = async (id, userId) => {
   return result.rows[0];
 };
 
+const deleteAllItems = async () => {
+  await ensureTablesExist();
+  const result = await sql`
+    DELETE FROM items
+    RETURNING id
+  `;
+  return result.rows;
+};
+
 module.exports = {
   createItem,
   findItemById,
   getItemsByUserId,
   updateItem,
-  deleteItem
+  deleteItem,
+  deleteAllItems
 };

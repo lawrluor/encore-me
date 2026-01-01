@@ -63,11 +63,21 @@ const deleteUser = async (id) => {
   return result.rows[0];
 };
 
+const deleteAllUsers = async () => {
+  await ensureTablesExist();
+  const result = await sql`
+    DELETE FROM users
+    RETURNING id
+  `;
+  return result.rows;
+};
+
 module.exports = {
   createUser,
   findUserByEmail,
   findUserById,
   getAllUsers,
   updateUser,
-  deleteUser
+  deleteUser,
+  deleteAllUsers
 };

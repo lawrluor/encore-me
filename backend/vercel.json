@@ -24,8 +24,44 @@
       "destination": "/api/items/index.js"
     },
     {
+      "source": "/api/items/delete-all",
+      "destination": "/api/items/delete-all.js"
+    },
+    {
       "source": "/api/items/:id",
       "destination": "/api/items/[id].js"
+    },
+    {
+      "source": "/api/songs",
+      "destination": "/api/songs/index.js"
+    },
+    {
+      "source": "/api/songs/delete-all",
+      "destination": "/api/songs/delete-all.js"
+    },
+    {
+      "source": "/api/songs/:id",
+      "destination": "/api/songs/[id].js"
+    },
+    {
+      "source": "/api/acts",
+      "destination": "/api/acts/index.js"
+    },
+    {
+      "source": "/api/acts/delete-all",
+      "destination": "/api/acts/delete-all.js"
+    },
+    {
+      "source": "/api/acts/:id/members",
+      "destination": "/api/acts/members.js"
+    },
+    {
+      "source": "/api/acts/:id",
+      "destination": "/api/acts/[id].js"
+    },
+    {
+      "source": "/api/users/delete-all",
+      "destination": "/api/users/delete-all.js"
     },
     {
       "source": "/api/:path",

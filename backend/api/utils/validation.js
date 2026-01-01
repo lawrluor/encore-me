@@ -20,14 +20,27 @@ const userSchema = Joi.object({
   name: Joi.string().min(2).max(50).optional()
 });
 
-const itemSchema = Joi.object({
+const songSchema = Joi.object({
   title: Joi.string().min(1).max(200).required(),
   description: Joi.string().max(1000).optional(),
-  status: Joi.string().valid('active', 'inactive', 'pending').optional()
+  genre: Joi.string().max(50).optional(),
+  tempo: Joi.string().max(50).optional()
+});
+
+const actSchema = Joi.object({
+  title: Joi.string().min(1).max(200).required(),
+  description: Joi.string().max(1000).optional()
+});
+
+const userActSchema = Joi.object({
+  userId: Joi.string().uuid().required(),
+  role: Joi.string().max(100).optional()
 });
 
 module.exports = {
   validateBody,
   userSchema,
-  itemSchema
+  songSchema,
+  actSchema,
+  userActSchema
 };

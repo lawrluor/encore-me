@@ -17,7 +17,6 @@ const Home = (): JSX.Element => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
         const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`;
         const response = await fetch(endpoint);
         if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
