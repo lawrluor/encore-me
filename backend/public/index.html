@@ -417,16 +417,16 @@
 
           <!-- Delete All Users -->
           <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('deleteAllUsers', 'DELETE', '/api/users/delete-all')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-delete">DELETE</span>
-                <span class="font-mono text-lg">/api/users/delete-all</span>
+            <div class="endpoint-header" onclick="toggleTestPanel('deleteAllUsers', 'DELETE', '/api/users/delete-all')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-delete">DELETE</span>
+                  <span class="font-mono text-lg">/api/users/delete-all</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
               </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
+              <p class="text-gray-600">Delete all users (admin operation)</p>
             </div>
-            <p class="text-gray-600">Delete all users (admin operation)</p>
-          </div>
 
             <div id="test-panel-deleteAllUsers" class="test-panel" style="display: none;">
               <div class="flex gap-4 mb-4">
@@ -457,229 +457,6 @@
           <span class="text-sm font-normal text-gray-500">(Requires Authorization Header)</span>
         </h2>
 
-        <!-- Get Items -->
-        <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('getItems', 'GET', '/api/items')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-get">GET</span>
-                <span class="font-mono text-lg">/api/items</span>
-              </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
-            </div>
-            <p class="text-gray-600">Get all items for authenticated user</p>
-          </div>
-
-          <div id="test-panel-getItems" class="test-panel" style="display: none;">
-            <div class="flex gap-4 mb-4">
-              <button onclick="sendInlineRequest('getItems', 'GET', '/api/items')"
-                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
-                <i class="fas fa-paper-plane"></i> Send Request
-              </button>
-              <button onclick="closeInlinePanel('getItems')"
-                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
-                Cancel
-              </button>
-            </div>
-            <div id="response-getItems" class="mt-4" style="display: none;">
-              <h4 class="text-lg font-bold mb-2">Response</h4>
-              <div class="code-block">
-                <pre id="response-content-getItems"></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Create Item -->
-        <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('createItem', 'POST', '/api/items')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-post">POST</span>
-                <span class="font-mono text-lg">/api/items</span>
-              </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
-            </div>
-            <p class="text-gray-600">Create a new item</p>
-          </div>
-
-          <div id="test-panel-createItem" class="test-panel" style="display: none;">
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Request Body (JSON)</label>
-              <textarea id="body-createItem" rows="5"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-indigo-500">{"title": "My Item", "description": "Item description", "status": "active"}</textarea>
-            </div>
-            <div class="flex gap-4 mb-4">
-              <button onclick="sendInlineRequest('createItem', 'POST', '/api/items')"
-                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
-                <i class="fas fa-paper-plane"></i> Send Request
-              </button>
-              <button onclick="closeInlinePanel('createItem')"
-                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
-                Cancel
-              </button>
-            </div>
-            <div id="response-createItem" class="mt-4" style="display: none;">
-              <h4 class="text-lg font-bold mb-2">Response</h4>
-              <div class="code-block">
-                <pre id="response-content-createItem"></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Get Item by ID -->
-        <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('getItemById', 'GET', '/api/items')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-get">GET</span>
-                <span class="font-mono text-lg">/api/items/{'{id}'}</span>
-              </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
-            </div>
-            <p class="text-gray-600">Get a specific item by ID</p>
-          </div>
-
-          <div id="test-panel-getItemById" class="test-panel" style="display: none;">
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Item ID</label>
-              <input type="text" id="id-getItemById" placeholder="Enter item ID..."
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
-            </div>
-            <div class="flex gap-4 mb-4">
-              <button onclick="sendInlineRequest('getItemById', 'GET', '/api/items')"
-                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
-                <i class="fas fa-paper-plane"></i> Send Request
-              </button>
-              <button onclick="closeInlinePanel('getItemById')"
-                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
-                Cancel
-              </button>
-            </div>
-            <div id="response-getItemById" class="mt-4" style="display: none;">
-              <h4 class="text-lg font-bold mb-2">Response</h4>
-              <div class="code-block">
-                <pre id="response-content-getItemById"></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Update Item -->
-        <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('updateItem', 'PUT', '/api/items')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-put">PUT</span>
-                <span class="font-mono text-lg">/api/items/{'{id}'}</span>
-              </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
-            </div>
-            <p class="text-gray-600">Update item information</p>
-          </div>
-
-          <div id="test-panel-updateItem" class="test-panel" style="display: none;">
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Item ID</label>
-              <input type="text" id="id-updateItem" placeholder="Enter item ID..."
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
-            </div>
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Request Body (JSON)</label>
-              <textarea id="body-updateItem" rows="4"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-indigo-500">{"title": "Updated Item", "status": "inactive"}</textarea>
-            </div>
-            <div class="flex gap-4 mb-4">
-              <button onclick="sendInlineRequest('updateItem', 'PUT', '/api/items')"
-                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
-                <i class="fas fa-paper-plane"></i> Send Request
-              </button>
-              <button onclick="closeInlinePanel('updateItem')"
-                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
-                Cancel
-              </button>
-            </div>
-            <div id="response-updateItem" class="mt-4" style="display: none;">
-              <h4 class="text-lg font-bold mb-2">Response</h4>
-              <div class="code-block">
-                <pre id="response-content-updateItem"></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Delete Item -->
-        <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('deleteItem', 'DELETE', '/api/items')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-delete">DELETE</span>
-                <span class="font-mono text-lg">/api/items/{'{id}'}</span>
-              </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
-            </div>
-            <p class="text-gray-600">Delete an item</p>
-          </div>
-
-          <div id="test-panel-deleteItem" class="test-panel" style="display: none;">
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Item ID</label>
-              <input type="text" id="id-deleteItem" placeholder="Enter item ID..."
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
-            </div>
-            <div class="flex gap-4 mb-4">
-              <button onclick="sendInlineRequest('deleteItem', 'DELETE', '/api/items')"
-                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
-                <i class="fas fa-paper-plane"></i> Send Request
-              </button>
-              <button onclick="closeInlinePanel('deleteItem')"
-                class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
-                Cancel
-              </button>
-            </div>
-            <div id="response-deleteItem" class="mt-4" style="display: none;">
-              <h4 class="text-lg font-bold mb-2">Response</h4>
-              <div class="code-block">
-                <pre id="response-content-deleteItem"></pre>
-              </div>
-            </div>
-          </div>
-
-          <!-- Delete All Items -->
-          <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('deleteAllItems', 'DELETE', '/api/items/delete-all')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-delete">DELETE</span>
-                <span class="font-mono text-lg">/api/items/delete-all</span>
-              </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
-            </div>
-            <p class="text-gray-600">Delete all items (admin operation)</p>
-          </div>
-
-            <div id="test-panel-deleteAllItems" class="test-panel" style="display: none;">
-              <div class="flex gap-4 mb-4">
-                <button onclick="sendInlineRequest('deleteAllItems', 'DELETE', '/api/items/delete-all')"
-                  class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition">
-                  <i class="fas fa-trash"></i> Delete All Items
-                </button>
-                <button onclick="closeInlinePanel('deleteAllItems')"
-                  class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
-                  Cancel
-                </button>
-              </div>
-              <div id="response-deleteAllItems" class="mt-4" style="display: none;">
-                <h4 class="text-lg font-bold mb-2">Response</h4>
-                <div class="code-block">
-                  <pre id="response-content-deleteAllItems"></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- Songs Section -->
         <div>
           <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">
@@ -689,16 +466,16 @@
 
           <!-- Get Songs -->
           <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('getSongs', 'GET', '/api/songs')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-get">GET</span>
-                <span class="font-mono text-lg">/api/songs</span>
+            <div class="endpoint-header" onclick="toggleTestPanel('getSongs', 'GET', '/api/songs')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-get">GET</span>
+                  <span class="font-mono text-lg">/api/songs</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
               </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
+              <p class="text-gray-600">Get all songs for authenticated user</p>
             </div>
-            <p class="text-gray-600">Get all songs for authenticated user</p>
-          </div>
 
             <div id="test-panel-getSongs" class="test-panel" style="display: none;">
               <div class="flex gap-4 mb-4">
@@ -722,16 +499,16 @@
 
           <!-- Create Song -->
           <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('createSong', 'POST', '/api/songs')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-post">POST</span>
-                <span class="font-mono text-lg">/api/songs</span>
+            <div class="endpoint-header" onclick="toggleTestPanel('createSong', 'POST', '/api/songs')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-post">POST</span>
+                  <span class="font-mono text-lg">/api/songs</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
               </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
+              <p class="text-gray-600">Create a new song</p>
             </div>
-            <p class="text-gray-600">Create a new song</p>
-          </div>
 
             <div id="test-panel-createSong" class="test-panel" style="display: none;">
               <div class="mb-4">
@@ -760,16 +537,16 @@
 
           <!-- Get Song by ID -->
           <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('getSongById', 'GET', '/api/songs')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-get">GET</span>
-                <span class="font-mono text-lg">/api/songs/{'{id}'}</span>
+            <div class="endpoint-header" onclick="toggleTestPanel('getSongById', 'GET', '/api/songs')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-get">GET</span>
+                  <span class="font-mono text-lg">/api/songs/{'{id}'}</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
               </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
+              <p class="text-gray-600">Get a specific song by ID</p>
             </div>
-            <p class="text-gray-600">Get a specific song by ID</p>
-          </div>
 
             <div id="test-panel-getSongById" class="test-panel" style="display: none;">
               <div class="mb-4">
@@ -798,16 +575,16 @@
 
           <!-- Update Song -->
           <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('updateSong', 'PUT', '/api/songs')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-put">PUT</span>
-                <span class="font-mono text-lg">/api/songs/{'{id}'}</span>
+            <div class="endpoint-header" onclick="toggleTestPanel('updateSong', 'PUT', '/api/songs')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-put">PUT</span>
+                  <span class="font-mono text-lg">/api/songs/{'{id}'}</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
               </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
+              <p class="text-gray-600">Update song information</p>
             </div>
-            <p class="text-gray-600">Update song information</p>
-          </div>
 
             <div id="test-panel-updateSong" class="test-panel" style="display: none;">
               <div class="mb-4">
@@ -841,16 +618,16 @@
 
           <!-- Delete Song -->
           <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('deleteSong', 'DELETE', '/api/songs')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-delete">DELETE</span>
-                <span class="font-mono text-lg">/api/songs/{'{id}'}</span>
+            <div class="endpoint-header" onclick="toggleTestPanel('deleteSong', 'DELETE', '/api/songs')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-delete">DELETE</span>
+                  <span class="font-mono text-lg">/api/songs/{'{id}'}</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
               </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
+              <p class="text-gray-600">Delete a song</p>
             </div>
-            <p class="text-gray-600">Delete a song</p>
-          </div>
 
             <div id="test-panel-deleteSong" class="test-panel" style="display: none;">
               <div class="mb-4">
@@ -879,16 +656,16 @@
 
           <!-- Delete All Songs -->
           <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('deleteAllSongs', 'DELETE', '/api/songs/delete-all')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-delete">DELETE</span>
-                <span class="font-mono text-lg">/api/songs/delete-all</span>
+            <div class="endpoint-header" onclick="toggleTestPanel('deleteAllSongs', 'DELETE', '/api/songs/delete-all')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-delete">DELETE</span>
+                  <span class="font-mono text-lg">/api/songs/delete-all</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
               </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
+              <p class="text-gray-600">Delete all songs (admin operation)</p>
             </div>
-            <p class="text-gray-600">Delete all songs (admin operation)</p>
-          </div>
 
             <div id="test-panel-deleteAllSongs" class="test-panel" style="display: none;">
               <div class="flex gap-4 mb-4">
@@ -920,16 +697,16 @@
 
           <!-- Get Acts -->
           <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('getActs', 'GET', '/api/acts')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-get">GET</span>
-                <span class="font-mono text-lg">/api/acts</span>
+            <div class="endpoint-header" onclick="toggleTestPanel('getActs', 'GET', '/api/acts')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-get">GET</span>
+                  <span class="font-mono text-lg">/api/acts</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
               </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
+              <p class="text-gray-600">Get all acts for authenticated user</p>
             </div>
-            <p class="text-gray-600">Get all acts for authenticated user</p>
-          </div>
 
             <div id="test-panel-getActs" class="test-panel" style="display: none;">
               <div class="flex gap-4 mb-4">
@@ -953,16 +730,16 @@
 
           <!-- Create Act -->
           <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('createAct', 'POST', '/api/acts')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-post">POST</span>
-                <span class="font-mono text-lg">/api/acts</span>
+            <div class="endpoint-header" onclick="toggleTestPanel('createAct', 'POST', '/api/acts')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-post">POST</span>
+                  <span class="font-mono text-lg">/api/acts</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
               </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
+              <p class="text-gray-600">Create a new act (band/group)</p>
             </div>
-            <p class="text-gray-600">Create a new act (band/group)</p>
-          </div>
 
             <div id="test-panel-createAct" class="test-panel" style="display: none;">
               <div class="mb-4">
@@ -991,16 +768,16 @@
 
           <!-- Get Act by ID -->
           <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('getActById', 'GET', '/api/acts')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-get">GET</span>
-                <span class="font-mono text-lg">/api/acts/{'{id}'}</span>
+            <div class="endpoint-header" onclick="toggleTestPanel('getActById', 'GET', '/api/acts')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-get">GET</span>
+                  <span class="font-mono text-lg">/api/acts/{'{id}'}</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
               </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
+              <p class="text-gray-600">Get a specific act by ID with members</p>
             </div>
-            <p class="text-gray-600">Get a specific act by ID with members</p>
-          </div>
 
             <div id="test-panel-getActById" class="test-panel" style="display: none;">
               <div class="mb-4">
@@ -1029,16 +806,16 @@
 
           <!-- Update Act -->
           <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('updateAct', 'PUT', '/api/acts')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-put">PUT</span>
-                <span class="font-mono text-lg">/api/acts/{'{id}'}</span>
+            <div class="endpoint-header" onclick="toggleTestPanel('updateAct', 'PUT', '/api/acts')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-put">PUT</span>
+                  <span class="font-mono text-lg">/api/acts/{'{id}'}</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
               </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
+              <p class="text-gray-600">Update act information</p>
             </div>
-            <p class="text-gray-600">Update act information</p>
-          </div>
 
             <div id="test-panel-updateAct" class="test-panel" style="display: none;">
               <div class="mb-4">
@@ -1072,16 +849,16 @@
 
           <!-- Delete Act -->
           <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('deleteAct', 'DELETE', '/api/acts')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-delete">DELETE</span>
-                <span class="font-mono text-lg">/api/acts/{'{id}'}</span>
+            <div class="endpoint-header" onclick="toggleTestPanel('deleteAct', 'DELETE', '/api/acts')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-delete">DELETE</span>
+                  <span class="font-mono text-lg">/api/acts/{'{id}'}</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
               </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
+              <p class="text-gray-600">Delete an act</p>
             </div>
-            <p class="text-gray-600">Delete an act</p>
-          </div>
 
             <div id="test-panel-deleteAct" class="test-panel" style="display: none;">
               <div class="mb-4">
@@ -1110,16 +887,16 @@
 
           <!-- Add Member to Act -->
           <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('addMember', 'POST', '/api/acts')">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-3">
-                <span class="method-badge method-post">POST</span>
-                <span class="font-mono text-lg">/api/acts/{'{id}'}/members</span>
+            <div class="endpoint-header" onclick="toggleTestPanel('addMember', 'POST', '/api/acts')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-post">POST</span>
+                  <span class="font-mono text-lg">/api/acts/{'{id}'}/members</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
               </div>
-              <i class="fas fa-chevron-down text-gray-400"></i>
+              <p class="text-gray-600">Add a user to an act</p>
             </div>
-            <p class="text-gray-600">Add a user to an act</p>
-          </div>
 
             <div id="test-panel-addMember" class="test-panel" style="display: none;">
               <div class="mb-4">

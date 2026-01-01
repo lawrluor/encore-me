@@ -24,9 +24,13 @@ A complete backend API built with Vercel Serverless Functions, featuring authent
 │   ├── users/
 │   │   ├── index.js          # Get all users, create user
 │   │   └── [id].js           # Get, update, delete user by ID
-│   ├── items/
-│   │   ├── index.js          # Get all items, create item (protected)
-│   │   └── [id].js           # Get, update, delete item by ID (protected)
+│   ├── songs/
+│   │   ├── index.js          # Get all songs, create song (protected)
+│   │   └── [id].js           # Get, update, delete song by ID (protected)
+│   ├── acts/
+│   │   ├── index.js          # Get all acts, create act (protected)
+│   │   ├── [id].js           # Get, update, delete act by ID (protected)
+│   │   └── members.js        # Manage act members (protected)
 │   ├── utils/
 │   │   ├── auth.js           # JWT utilities
 │   │   ├── cors.js           # CORS middleware
@@ -149,14 +153,15 @@ Response:
 # Copy the token from the login response
 export TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 
-# Create an item (protected endpoint)
-curl -X POST http://localhost:3000/api/items \
+# Create a song (protected endpoint)
+curl -X POST http://localhost:3000/api/songs \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   -d '{
-    "title": "My First Item",
-    "description": "This is a test item",
-    "status": "active"
+    "title": "My First Song",
+    "description": "This is a test song",
+    "genre": "Rock",
+    "tempo": "Fast"
   }'
 ```
 
@@ -234,49 +239,107 @@ All protected endpoints require an `Authorization` header:
 Authorization: Bearer <your_jwt_token>
 ```
 
-#### Items
+#### Songs
 
-**Get All Items**
+**Get All Songs**
 ```
-GET /api/items
+GET /api/songs
 Authorization: Bearer <token>
 ```
 
-**Create Item**
+**Create Song**
 ```
-POST /api/items
+POST /api/songs
 Authorization: Bearer <token>
 Content-Type: application/json
 
 {
-  "title": "My Item",
-  "description": "Item description",
-  "status": "active"
+  "title": "My Song",
+  "description": "Song description",
+  "genre": "Rock",
+  "tempo": "Fast"
 }
 ```
 
-**Get Item by ID**
+**Get Song by ID**
 ```
-GET /api/items/{id}
+GET /api/songs/{id}
 Authorization: Bearer <token>
 ```
 
-**Update Item**
+**Update Song**
 ```
-PUT /api/items/{id}
+PUT /api/songs/{id}
 Authorization: Bearer <token>
 Content-Type: application/json
 
 {
   "title": "Updated Title",
-  "status": "inactive"
+  "genre": "Jazz",
+  "tempo": "Moderate"
 }
 ```
 
-**Delete Item**
+**Delete Song**
 ```
-DELETE /api/items/{id}
+DELETE /api/songs/{id}
 Authorization: Bearer <token>
+```
+
+#### Acts
+
+**Get All Acts**
+```
+GET /api/acts
+Authorization: Bearer <token>
+```
+
+**Create Act**
+```
+POST /api/acts
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "title": "The Beatles",
+  "description": "Legendary rock band"
+}
+```
+
+**Get Act by ID (with members)**
+```
+GET /api/acts/{id}
+Authorization: Bearer <token>
+```
+
+**Update Act**
+```
+PUT /api/acts/{id}
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "title": "Updated Band Name",
+  "description": "Updated description"
+}
+```
+
+**Delete Act**
+```
+DELETE /api/acts/{id}
+Authorization: Bearer <token>
+```
+
+**Add Member to Act**
+```
+POST /api/acts/{id}/members
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "userId": "user-uuid-here",
+  "role": "Lead Vocalist"
+}
 ```
 
 #### Users
@@ -366,9 +429,9 @@ const user = authenticateRequest(req, res);
 ### Validation (`api/utils/validation.js`)
 
 ```javascript
-const { validateBody, userSchema, itemSchema } = require('./utils/validation');
+const { validateBody, userSchema, songSchema, actSchema } = require('./utils/validation');
 
-const validation = validateBody(userSchema, req.body);
+const validation = validateBody(songSchema, req.body);
 if (!validation.valid) {
   return sendError(res, 'Validation failed', 400, validation.errors);
 }
@@ -402,12 +465,12 @@ curl -X POST http://localhost:3000/api/auth/login \
   -d '{"email":"test@example.com","password":"password123"}'
 ```
 
-### Create an item (with token):
+### Create a song (with token):
 ```bash
-curl -X POST http://localhost:3000/api/items \
+curl -X POST http://localhost:3000/api/songs \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_TOKEN_HERE" \
-  -d '{"title":"My First Item","description":"This is a test item","status":"active"}'
+  -d '{"title":"My First Song","description":"This is a test song","genre":"Rock","tempo":"Fast"}'
 ```
 
 ## Database

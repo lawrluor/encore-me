@@ -20,18 +20,6 @@
       "destination": "/api/users/[id].js"
     },
     {
-      "source": "/api/items",
-      "destination": "/api/items/index.js"
-    },
-    {
-      "source": "/api/items/delete-all",
-      "destination": "/api/items/delete-all.js"
-    },
-    {
-      "source": "/api/items/:id",
-      "destination": "/api/items/[id].js"
-    },
-    {
       "source": "/api/songs",
       "destination": "/api/songs/index.js"
     },
