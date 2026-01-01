@@ -186,7 +186,7 @@ const Signup = (): JSX.Element => {
               <button id="submit" type="submit" className="h-44 cursor-pointer p-10 bg-blue-500 rounded-sm" disabled={loading}>CREATE ACCOUNT</button>
             </div>
 
-            {errorMessage && <div className="py-5"><p className="fill-red-50">{errorMessage}</p></div>}
+            {errorMessage && <div className="py-5"><p className="text-red-50">{errorMessage}</p></div>}
           </Form>
 
           <button type="button" onClick={() => switchPageType("login")} className="h-44 cursor-pointer">
@@ -216,7 +216,7 @@ const Signup = (): JSX.Element => {
               <button id="submit" type="submit" className="h-44 p-10 cursor-pointer bg-blue-500 rounded-sm" disabled={loading}>LOG IN</button>
             </div>
 
-            {errorMessage && <div className="py-5"><p className="fill-red-50">{errorMessage}</p></div>}
+            {errorMessage && <div className="py-5"><p className="text-red-50">{errorMessage}</p></div>}
           </Form>
 
           <div className="py-5">
