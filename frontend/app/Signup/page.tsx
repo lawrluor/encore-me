@@ -46,7 +46,7 @@ const Signup = (): JSX.Element => {
     try {
       if (!passwordIsValid()) throw new Error('Passwords must match');
       return true;
-    } catch(err) {
+    } catch (err) {
       if (err instanceof Error) {
         setErrorMessage(err.message);
       } else {
@@ -64,45 +64,40 @@ const Signup = (): JSX.Element => {
   const createAccount = async () => {
     if (!fieldsValid()) return;
 
-    let data = {
+    const data = {
       "name": name,
       "email": email,
       "password": password
     }
-    let success = false;
+
     setLoading(true);
 
     try {
       const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`;
-      console.log(endpoint);  // http://localhost:4200/api/users
-      let response = await fetch(endpoint, { 
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
       if (!response.ok) throw new Error(`Error occurred: ${response.status}`);
-      let successMessage = await response.json();
-      console.log(successMessage);
-      success = true;
+      return await response.json();
     } catch (err) {
-      if (err instanceof Error) {
-        console.log(`Error occurred: ${err.message}`);
-      } else {
-        console.log(`Unknown Error:`, err);
-      }
-      success = false;
-      setErrorMessage("Something went wrong. Please try again later.");
+      throw err;
     } finally {
       setLoading(false);
     }
-
-    return success;
   }
 
   const signup = async () => {
     try {
-      if (await createAccount()) router.push('/Home');
+      const user = await createAccount();
+      if (user) {
+        console.log(user);
+        localStorage.setItem(user)
+        router.push('/Home');
+      }
     } catch (err) {
+      setErrorMessage("Something went wrong. Please try again later.");
       console.error('Signup error:', err);
     }
   }
@@ -111,14 +106,12 @@ const Signup = (): JSX.Element => {
     try {
       setLoading(true);
 
-      let data = {
+      const data = {
         "email": email,
         "password": password
       }
 
       const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`;
-      console.log(endpoint);
-
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -126,19 +119,9 @@ const Signup = (): JSX.Element => {
       })
 
       if (!response.ok) throw new Error(`Response failed: ${response.status}`);
-      let result = await response.json();
-      console.log(result);
-
-      return true;
-    } catch(err) {
-      if (err instanceof Error) {
-        console.error(`Error occurred: ${err.message}`);
-      } else {
-        console.error(`Unknown error:`, err);
-      }
-      
-      setErrorMessage("Something went wrong. Please try again later.");
-      return false;
+      return await response.json();
+    } catch (err) {
+      throw err;
     } finally {
       setLoading(false);
     }
@@ -146,8 +129,13 @@ const Signup = (): JSX.Element => {
 
   const login = async () => {
     try {
-      if (await loginAccount()) router.push('/Home');
+      const result = await loginAccount();
+      if (result) {
+        localStorage.setItem('token', result.data.token);
+        router.push('/Home');
+      }
     } catch (err) {
+      setErrorMessage("Something went wrong. Please try again later.");
       console.error("Login error", err);
     }
   }
