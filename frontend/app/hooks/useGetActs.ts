@@ -6,7 +6,13 @@ type Act = {
   description: string
 }
 
-export const useGetActs = () => {
+type GetActsResult = {
+  acts: Act[],
+  loading: boolean,
+  errorMessage: string
+}
+
+export const useGetActs = (): GetActsResult => {
   const [acts, setActs] = useState<Act[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");

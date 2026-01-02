@@ -927,6 +927,74 @@
               </div>
             </div>
           </div>
+
+          <!-- Get All Acts (Admin) -->
+          <div class="endpoint-card">
+            <div class="endpoint-header" onclick="toggleTestPanel('getAllActs', 'GET', '/api/acts?all=true')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-get">GET</span>
+                  <span class="font-mono text-lg">/api/acts?all=true</span>
+                  <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Admin Only</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
+              </div>
+              <p class="text-gray-600">Get all acts in the system (admin operation)</p>
+            </div>
+
+            <div id="test-panel-getAllActs" class="test-panel" style="display: none;">
+              <div class="flex gap-4 mb-4">
+                <button onclick="sendInlineRequest('getAllActs', 'GET', '/api/acts?all=true')"
+                  class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                  <i class="fas fa-paper-plane"></i> Send Request
+                </button>
+                <button onclick="closeInlinePanel('getAllActs')"
+                  class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                  Cancel
+                </button>
+              </div>
+              <div id="response-getAllActs" class="mt-4" style="display: none;">
+                <h4 class="text-lg font-bold mb-2">Response</h4>
+                <div class="code-block">
+                  <pre id="response-content-getAllActs"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delete All Acts (Admin) -->
+          <div class="endpoint-card">
+            <div class="endpoint-header" onclick="toggleTestPanel('deleteAllActs', 'DELETE', '/api/acts/delete-all')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-delete">DELETE</span>
+                  <span class="font-mono text-lg">/api/acts/delete-all</span>
+                  <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Admin Only</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
+              </div>
+              <p class="text-gray-600">Delete all acts (admin operation)</p>
+            </div>
+
+            <div id="test-panel-deleteAllActs" class="test-panel" style="display: none;">
+              <div class="flex gap-4 mb-4">
+                <button onclick="sendInlineRequest('deleteAllActs', 'DELETE', '/api/acts/delete-all')"
+                  class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition">
+                  <i class="fas fa-trash"></i> Delete All Acts
+                </button>
+                <button onclick="closeInlinePanel('deleteAllActs')"
+                  class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                  Cancel
+                </button>
+              </div>
+              <div id="response-deleteAllActs" class="mt-4" style="display: none;">
+                <h4 class="text-lg font-bold mb-2">Response</h4>
+                <div class="code-block">
+                  <pre id="response-content-deleteAllActs"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

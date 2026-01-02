@@ -6,12 +6,18 @@ type User = {
   updatedAt: string
 }
 
+type GetUsersResult = {
+  data: User[],
+  loading: boolean,
+  errorMessage: string
+}
+
 import { useState, useEffect } from 'react';
 
-export const useGetUsers = () => {
+export const useGetUsers = ():GetUsersResult => {
   const [data, setData] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +34,7 @@ export const useGetUsers = () => {
         } else {
           console.error(`Unknown Error`, err);
         }
-        setError('Something went wrong. Please try again later.')
+        setErrorMessage('Something went wrong. Please try again later.')
       } finally {
         setLoading(false);
       }
@@ -37,5 +43,5 @@ export const useGetUsers = () => {
     fetchData();
   }, [])
 
-  return { data, loading, error };
+  return { data, loading, errorMessage };
 }

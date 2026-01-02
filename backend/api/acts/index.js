@@ -2,7 +2,7 @@ const allowCors = require('../utils/cors');
 const { sendSuccess, sendError } = require('../utils/response');
 const { validateBody, actSchema } = require('../utils/validation');
 const { authenticateRequest } = require('../utils/auth');
-const { createAct, getAllActs, getActsByUserId } = require('../../db/acts');
+const { createAct, getAllActs, getActsByUserId, addUserToAct } = require('../../db/acts');
 
 async function handler(req, res) {
   try {
@@ -11,6 +11,15 @@ async function handler(req, res) {
 
       if (!user) {
         return sendError(res, 'Unauthorized', 401);
+      }
+
+      // Check if requesting all acts (admin function)
+      const { all } = req.query || {};
+
+      if (all === 'true') {
+        // Get all acts (admin function)
+        const allActs = await getAllActs();
+        return sendSuccess(res, allActs, 'All acts retrieved successfully');
       }
 
       // Get acts for the authenticated user
@@ -33,6 +42,9 @@ async function handler(req, res) {
 
       const { title, description } = validation.value;
       const newAct = await createAct(title, description || '');
+
+      // Automatically add the creator as a member with 'creator' role
+      await addUserToAct(user.userId, newAct.id, 'creator');
 
       return sendSuccess(res, newAct, 'Act created successfully', 201);
     }

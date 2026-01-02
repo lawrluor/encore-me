@@ -1,6 +1,7 @@
 'use client'
 
 import { ActsList } from '../components/ActsList';
+import { CreateActForm } from '../components/CreateActForm';
 
 const Home = () => {
   const signOut = () => {
@@ -19,6 +20,10 @@ const Home = () => {
       <section>
         <h2>Acts</h2>
         <ActsList />
+      </section>
+
+      <section>
+        <CreateActForm />
       </section>
     </main>
   )
