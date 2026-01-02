@@ -9,7 +9,7 @@ type Act = {
 export const useGetActs = () => {
   const [acts, setActs] = useState<Act[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchActs = async () => {
@@ -32,7 +32,7 @@ export const useGetActs = () => {
         setActs(result.data);
       } catch (err) {
         console.error(err);
-        setError('Something went wrong. Please try again later.');
+        setErrorMessage('Something went wrong. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -41,5 +41,5 @@ export const useGetActs = () => {
     fetchActs();
   }, [])
 
-  return { acts, loading, error };
+  return { acts, loading, errorMessage };
 }

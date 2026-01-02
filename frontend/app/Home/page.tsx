@@ -1,10 +1,8 @@
 'use client'
 
-import { useGetActs } from '../hooks/useGetActs';
+import { ActsList } from '../components/ActsList';
 
 const Home = () => {
-  const { acts, loading, error } = useGetActs();
-
   const signOut = () => {
     localStorage.removeItem('token');
   }
@@ -19,16 +17,8 @@ const Home = () => {
       </header>
 
       <section>
-        {loading && <p>Loading...</p>}
-
-        {acts?.map(act =>
-          <div key={act.id}>
-            <p>{act.name}</p>
-            <p>{act.description}</p>
-          </div>
-        )}
-
-        {error && <p className="text-red-500">{error}</p>}
+        <h2>Acts</h2>
+        <ActsList />
       </section>
     </main>
   )
