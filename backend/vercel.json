@@ -12,6 +12,10 @@
       "destination": "/api/auth/login.js"
     },
     {
+      "source": "/api/admin/setup",
+      "destination": "/api/admin/setup.js"
+    },
+    {
       "source": "/api/users",
       "destination": "/api/users/index.js"
     },

@@ -1,6 +1,6 @@
 const allowCors = require('../utils/cors');
 const { sendSuccess, sendError } = require('../utils/response');
-const { authenticateRequest } = require('../utils/auth');
+const { requireAdmin } = require('../utils/adminAuth');
 const { deleteAllActs } = require('../../db/acts');
 
 async function handler(req, res) {
@@ -9,10 +9,10 @@ async function handler(req, res) {
       return sendError(res, 'Method not allowed', 405);
     }
 
-    const user = authenticateRequest(req, res);
+    const admin = await requireAdmin(req, res);
 
-    if (!user) {
-      return sendError(res, 'Unauthorized', 401);
+    if (!admin) {
+      return sendError(res, 'Forbidden: Admin access required', 403);
     }
 
     const deletedActs = await deleteAllActs();

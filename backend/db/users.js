@@ -22,7 +22,7 @@ const findUserByEmail = async (email) => {
 const findUserById = async (id) => {
   await ensureTablesExist();
   const result = await sql`
-    SELECT id, email, name, created_at, updated_at 
+    SELECT id, email, name, is_admin, created_at, updated_at 
     FROM users 
     WHERE id = ${id}
   `;

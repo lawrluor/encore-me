@@ -2,6 +2,7 @@ const allowCors = require('../utils/cors');
 const { sendSuccess, sendError } = require('../utils/response');
 const { validateBody, actSchema } = require('../utils/validation');
 const { authenticateRequest } = require('../utils/auth');
+const { requireAdmin } = require('../utils/adminAuth');
 const { createAct, getAllActs, getActsByUserId, addUserToAct } = require('../../db/acts');
 
 async function handler(req, res) {
@@ -17,6 +18,12 @@ async function handler(req, res) {
       const { all } = req.query || {};
 
       if (all === 'true') {
+        // Verify admin status
+        const admin = await requireAdmin(req, res);
+        if (!admin) {
+          return sendError(res, 'Forbidden: Admin access required', 403);
+        }
+
         // Get all acts (admin function)
         const allActs = await getAllActs();
         return sendSuccess(res, allActs, 'All acts retrieved successfully');
