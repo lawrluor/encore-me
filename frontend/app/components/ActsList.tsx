@@ -11,7 +11,7 @@ export const ActsList = () => {
 
   return acts?.map(act =>
     <div key={act.id}>
-      <p>{act.name}</p>
+      <p>{act.title}</p>
       <p>{act.description}</p>
     </div>
   )

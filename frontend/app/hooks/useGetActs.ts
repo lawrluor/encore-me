@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 type Act = {
   id: string,
-  name: string,
+  title: string,
   description: string
 }
 
@@ -33,7 +33,7 @@ export const useGetActs = (): GetActsResult => {
         const result = await response.json();
         console.log(result);
 
-        if (!result?.data || !(Array.isArray(result.data))) 
+        if (!result?.data || !(Array.isArray(result.data)))
           throw new Error("Malformed data. Expected an array of Act objects.");
         setActs(result.data);
       } catch (err) {
