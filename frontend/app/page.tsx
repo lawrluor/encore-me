@@ -10,9 +10,9 @@ const Home = () => {
   useEffect(() => {
     if (!router) return;
 
-    if (token && router.pathname!=="Home") {
+    if (token && router.pathname !== "Home") {
       router.push('/Home');
-    } else if (!token && router.pathname!=="Signup") {
+    } else if (!token && router.pathname !== "Signup") {
       router.push('/Signup');
     }
   }, [router, token])
