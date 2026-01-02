@@ -1,3 +1,11 @@
+type User = {
+  id: string,
+  name: string,
+  email: string,
+  createdAt: string,
+  updatedAt: string
+}
+
 import { useState, useEffect } from 'react';
 
 export const useGetUsers = () => {
