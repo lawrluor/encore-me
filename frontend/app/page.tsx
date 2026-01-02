@@ -1,27 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { AuthProvider } from './context/AuthProvider';
+import Navigator from './components/Navigator';
 
-const Home = () => {
-  const router = useRouter();
-  const [token, setToken] = useState(localStorage.getItem('token'));
-
-  useEffect(() => {
-    if (!router) return;
-
-    if (token && router.pathname !== "Home") {
-      router.push('/Home');
-    } else if (!token && router.pathname !== "Signup") {
-      router.push('/Signup');
-    }
-  }, [router, token])
-
+const App = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-
-    </div>
+    <AuthProvider>
+      <Navigator />
+    </AuthProvider>
   );
 }
 
-export default Home;
+export default App;

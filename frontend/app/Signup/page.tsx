@@ -1,29 +1,31 @@
 'use client';
 import { JSX, useState } from 'react';
 
-import { useRouter } from 'next/navigation';
+import { useAuth } from "../context/AuthProvider";
+
 import Form from 'next/form';
 
 type PageType = 'login' | 'signup';
 
 type User = {
-  id: string;
-  email: string;
-  name: string;
+  id: string,
+  email: string,
+  name: string,
+  createdAt: string,
+  updatedAt: string
 };
 
 type AuthResponse = {
-  success: boolean;
-  message: string;
+  success: boolean,
+  message: string,
   data: {
-    token: string;
-    user: User;
+    token: string,
+    user: User
   };
 };
 
 const Signup = (): JSX.Element => {
-  const router = useRouter();
-
+  const { setUser } = useAuth();
   const [pageType, setPageType] = useState<PageType>("signup");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -62,15 +64,15 @@ const Signup = (): JSX.Element => {
   }
 
   const createAccount = async () => {
-    if (!fieldsValid()) return;
+    setLoading(true);
+
+    if (!fieldsValid()) throw new Error("Form fields are invalid")
 
     const data = {
       "name": name,
       "email": email,
       "password": password
     }
-
-    setLoading(true);
 
     try {
       const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`;
@@ -79,10 +81,11 @@ const Signup = (): JSX.Element => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      if (!response.ok) throw new Error(`Error occurred: ${response.status}`);
-      return await response.json();
-    } catch (err) {
-      throw err;
+      if (!response.ok) throw new Error(`Response: ${response.status} ${response.statusText} ${response.url}`);
+      const result = await response.json();
+
+      if (!result || !result.data) throw new Error(`Unexpected result: ${JSON.stringify(result)}`);
+      return result.data;
     } finally {
       setLoading(false);
     }
@@ -90,15 +93,15 @@ const Signup = (): JSX.Element => {
 
   const signup = async () => {
     try {
-      const user = await createAccount();
-      if (user) {
-        console.log(user);
-        localStorage.setItem(user)
-        router.push('/Home');
+      const userData = await createAccount();
+      if (userData) {
+        console.log('Signup successful:', userData);
+        localStorage.setItem('token', userData.token);
+        setUser(userData.user);
       }
     } catch (err) {
-      setErrorMessage("Something went wrong. Please try again later.");
       console.error('Signup error:', err);
+      setErrorMessage("Something went wrong. Please try again later.");
     }
   }
 
@@ -119,7 +122,10 @@ const Signup = (): JSX.Element => {
       })
 
       if (!response.ok) throw new Error(`Response failed: ${response.status}`);
-      return await response.json();
+      const result = await response.json();
+
+      if (!result || !result.data) throw new Error(`Unexpected result: ${JSON.stringify(result)}`);
+      return result.data;
     } catch (err) {
       throw err;
     } finally {
@@ -129,10 +135,11 @@ const Signup = (): JSX.Element => {
 
   const login = async () => {
     try {
-      const result = await loginAccount();
-      if (result) {
-        localStorage.setItem('token', result.data.token);
-        router.push('/Home');
+      const userData = await loginAccount();
+      if (userData) {
+        console.log('Login successful:', userData);
+        localStorage.setItem('token', userData.token);
+        setUser(userData.user);
       }
     } catch (err) {
       setErrorMessage("Something went wrong. Please try again later.");

@@ -1,12 +1,12 @@
 import Form from 'next/form';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 type ActFormPayload = {
   'title': string,
   'description': string
 }
 
-export const CreateActForm = () => {
+export const CreateActForm = ({ id, hidden }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -40,8 +40,7 @@ export const CreateActForm = () => {
     }
   }
 
-  return <Form action={submitForm}>
-    <h2>Add an Act</h2>
+  return <Form id={id} action={submitForm} hidden={hidden}>
     <div className="py-5">
       <label htmlFor="title" className="opacity-80">Name</label>
       <input id="title" name="title" type="text" className="block p-5 border-1 border-white border-solid" value={name} onChange={e => setName(e.target.value)} />
