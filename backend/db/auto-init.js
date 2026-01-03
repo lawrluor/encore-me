@@ -1,11 +1,9 @@
 const { sql } = require('@vercel/postgres');
 
-let isInitialized = false;
-
-const ensureTablesExist = async () => {
-  if (isInitialized) return;
-
+const initializeDatabase = async () => {
   try {
+    console.log('🔧 Initializing database tables...');
+
     await sql`
       CREATE TABLE IF NOT EXISTS users (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -57,7 +55,6 @@ const ensureTablesExist = async () => {
     await sql`CREATE INDEX IF NOT EXISTS idx_user_acts_user_id ON user_acts(user_id)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_user_acts_act_id ON user_acts(act_id)`;
 
-    isInitialized = true;
     console.log('✅ Database tables initialized successfully');
   } catch (error) {
     console.error('❌ Database initialization error:', error);
@@ -65,4 +62,16 @@ const ensureTablesExist = async () => {
   }
 };
 
-module.exports = { ensureTablesExist };
+if (require.main === module) {
+  initializeDatabase()
+    .then(() => {
+      console.log('✅ Database initialization complete');
+      process.exit(0);
+    })
+    .catch((error) => {
+      console.error('❌ Database initialization failed:', error);
+      process.exit(1);
+    });
+}
+
+module.exports = { initializeDatabase };

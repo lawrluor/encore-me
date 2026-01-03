@@ -1,8 +1,6 @@
 const { sql } = require('./client');
-const { ensureTablesExist } = require('./auto-init');
 
 const createAct = async (title, description = '') => {
-  await ensureTablesExist();
   const result = await sql`
     INSERT INTO acts (title, description)
     VALUES (${title}, ${description})
@@ -12,7 +10,6 @@ const createAct = async (title, description = '') => {
 };
 
 const findActById = async (id) => {
-  await ensureTablesExist();
   const result = await sql`
     SELECT * FROM acts 
     WHERE id = ${id}
@@ -21,7 +18,6 @@ const findActById = async (id) => {
 };
 
 const getAllActs = async () => {
-  await ensureTablesExist();
   const result = await sql`
     SELECT * FROM acts 
     ORDER BY created_at DESC
@@ -30,7 +26,6 @@ const getAllActs = async () => {
 };
 
 const getActsByUserId = async (userId) => {
-  await ensureTablesExist();
   const result = await sql`
     SELECT a.*, ua.role, ua.joined_at
     FROM acts a
@@ -42,7 +37,6 @@ const getActsByUserId = async (userId) => {
 };
 
 const getActMembers = async (actId) => {
-  await ensureTablesExist();
   const result = await sql`
     SELECT u.id, u.email, u.name, ua.role, ua.joined_at
     FROM users u
@@ -54,7 +48,6 @@ const getActMembers = async (actId) => {
 };
 
 const updateAct = async (id, updates) => {
-  await ensureTablesExist();
   const { title, description } = updates;
   const result = await sql`
     UPDATE acts 
@@ -69,7 +62,6 @@ const updateAct = async (id, updates) => {
 };
 
 const deleteAct = async (id) => {
-  await ensureTablesExist();
   const result = await sql`
     DELETE FROM acts 
     WHERE id = ${id}
@@ -79,7 +71,6 @@ const deleteAct = async (id) => {
 };
 
 const addUserToAct = async (userId, actId, role = '') => {
-  await ensureTablesExist();
   const result = await sql`
     INSERT INTO user_acts (user_id, act_id, role)
     VALUES (${userId}, ${actId}, ${role})
@@ -91,7 +82,6 @@ const addUserToAct = async (userId, actId, role = '') => {
 };
 
 const removeUserFromAct = async (userId, actId) => {
-  await ensureTablesExist();
   const result = await sql`
     DELETE FROM user_acts 
     WHERE user_id = ${userId} AND act_id = ${actId}
@@ -101,7 +91,6 @@ const removeUserFromAct = async (userId, actId) => {
 };
 
 const deleteAllActs = async () => {
-  await ensureTablesExist();
   const result = await sql`
     DELETE FROM acts
     RETURNING *

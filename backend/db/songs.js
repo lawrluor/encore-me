@@ -1,8 +1,6 @@
 const { sql } = require('./client');
-const { ensureTablesExist } = require('./auto-init');
 
 const createSong = async (userId, title, description = '', genre = '', tempo = '') => {
-  await ensureTablesExist();
   const result = await sql`
     INSERT INTO songs (user_id, title, description, genre, tempo)
     VALUES (${userId}, ${title}, ${description}, ${genre}, ${tempo})
@@ -12,7 +10,6 @@ const createSong = async (userId, title, description = '', genre = '', tempo = '
 };
 
 const findSongById = async (id, userId) => {
-  await ensureTablesExist();
   const result = await sql`
     SELECT * FROM songs 
     WHERE id = ${id} AND user_id = ${userId}
@@ -21,7 +18,6 @@ const findSongById = async (id, userId) => {
 };
 
 const getSongsByUserId = async (userId) => {
-  await ensureTablesExist();
   const result = await sql`
     SELECT * FROM songs 
     WHERE user_id = ${userId}
@@ -31,7 +27,6 @@ const getSongsByUserId = async (userId) => {
 };
 
 const updateSong = async (id, userId, updates) => {
-  await ensureTablesExist();
   const { title, description, genre, tempo } = updates;
   const result = await sql`
     UPDATE songs 
@@ -48,7 +43,6 @@ const updateSong = async (id, userId, updates) => {
 };
 
 const deleteSong = async (id, userId) => {
-  await ensureTablesExist();
   const result = await sql`
     DELETE FROM songs 
     WHERE id = ${id} AND user_id = ${userId}
@@ -58,7 +52,6 @@ const deleteSong = async (id, userId) => {
 };
 
 const deleteAllSongs = async () => {
-  await ensureTablesExist();
   const result = await sql`
     DELETE FROM songs
     RETURNING id

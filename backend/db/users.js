@@ -1,8 +1,6 @@
 const { sql } = require('./client');
-const { ensureTablesExist } = require('./auto-init');
 
 const createUser = async (email, hashedPassword, name = '') => {
-  await ensureTablesExist();
   const result = await sql`
     INSERT INTO users (email, password, name)
     VALUES (${email}, ${hashedPassword}, ${name})
@@ -12,7 +10,6 @@ const createUser = async (email, hashedPassword, name = '') => {
 };
 
 const findUserByEmail = async (email) => {
-  await ensureTablesExist();
   const result = await sql`
     SELECT * FROM users WHERE email = ${email}
   `;
@@ -20,7 +17,6 @@ const findUserByEmail = async (email) => {
 };
 
 const findUserById = async (id) => {
-  await ensureTablesExist();
   const result = await sql`
     SELECT id, email, name, is_admin, created_at, updated_at 
     FROM users 
@@ -30,7 +26,6 @@ const findUserById = async (id) => {
 };
 
 const getAllUsers = async () => {
-  await ensureTablesExist();
   const result = await sql`
     SELECT id, email, name, created_at, updated_at 
     FROM users 
@@ -40,7 +35,6 @@ const getAllUsers = async () => {
 };
 
 const updateUser = async (id, updates) => {
-  await ensureTablesExist();
   const { email, name } = updates;
   const result = await sql`
     UPDATE users 
@@ -55,7 +49,6 @@ const updateUser = async (id, updates) => {
 };
 
 const deleteUser = async (id) => {
-  await ensureTablesExist();
   const result = await sql`
     DELETE FROM users WHERE id = ${id}
     RETURNING id
@@ -64,7 +57,6 @@ const deleteUser = async (id) => {
 };
 
 const deleteAllUsers = async () => {
-  await ensureTablesExist();
   const result = await sql`
     DELETE FROM users
     RETURNING id
