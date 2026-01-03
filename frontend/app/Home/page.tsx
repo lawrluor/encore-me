@@ -1,6 +1,9 @@
 'use client'
 
 import { useState } from 'react';
+
+import Link from 'next/link';
+
 import { ActsList } from '../components/ActsList';
 import { CreateActForm } from '../components/CreateActForm';
 
@@ -18,18 +21,18 @@ const Home = () => {
   return (
     <main>
       <header>
-        <div className="flex justify-between w-full">
-          <h1>Home</h1>
+        <nav className="px-5 flex justify-between w-full">
+          <Link href={{ pathname: '/' }}><p>Home</p></Link>
 
           <span>
-            <h2>Welcome, {user.name}</h2>
-            <button onClick={signOut} className="h-44 p-5 cursor-pointer border-1 border-white border-solid radius-sm">Sign Out</button>
+            <p>{user.name}</p>
+            <button onClick={signOut} className="h-44 p-5 cursor-pointer rounded-sm bg-red-900">Sign Out</button>
           </span>
-        </div>
+        </nav>
       </header>
 
-      <section>
-        <h2>Acts</h2>
+      <section className="p-5">
+        <h2 className="font-bold text-2xl">ACTS</h2>
         <ActsList />
         <button onClick={() => setCreateActFormHidden(!createActFormHidden)} className="h-44 p-5 font-bold" aria-controls="createActForm" aria-expanded={!createActFormHidden}>
           <h2>{createActFormHidden ? "+ add an act" : "- hide form"}</h2>

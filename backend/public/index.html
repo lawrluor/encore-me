@@ -996,6 +996,239 @@
             </div>
           </div>
         </div>
+
+        <!-- Setlists Section -->
+        <div>
+          <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">
+            <i class="fas fa-list"></i> Setlists Endpoints
+            <span class="text-sm font-normal text-gray-500">(Requires Authorization Header)</span>
+          </h2>
+
+          <!-- Get Setlists -->
+          <div class="endpoint-card">
+            <div class="endpoint-header" onclick="toggleTestPanel('getSetlists', 'GET', '/api/setlists')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-get">GET</span>
+                  <span class="font-mono text-lg">/api/setlists</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
+              </div>
+              <p class="text-gray-600">Get all setlists or filter by actId query parameter</p>
+            </div>
+
+            <div id="test-panel-getSetlists" class="test-panel" style="display: none;">
+              <div class="flex gap-4 mb-4">
+                <button onclick="sendInlineRequest('getSetlists', 'GET', '/api/setlists')"
+                  class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                  <i class="fas fa-paper-plane"></i> Send Request
+                </button>
+                <button onclick="closeInlinePanel('getSetlists')"
+                  class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                  Cancel
+                </button>
+              </div>
+              <div id="response-getSetlists" class="mt-4" style="display: none;">
+                <h4 class="text-lg font-bold mb-2">Response</h4>
+                <div class="code-block">
+                  <pre id="response-content-getSetlists"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Create Setlist -->
+          <div class="endpoint-card">
+            <div class="endpoint-header" onclick="toggleTestPanel('createSetlist', 'POST', '/api/setlists')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-post">POST</span>
+                  <span class="font-mono text-lg">/api/setlists</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
+              </div>
+              <p class="text-gray-600">Create a new setlist for an act</p>
+            </div>
+
+            <div id="test-panel-createSetlist" class="test-panel" style="display: none;">
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Request Body (JSON)</label>
+                <textarea id="body-createSetlist" rows="4"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-indigo-500">{"actId": "act-uuid-here", "title": "Summer Tour 2024", "description": "Main setlist for summer tour"}</textarea>
+              </div>
+              <div class="flex gap-4 mb-4">
+                <button onclick="sendInlineRequest('createSetlist', 'POST', '/api/setlists')"
+                  class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                  <i class="fas fa-paper-plane"></i> Send Request
+                </button>
+                <button onclick="closeInlinePanel('createSetlist')"
+                  class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                  Cancel
+                </button>
+              </div>
+              <div id="response-createSetlist" class="mt-4" style="display: none;">
+                <h4 class="text-lg font-bold mb-2">Response</h4>
+                <div class="code-block">
+                  <pre id="response-content-createSetlist"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Get Setlist by ID -->
+          <div class="endpoint-card">
+            <div class="endpoint-header" onclick="toggleTestPanel('getSetlistById', 'GET', '/api/setlists')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-get">GET</span>
+                  <span class="font-mono text-lg">/api/setlists/{'{id}'}</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
+              </div>
+              <p class="text-gray-600">Get a specific setlist by ID</p>
+            </div>
+
+            <div id="test-panel-getSetlistById" class="test-panel" style="display: none;">
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Setlist ID</label>
+                <input type="text" id="id-getSetlistById" placeholder="Enter setlist ID..."
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+              </div>
+              <div class="flex gap-4 mb-4">
+                <button onclick="sendInlineRequest('getSetlistById', 'GET', '/api/setlists')"
+                  class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                  <i class="fas fa-paper-plane"></i> Send Request
+                </button>
+                <button onclick="closeInlinePanel('getSetlistById')"
+                  class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                  Cancel
+                </button>
+              </div>
+              <div id="response-getSetlistById" class="mt-4" style="display: none;">
+                <h4 class="text-lg font-bold mb-2">Response</h4>
+                <div class="code-block">
+                  <pre id="response-content-getSetlistById"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Update Setlist -->
+          <div class="endpoint-card">
+            <div class="endpoint-header" onclick="toggleTestPanel('updateSetlist', 'PUT', '/api/setlists')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-put">PUT</span>
+                  <span class="font-mono text-lg">/api/setlists/{'{id}'}</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
+              </div>
+              <p class="text-gray-600">Update setlist information</p>
+            </div>
+
+            <div id="test-panel-updateSetlist" class="test-panel" style="display: none;">
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Setlist ID</label>
+                <input type="text" id="id-updateSetlist" placeholder="Enter setlist ID..."
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+              </div>
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Request Body (JSON)</label>
+                <textarea id="body-updateSetlist" rows="4"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-indigo-500">{"title": "Updated Setlist Name", "description": "Updated description"}</textarea>
+              </div>
+              <div class="flex gap-4 mb-4">
+                <button onclick="sendInlineRequest('updateSetlist', 'PUT', '/api/setlists')"
+                  class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                  <i class="fas fa-paper-plane"></i> Send Request
+                </button>
+                <button onclick="closeInlinePanel('updateSetlist')"
+                  class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                  Cancel
+                </button>
+              </div>
+              <div id="response-updateSetlist" class="mt-4" style="display: none;">
+                <h4 class="text-lg font-bold mb-2">Response</h4>
+                <div class="code-block">
+                  <pre id="response-content-updateSetlist"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delete Setlist -->
+          <div class="endpoint-card">
+            <div class="endpoint-header" onclick="toggleTestPanel('deleteSetlist', 'DELETE', '/api/setlists')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-delete">DELETE</span>
+                  <span class="font-mono text-lg">/api/setlists/{'{id}'}</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
+              </div>
+              <p class="text-gray-600">Delete a setlist</p>
+            </div>
+
+            <div id="test-panel-deleteSetlist" class="test-panel" style="display: none;">
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Setlist ID</label>
+                <input type="text" id="id-deleteSetlist" placeholder="Enter setlist ID..."
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+              </div>
+              <div class="flex gap-4 mb-4">
+                <button onclick="sendInlineRequest('deleteSetlist', 'DELETE', '/api/setlists')"
+                  class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                  <i class="fas fa-paper-plane"></i> Send Request
+                </button>
+                <button onclick="closeInlinePanel('deleteSetlist')"
+                  class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                  Cancel
+                </button>
+              </div>
+              <div id="response-deleteSetlist" class="mt-4" style="display: none;">
+                <h4 class="text-lg font-bold mb-2">Response</h4>
+                <div class="code-block">
+                  <pre id="response-content-deleteSetlist"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delete All Setlists (Admin) -->
+          <div class="endpoint-card">
+            <div class="endpoint-header"
+              onclick="toggleTestPanel('deleteAllSetlists', 'DELETE', '/api/setlists/delete-all')">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                  <span class="method-badge method-delete">DELETE</span>
+                  <span class="font-mono text-lg">/api/setlists/delete-all</span>
+                  <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Admin Only</span>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400"></i>
+              </div>
+              <p class="text-gray-600">Delete all setlists (admin operation)</p>
+            </div>
+
+            <div id="test-panel-deleteAllSetlists" class="test-panel" style="display: none;">
+              <div class="flex gap-4 mb-4">
+                <button onclick="sendInlineRequest('deleteAllSetlists', 'DELETE', '/api/setlists/delete-all')"
+                  class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition">
+                  <i class="fas fa-trash"></i> Delete All Setlists
+                </button>
+                <button onclick="closeInlinePanel('deleteAllSetlists')"
+                  class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                  Cancel
+                </button>
+              </div>
+              <div id="response-deleteAllSetlists" class="mt-4" style="display: none;">
+                <h4 class="text-lg font-bold mb-2">Response</h4>
+                <div class="code-block">
+                  <pre id="response-content-deleteAllSetlists"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 

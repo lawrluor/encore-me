@@ -37,10 +37,17 @@ const userActSchema = Joi.object({
   role: Joi.string().max(100).optional()
 });
 
+const setlistSchema = Joi.object({
+  actId: Joi.string().uuid().required(),
+  title: Joi.string().min(1).max(200).required(),
+  description: Joi.string().max(1000).optional()
+});
+
 module.exports = {
   validateBody,
   userSchema,
   songSchema,
   actSchema,
-  userActSchema
+  userActSchema,
+  setlistSchema
 };

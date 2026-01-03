@@ -10,9 +10,9 @@ export const ActsList = () => {
   if (acts.length === 0) return (<p>No acts created</p>);
 
   return acts?.map(act =>
-    <div key={act.id}>
+    <div key={act.id} className="py-5">
       <p>{act.title}</p>
-      <p>{act.description}</p>
+      <p className="opacity-80 text-sm">{act.description}</p>
     </div>
   )
 };

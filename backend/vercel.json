@@ -56,6 +56,18 @@
       "destination": "/api/acts/[id].js"
     },
     {
+      "source": "/api/setlists",
+      "destination": "/api/setlists/index.js"
+    },
+    {
+      "source": "/api/setlists/delete-all",
+      "destination": "/api/setlists/delete-all.js"
+    },
+    {
+      "source": "/api/setlists/:id",
+      "destination": "/api/setlists/[id].js"
+    },
+    {
       "source": "/api/users/delete-all",
       "destination": "/api/users/delete-all.js"
     },

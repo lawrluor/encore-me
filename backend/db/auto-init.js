@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { sql } = require('@vercel/postgres');
 
 const initializeDatabase = async () => {
@@ -49,11 +50,23 @@ const initializeDatabase = async () => {
       )
     `;
 
+    await sql`
+      CREATE TABLE IF NOT EXISTS setlists (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        act_id UUID NOT NULL REFERENCES acts(id) ON DELETE CASCADE,
+        title VARCHAR(200) NOT NULL,
+        description TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
     await sql`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_songs_user_id ON songs(user_id)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_songs_genre ON songs(genre)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_user_acts_user_id ON user_acts(user_id)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_user_acts_act_id ON user_acts(act_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_setlists_act_id ON setlists(act_id)`;
 
     console.log('✅ Database tables initialized successfully');
   } catch (error) {
