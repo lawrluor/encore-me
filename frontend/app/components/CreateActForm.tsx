@@ -2,13 +2,13 @@ import Form from 'next/form';
 import { useState } from 'react';
 
 type ActFormPayload = {
-  'title': string,
-  'description': string
+  title: string,
+  description?: string
 }
 
 type Props = {
-  'id': string,
-  'hidden': boolean
+  id: string,
+  hidden: boolean
 }
 
 export const CreateActForm = ({ id, hidden }: Props) => {
