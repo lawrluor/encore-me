@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+import { useAuth } from '../context/AuthProvider';
+
 type Act = {
   id: string,
   title: string,

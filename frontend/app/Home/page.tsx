@@ -25,7 +25,7 @@ const Home = () => {
           <Link href={{ pathname: '/' }}><p>Home</p></Link>
 
           <span>
-            <p>{user.name}</p>
+            <p>{user?.name}</p>
             <button onClick={signOut} className="h-44 p-5 cursor-pointer rounded-sm bg-red-900">Sign Out</button>
           </span>
         </nav>

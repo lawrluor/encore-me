@@ -6,7 +6,12 @@ type ActFormPayload = {
   'description': string
 }
 
-export const CreateActForm = ({ id, hidden }) => {
+type Props = {
+  'id': string,
+  'hidden': boolean
+}
+
+export const CreateActForm = ({ id, hidden }: Props) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
