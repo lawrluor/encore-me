@@ -1,8 +1,8 @@
 const allowCors = require('../utils/cors');
 const { sendSuccess, sendError } = require('../utils/response');
-const { validateBody, setlistSchema } = require('../utils/validation');
+const { validateBody, setSchema } = require('../utils/validation');
 const { authenticateRequest } = require('../utils/auth');
-const { createSetlist, getAllSetlists, getSetlistsByActId } = require('../../db/setlists');
+const { createSet, getAllSets, getSetsByActId } = require('../../db/sets');
 
 async function handler(req, res) {
   try {
@@ -16,14 +16,14 @@ async function handler(req, res) {
       const { actId } = req.query || {};
 
       if (actId) {
-        // Get setlists for a specific act
-        const setlists = await getSetlistsByActId(actId);
-        return sendSuccess(res, setlists, 'Setlists retrieved successfully');
+        // Get sets for a specific act
+        const sets = await getSetsByActId(actId);
+        return sendSuccess(res, sets, 'Sets retrieved successfully');
       }
 
-      // Get all setlists
-      const allSetlists = await getAllSetlists();
-      return sendSuccess(res, allSetlists, 'All setlists retrieved successfully');
+      // Get all sets
+      const allSets = await getAllSets();
+      return sendSuccess(res, allSets, 'All sets retrieved successfully');
     }
 
     if (req.method === 'POST') {
@@ -33,21 +33,21 @@ async function handler(req, res) {
         return sendError(res, 'Unauthorized', 401);
       }
 
-      const validation = validateBody(setlistSchema, req.body);
+      const validation = validateBody(setSchema, req.body);
 
       if (!validation.valid) {
         return sendError(res, 'Validation failed', 400, validation.errors);
       }
 
       const { actId, title, description } = validation.value;
-      const newSetlist = await createSetlist(actId, title, description || '');
+      const newSet = await createSet(actId, title, description || '');
 
-      return sendSuccess(res, newSetlist, 'Setlist created successfully', 201);
+      return sendSuccess(res, newSet, 'Set created successfully', 201);
     }
 
     return sendError(res, 'Method not allowed', 405);
   } catch (error) {
-    console.error('Setlists API error:', error);
+    console.error('Sets API error:', error);
     return sendError(res, 'Internal server error', 500);
   }
 }

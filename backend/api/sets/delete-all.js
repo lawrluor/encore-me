@@ -1,7 +1,7 @@
 const allowCors = require('../utils/cors');
 const { sendSuccess, sendError } = require('../utils/response');
 const { requireAdmin } = require('../utils/adminAuth');
-const { deleteAllSetlists } = require('../../db/setlists');
+const { deleteAllSets } = require('../../db/sets');
 
 async function handler(req, res) {
   try {
@@ -15,10 +15,10 @@ async function handler(req, res) {
       return sendError(res, 'Forbidden: Admin access required', 403);
     }
 
-    const deletedSetlists = await deleteAllSetlists();
-    return sendSuccess(res, deletedSetlists, `${deletedSetlists.length} setlists deleted successfully`);
+    const deletedSets = await deleteAllSets();
+    return sendSuccess(res, deletedSets, `${deletedSets.length} sets deleted successfully`);
   } catch (error) {
-    console.error('Delete all setlists API error:', error);
+    console.error('Delete all sets API error:', error);
     return sendError(res, 'Internal server error', 500);
   }
 }

@@ -5,7 +5,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 import { ActsList } from '../components/ActsList';
-import { Setlist } from '../components/Setlist';
 import { CreateActForm } from '../components/CreateActForm';
 
 import { useAuth } from '../context/AuthProvider';
@@ -42,7 +41,7 @@ const Home = () => {
       </section>
 
       {/*<section className="p-5">
-        <h2 className="text-bold">SETLISTS</h2>
+        <h2 className="text-bold">SETS</h2>
       </section>*/}
     </main>
   )
