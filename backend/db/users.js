@@ -18,7 +18,7 @@ const findUserByEmail = async (email) => {
 
 const findUserById = async (id) => {
   const result = await sql`
-    SELECT id, email, name, is_admin, created_at, updated_at 
+    SELECT id, email, name, is_admin, promoted_set_id, created_at, updated_at 
     FROM users 
     WHERE id = ${id}
   `;
@@ -27,7 +27,7 @@ const findUserById = async (id) => {
 
 const getAllUsers = async () => {
   const result = await sql`
-    SELECT id, email, name, created_at, updated_at 
+    SELECT id, email, name, promoted_set_id, created_at, updated_at 
     FROM users 
     ORDER BY created_at DESC
   `;
@@ -43,7 +43,7 @@ const updateUser = async (id, updates) => {
       name = COALESCE(${name}, name),
       updated_at = CURRENT_TIMESTAMP
     WHERE id = ${id}
-    RETURNING id, email, name, created_at, updated_at
+    RETURNING id, email, name, promoted_set_id, created_at, updated_at
   `;
   return result.rows[0];
 };
@@ -64,6 +64,18 @@ const deleteAllUsers = async () => {
   return result.rows;
 };
 
+const updatePromotedSet = async (userId, setId) => {
+  const result = await sql`
+    UPDATE users 
+    SET 
+      promoted_set_id = ${setId},
+      updated_at = CURRENT_TIMESTAMP
+    WHERE id = ${userId}
+    RETURNING id, email, name, promoted_set_id, created_at, updated_at
+  `;
+  return result.rows[0];
+};
+
 module.exports = {
   createUser,
   findUserByEmail,
@@ -71,5 +83,6 @@ module.exports = {
   getAllUsers,
   updateUser,
   deleteUser,
-  deleteAllUsers
+  deleteAllUsers,
+  updatePromotedSet
 };

@@ -24,6 +24,10 @@
       "destination": "/api/users/me.js"
     },
     {
+      "source": "/api/users/promoted-set",
+      "destination": "/api/users/promoted-set.js"
+    },
+    {
       "source": "/api/users/:id",
       "destination": "/api/users/[id].js"
     },

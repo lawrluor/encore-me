@@ -1,5 +1,7 @@
 import { useGetSets } from '../hooks/useGetSets';
 
+import Link from 'next/link';
+
 type Props = {
   actId: string
 }
@@ -11,10 +13,10 @@ export const SetsList = ({ actId }: Props) => {
 
   if (errorMessage) return <p className="text-red-500">{errorMessage}</p>;
 
-  if (data.length === 0) return <p>No sets created yet.</p>;
+  if (data.length === 0) return <p>No sets created yet. <Link href="/Sets" className="underline font-bold text-blue-500">Create a new set</Link></p>;
 
   return data.map((set) => <div key={set.id}>
-    <p className="text-bold">{set.title}</p>
+    <p className="font-bold">{set.title}</p>
     {set.description && <p>{set.description}</p>}
   </div>
   )

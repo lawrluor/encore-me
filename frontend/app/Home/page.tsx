@@ -2,33 +2,17 @@
 
 import { useState } from 'react';
 
-import Link from 'next/link';
-
 import { ActsList } from '../components/ActsList';
 import { CreateActForm } from '../components/CreateActForm';
-
-import { useAuth } from '../context/AuthProvider';
+import { TopNav } from '../components/TopNav';
 
 const Home = () => {
-  const { user, setUser } = useAuth();
   const [createActFormHidden, setCreateActFormHidden] = useState(true);
-
-  const signOut = () => {
-    localStorage.removeItem('token');
-    setUser(null);
-  }
 
   return (
     <main>
       <header>
-        <nav className="px-5 flex justify-between w-full">
-          <Link href={{ pathname: '/' }}><p>Home</p></Link>
-
-          <span>
-            <p>{user?.name}</p>
-            <button onClick={signOut} className="h-44 p-5 cursor-pointer rounded-sm bg-red-900">Sign Out</button>
-          </span>
-        </nav>
+        <TopNav />
       </header>
 
       <section className="p-5">

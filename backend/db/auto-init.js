@@ -12,6 +12,7 @@ const initializeDatabase = async () => {
         password VARCHAR(255) NOT NULL,
         name VARCHAR(100),
         is_admin BOOLEAN DEFAULT FALSE,
+        promoted_set_id UUID REFERENCES sets(id) ON DELETE SET NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
@@ -62,6 +63,7 @@ const initializeDatabase = async () => {
     `;
 
     await sql`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_users_promoted_set_id ON users(promoted_set_id)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_songs_user_id ON songs(user_id)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_songs_genre ON songs(genre)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_user_acts_user_id ON user_acts(user_id)`;

@@ -178,7 +178,7 @@ const Signup = (): JSX.Element => {
             </div>
 
             <div className="py-5">
-              <button id="submit" type="submit" className="h-44 cursor-pointer p-10 bg-blue-500 rounded-sm" disabled={loading}>CREATE ACCOUNT</button>
+              <button id="submit" type="submit" className={`h-44 cursor-pointer p-10 rounded-sm ${loading ? 'bg-gray-500' : 'bg-blue-500'}`} disabled={loading}>CREATE ACCOUNT</button>
             </div>
 
             {errorMessage && <div className="py-5"><p className="text-red-50">{errorMessage}</p></div>}
@@ -208,7 +208,7 @@ const Signup = (): JSX.Element => {
             </div>
 
             <div className="py-5">
-              <button id="submit" type="submit" className="h-44 p-10 cursor-pointer bg-blue-500 rounded-sm" disabled={loading}>LOG IN</button>
+              <button id="submit" type="submit" className={`h-44 cursor-pointer p-10 rounded-sm ${loading ? 'bg-gray-500' : 'bg-blue-500'}`} disabled={loading}>LOG IN</button>
             </div>
 
             {errorMessage && <div className="py-5"><p className="text-red-50">{errorMessage}</p></div>}
