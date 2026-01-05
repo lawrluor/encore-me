@@ -40,7 +40,7 @@ const userActSchema = Joi.object({
 const setSchema = Joi.object({
   actId: Joi.string().uuid().required(),
   title: Joi.string().min(1).max(200).required(),
-  description: Joi.string().max(1000).optional()
+  description: Joi.string().max(1000).allow('').optional()
 });
 
 module.exports = {

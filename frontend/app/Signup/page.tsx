@@ -159,22 +159,22 @@ const Signup = (): JSX.Element => {
           <Form action={signup} className="w-1/4">
             <div className="py-5">
               <label htmlFor="name" className="opacity-80">Name</label>
-              <input id="name" name="name" type="text" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={name} onChange={e => setName(e.target.value)} />
+              <input id="name" name="name" type="text" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={name} onChange={e => setName(e.target.value)} required/>
             </div>
 
             <div className="py-5">
               <label htmlFor="email" className="opacity-80">Email</label>
-              <input id="email" name="email" type="email" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={email} onChange={e => setEmail(e.target.value)} />
+              <input id="email" name="email" type="email" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={email} onChange={e => setEmail(e.target.value)} required/>
             </div>
 
             <div className="py-5">
               <label htmlFor="password" className="opacity-80">Password</label>
-              <input id="password" name="password" type="password" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={password} onChange={e => setPassword(e.target.value)} />
+              <input id="password" name="password" type="password" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={password} onChange={e => setPassword(e.target.value)} required/>
             </div>
 
             <div className="py-5">
               <label htmlFor="passwordConfirm" className="opacity-80">Confirm Password</label>
-              <input id="passwordConfirm" name="passwordConfirm" type="password" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)} />
+              <input id="passwordConfirm" name="passwordConfirm" type="password" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)} required/>
             </div>
 
             <div className="py-5">
