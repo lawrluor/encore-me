@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation'
 
+import { useGetActs } from '../hooks/useGetActs';
 import { usePostSet } from '../hooks/usePostSet';
 
 import Form from 'next/form';
@@ -13,6 +14,7 @@ const Sets = () => {
   const actId = searchParams.get('actId');
 
   const { responseOk, loading, errorMessage, postData } = usePostSet();
+  const { acts, loading: actsLoading, errorMessage: actsErrorMessage } = useGetActs();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -42,12 +44,21 @@ const Sets = () => {
         <TopNav />
       </header>
 
+      <section>
+        {acts?.map((act) => (
+          <div key={act.id}>
+            <h2>{act.title}</h2>
+            <p>{act.description}</p>
+          </div>
+        ))}
+      </section>
+
       <section className="p-5">
         <h1 className="text-3xl">Sets</h1>
         <Form action={submitForm}>
           <div className="p-5">
             <label htmlFor="title" className="opacity-80">Title</label><span aria-hidden="true">*</span>
-            <input id="title" name="title" type="text" className="block h-44 p-5 border-1 border-white border-solid" value={title} onChange={e => setTitle(e.target.value)} />
+            <input id="title" name="title" type="text" className="block h-44 p-5 border-1 border-white border-solid" value={title} onChange={e => setTitle(e.target.value)} required />
           </div>
 
           <div className="p-5">

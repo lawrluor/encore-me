@@ -1,8 +1,13 @@
 import Signup from './page';
+import { AuthProvider } from '../context/AuthProvider';
+
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 
 jest.mock('next/navigation', () => ({
+  usePathname: () => {
+    return '/home'
+  },
   useRouter: () => ({
     push: jest.fn(),
     replace: jest.fn(),
@@ -12,7 +17,7 @@ jest.mock('next/navigation', () => ({
 
 describe('Elements rendered', () => {
   test('Heading', () => {
-    render(<Signup />);
+    render(<AuthProvider><Signup /></AuthProvider>);
     const el = screen.getByRole('heading');
     expect(el).toBeInTheDocument();
   })
@@ -20,7 +25,7 @@ describe('Elements rendered', () => {
 
 describe('Switch Signup to Login', () => {
   test('Elements exist', () => {
-    render(<Signup />);
+    render(<AuthProvider><Signup /></AuthProvider>);
 
     // Initial states
     const pageTitle = screen.getByRole('heading');
@@ -31,7 +36,7 @@ describe('Switch Signup to Login', () => {
   })
 
   test('renders Login title text after one click on button', async () => {
-    render(<Signup />);
+    render(<AuthProvider><Signup /></AuthProvider>);
 
     user.setup();
 
@@ -43,7 +48,7 @@ describe('Switch Signup to Login', () => {
   })
 
   test.skip('renders Login title text after a double click on button', async () => {
-    render(<Signup />);
+    render(<AuthProvider><Signup /></AuthProvider>);
 
     user.setup();
 

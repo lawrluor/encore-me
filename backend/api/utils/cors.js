@@ -1,4 +1,6 @@
-const allowCors = fn => async (req, res) => {
+const logger = require('./logger');
+
+const allowCors = fn => logger(async (req, res) => {
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -13,6 +15,6 @@ const allowCors = fn => async (req, res) => {
   }
 
   return await fn(req, res);
-};
+});
 
 module.exports = allowCors;
