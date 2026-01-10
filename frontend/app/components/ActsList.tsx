@@ -1,5 +1,5 @@
 import { useGetActs } from '../hooks/useGetActs';
-import { SetsList } from './SetsList';
+import { ActCard } from './ActCard';
 
 export const ActsList = () => {
   const { acts, loading, errorMessage } = useGetActs();
@@ -10,11 +10,9 @@ export const ActsList = () => {
 
   if (acts.length === 0) return (<p>No acts created</p>);
 
-  return acts.map(act =>
-    <div key={act.id} className="py-5">
-      <p>{act.title}</p>
-      <p className="opacity-80 text-sm">{act.description}</p>
-      <SetsList actId={act.id} />
+  return (
+    <div className="flex gap-10">
+      {acts.map(act => <ActCard key={act.id} act={act} />)}
     </div>
   )
 };

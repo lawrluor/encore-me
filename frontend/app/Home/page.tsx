@@ -18,7 +18,7 @@ const Home = () => {
       <section className="p-5">
         <h2 className="font-bold text-2xl">ACTS</h2>
         <ActsList />
-        <button onClick={() => setCreateActFormHidden(!createActFormHidden)} className="h-44 p-5 font-bold" aria-controls="createActForm" aria-expanded={!createActFormHidden}>
+        <button onClick={() => setCreateActFormHidden(!createActFormHidden)} className="h-44 p-5 font-bold cursor-pointer" aria-controls="createActForm" aria-expanded={!createActFormHidden}>
           <h2>{createActFormHidden ? "+ add an act" : "- hide form"}</h2>
         </button>
         <CreateActForm id={"createActForm"} hidden={createActFormHidden} />

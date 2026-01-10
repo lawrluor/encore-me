@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation'
+import Link from 'next/link';
 
 import { useGetActs } from '../hooks/useGetActs';
 import { usePostSet } from '../hooks/usePostSet';
@@ -44,17 +45,23 @@ const Sets = () => {
         <TopNav />
       </header>
 
-      <section>
-        {acts?.map((act) => (
-          <div key={act.id}>
-            <h2>{act.title}</h2>
-            <p>{act.description}</p>
-          </div>
-        ))}
-      </section>
+      <aside>
+        {actsLoading ? <div>Loading...</div> :
+          actsErrorMessage ? <div>{actsErrorMessage}</div> :
+            <>
+              <h2 className="text-bold text-xl">Switch Act</h2>
+              {acts?.map((act) => (
+                <div key={act.id}>
+                  <Link href={{ pathname: 'Sets', query: { actId: act.id } }}><h2 className={`text-bold cursor-pointer hover:opacity-80 ${act.id == actId ? "text-blue-500" : ""}`}>{act.title}</h2></Link>
+                </div>
+              ))}
+            </>
+        }
+      </aside>
 
       <section className="p-5">
         <h1 className="text-3xl">Sets</h1>
+        <h2 className="text-bold">Add New Set</h2>
         <Form action={submitForm}>
           <div className="p-5">
             <label htmlFor="title" className="opacity-80">Title</label><span aria-hidden="true">*</span>
@@ -67,7 +74,7 @@ const Sets = () => {
           </div>
 
           <div className="p-5">
-            <button type="submit" className="p-5 bg-blue-500" disabled={loading}>CREATE SET</button>
+            <button type="submit" className="p-5 bg-blue-500 cursor-pointer" disabled={loading}>CREATE SET</button>
           </div>
 
           <div className="p-5">

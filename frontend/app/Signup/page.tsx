@@ -15,17 +15,6 @@ type User = {
   updatedAt: string
 };
 
-type AuthResponse = {
-  success: boolean,
-  message: string,
-  data: {
-    token: string,
-    user: User
-  };
-};
-
-
-
 const Signup = () => {
   const { setUser } = useAuth();
   const [pageType, setPageType] = useState<PageType>("signup");
@@ -48,7 +37,8 @@ const Signup = () => {
     });
   };
 
-  const handleSignupInfo = (e) => {
+  const handleSignupInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e || !e.target) return;
     setInfo({ ...info, [e.target.name]: e.target.value });
   }
 
