@@ -370,6 +370,37 @@ Content-Type: application/json
 DELETE /api/users/{id}
 ```
 
+#### QR Code Generation
+
+**Generate QR Code**
+```
+GET /api/qr?text=<text_to_encode>
+```
+
+Query Parameters:
+- `text` (required): The text or URL to encode in the QR code
+
+Response:
+```json
+{
+  "success": true,
+  "message": "QR code generated successfully",
+  "data": {
+    "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."
+  }
+}
+```
+
+Example:
+```bash
+curl "http://localhost:4200/api/qr?text=https://example.com"
+```
+
+The endpoint returns a base64-encoded data URL that can be directly used in an `<img>` tag:
+```html
+<img src="data:image/png;base64,..." alt="QR Code" />
+```
+
 ## Deployment
 
 ### Deploy to Vercel

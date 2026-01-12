@@ -2,20 +2,18 @@
 
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation'
-import Link from 'next/link';
 
-import { useGetActs } from '../hooks/useGetActs';
 import { usePostSet } from '../hooks/usePostSet';
 
 import Form from 'next/form';
 import { TopNav } from '../components/TopNav';
+import { ActsList } from '../components/ActsList';
 
 const Sets = () => {
   const searchParams = useSearchParams();
   const actId = searchParams.get('actId');
 
   const { responseOk, loading, errorMessage, postData } = usePostSet();
-  const { acts, loading: actsLoading, errorMessage: actsErrorMessage } = useGetActs();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -46,17 +44,7 @@ const Sets = () => {
       </header>
 
       <aside>
-        {actsLoading ? <div>Loading...</div> :
-          actsErrorMessage ? <div>{actsErrorMessage}</div> :
-            <>
-              <h2 className="text-bold text-xl">Switch Act</h2>
-              {acts?.map((act) => (
-                <div key={act.id}>
-                  <Link href={{ pathname: 'Sets', query: { actId: act.id } }}><h2 className={`text-bold cursor-pointer hover:opacity-80 ${act.id == actId ? "text-blue-500" : ""}`}>{act.title}</h2></Link>
-                </div>
-              ))}
-            </>
-        }
+        <ActsList />
       </aside>
 
       <section className="p-5">

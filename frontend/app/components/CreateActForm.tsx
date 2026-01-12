@@ -1,10 +1,7 @@
-import Form from 'next/form';
-import { useState } from 'react';
+import { useState, useActionState } from 'react';
 
-type ActFormPayload = {
-  title: string,
-  description?: string
-}
+import { createAct } from '../services/actService';
+// import { useCreateAct } from '../hooks/useCreateAct';
 
 type Props = {
   id: string,
@@ -14,54 +11,48 @@ type Props = {
 export const CreateActForm = ({ id, hidden }: Props) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
-  const createAct = async () => {
-    const data: ActFormPayload = { 'title': name, 'description': description };
-    const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acts`;
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data)
-    })
-
-    if (!response.ok) throw new Error(`Response failed: ${response.status}`);
-
-    const result = await response.json();
-    if (!result) throw new Error(`Error: No response`);
-    return result;
-  }
-
-  const submitForm = async () => {
+  /* In React <19, we would create a custom hook useCreateAct
+      then import the hook's callback function execute() from there
+      because useActionState IS the hook, we define the callback above (as we would import at the top)
+    
+      Note: this hook expects the executor function to return object with either 'success' or 'error' field, 
+      which will become the 'state' variable
+  */
+  const executeCreateAct = async () => {
     try {
-      const result = await createAct();
-      console.log(result);
-    } catch (err: any) {
+      const data = { 'title': name, 'description': description };
+      const result = await createAct(data);
+      return { 'success': result.message };
+    } catch (err) {
       console.error(err);
-      setErrorMessage(err.message);
+      // Optionally display actual error message to user: err instanceof Error ? err.message : String(err) 
+      return { 'error': 'Something went wrong. Please try again later.' };
     }
   }
 
-  return <Form id={id} action={submitForm} hidden={hidden}>
+  // state is basically error and success combined into one (state.success, state.error)
+  // const { errorMessage, executeCreateAct, loading } = useCreateAct(); 
+  const [state, formAction, pending] = useActionState(executeCreateAct, null);  // state starts null
+
+  return <form id={id} action={formAction} hidden={hidden}>
     <div className="py-5">
       <label htmlFor="title" className="opacity-80">Name</label>
-      <input id="title" name="title" type="text" className="block p-5 border-1 border-white border-solid" value={name} onChange={e => setName(e.target.value)} />
+      <input id="title" name="title" type="text" className="block p-5 border-1 border-white border-solid" value={name} onChange={e => setName(e.target.value)} required />
     </div>
 
     <div className="py-5">
       <label htmlFor="description" className="opacity-80">Description</label>
-      <input id="description" name="description" type="text" className="block p-5 border-1 border-white border-solid" value={description} onChange={e => setDescription(e.target.value)} />
+      <input id="description" name="description" type="text" className="block p-5 border-1 border-white border-solid" value={description} onChange={e => setDescription(e.target.value)} required />
     </div>
 
     <div className="py-5">
-      <button type="submit" className="p-5 cursor-pointer bg-blue-500">ADD ACT</button>
+      <button type="submit" className={`p-5 ${pending ? 'bg-gray-500 cursor-wait' : 'bg-blue-500 cursor-pointer'}`} disabled={pending}>ADD ACT</button>
     </div>
 
     <div className="py-5">
-      <p>{errorMessage}</p>
+      {state?.error && <p className="text-red-500">{state.error}</p>}
+      {state?.success && <p className="text-green-500">{state.success}</p>}
     </div>
-  </Form>
+  </form>
 }

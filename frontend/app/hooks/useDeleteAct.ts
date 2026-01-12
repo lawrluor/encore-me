@@ -2,25 +2,25 @@ import { useState } from 'react';
 import { deleteAct } from '../services/actService';
 
 export const useDeleteAct = () => {
+  const [result, setResult] = useState<object | Error | null>(null);
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const executeDelete = async (actId: string) => {
     if (loading) return;
 
     try {
       setLoading(true);
-      setErrorMessage("");
+      setResult(null);
       const result = await deleteAct(actId);
-      return result;  // must be true, otherwise error was thrown
+      setResult({ 'success': result.message });
     } catch (err) {
       console.error(err);
-      setErrorMessage("An unexpected error occurred. Please try again later.");
-      return false;
+      // const message = err instanceof Error ? err.message : String(err);
+      setResult({ 'error': 'Something went wrong. Please try again later.' });
     } finally {
       setLoading(false);
     }
   }
 
-  return { executeDelete, loading, errorMessage }
+  return { result, executeDelete, loading }
 }

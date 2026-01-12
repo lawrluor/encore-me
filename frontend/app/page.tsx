@@ -1,34 +1,37 @@
-'use client'
+// 'use client'
 
-import { useState } from 'react';
+// import { useState } from 'react';
 
-import { ActsList } from './components/ActsList';
-import { CreateActForm } from './components/CreateActForm';
-import { TopNav } from './components/TopNav';
+// import { useGetQR } from '../hooks/useGetQR';
 
-const Home = () => {
-  const [createActFormHidden, setCreateActFormHidden] = useState(true);
+// import { ActsList } from './components/ActsList';
+// import { CreateActForm } from './components/CreateActForm';
+// import { TopNav } from './components/TopNav';
 
-  return (
-    <main>
-      <header>
-        <TopNav />
-      </header>
+// const Home = () => {
+//   const [createActFormHidden, setCreateActFormHidden] = useState(true);
 
-      <section className="p-5">
-        <h2 className="font-bold text-2xl">ACTS</h2>
-        <ActsList />
-        <button onClick={() => setCreateActFormHidden(!createActFormHidden)} className="h-44 p-5 font-bold cursor-pointer" aria-controls="createActForm" aria-expanded={!createActFormHidden}>
-          <h2>{createActFormHidden ? "+ add an act" : "- hide form"}</h2>
-        </button>
-        <CreateActForm id={"createActForm"} hidden={createActFormHidden} />
-      </section>
 
-      {/*<section className="p-5">
-        <h2 className="text-bold">SETS</h2>
-      </section>*/}
-    </main>
-  )
-}
+//   return (
+//     <main>
+//       <header>
+//         <TopNav />
+//       </header>
 
-export default Home;
+//       <section className="p-5">
+//         <h2 className="font-bold text-2xl">ACTS App</h2>
+//         <ActsList />
+//         <button onClick={() => setCreateActFormHidden(!createActFormHidden)} className="h-44 p-5 font-bold cursor-pointer" aria-controls="createActForm" aria-expanded={!createActFormHidden}>
+//           <h2>{createActFormHidden ? "+ add an act" : "- hide form"}</h2>
+//         </button>
+//         <CreateActForm id={"createActForm"} hidden={createActFormHidden} />
+//       </section>
+
+//       {/*<section className="p-5">
+//         <h2 className="text-bold">SETS</h2>
+//       </section>*/}
+//     </main>
+//   )
+// }
+
+// export default Home;

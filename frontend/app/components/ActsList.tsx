@@ -1,5 +1,5 @@
 import { useGetActs } from '../hooks/useGetActs';
-import { ActCard } from './ActCard';
+import Link from 'next/link';
 
 export const ActsList = () => {
   const { acts, loading, errorMessage } = useGetActs();
@@ -11,8 +11,13 @@ export const ActsList = () => {
   if (acts.length === 0) return (<p>No acts created</p>);
 
   return (
-    <div className="flex gap-10">
-      {acts.map(act => <ActCard key={act.id} act={act} />)}
+    <div>
+      <h2 className="text-bold text-xl">ACTS</h2>
+      {acts?.map((act) => (
+        <div key={act.id}>
+          <Link href={{ pathname: 'Sets', query: { actId: act.id } }}><h2 className="text-bold cursor-pointer hover:opacity-80">{act.title}</h2></Link>
+        </div>
+      ))}
     </div>
   )
-};
+}
