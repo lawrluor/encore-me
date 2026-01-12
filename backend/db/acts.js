@@ -1,12 +1,28 @@
 const { sql } = require('./client');
+const QRCode = require('qrcode');
 
 const createAct = async (title, description = '') => {
+  // First insert the act to get the ID
   const result = await sql`
     INSERT INTO acts (title, description)
     VALUES (${title}, ${description})
     RETURNING *
   `;
-  return result.rows[0];
+
+  const newAct = result.rows[0];
+
+  // Generate QR code with the act ID
+  const qrCodeDataUrl = await QRCode.toDataURL(newAct.id);
+
+  // Update the act with the QR code
+  const updatedResult = await sql`
+    UPDATE acts
+    SET qr_code = ${qrCodeDataUrl}
+    WHERE id = ${newAct.id}
+    RETURNING *
+  `;
+
+  return updatedResult.rows[0];
 };
 
 const findActById = async (id) => {

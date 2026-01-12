@@ -36,6 +36,7 @@ const initializeDatabase = async () => {
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         title VARCHAR(200) NOT NULL,
         description TEXT,
+        qr_code TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
