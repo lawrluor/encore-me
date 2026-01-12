@@ -375,6 +375,7 @@ DELETE /api/users/{id}
 **Generate QR Code**
 ```
 GET /api/qr?text=<text_to_encode>
+Authorization: Bearer <token>
 ```
 
 Query Parameters:
@@ -393,7 +394,8 @@ Response:
 
 Example:
 ```bash
-curl "http://localhost:4200/api/qr?text=https://example.com"
+curl "http://localhost:4200/api/qr?text=https://example.com" \
+  -H "Authorization: Bearer <your_token>"
 ```
 
 The endpoint returns a base64-encoded data URL that can be directly used in an `<img>` tag:

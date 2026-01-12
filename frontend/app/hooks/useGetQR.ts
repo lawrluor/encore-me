@@ -1,30 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { getQR } from '../services/qrService';
 
-export const useGetQR = (text: string) => {
+export const useGetQR = () => {
   const [qrUrl, setQrUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const executeGetQR = async (text: string) => {
-    if (loading) return;
-
     try {
+      if (loading) return;
+
       setLoading(true);
-      const result = await getQR(text);  // throws if doesn't succeed
-      console.log("qr:", result);
+      setErrorMessage("");
+      const result = await getQR(text);
       setQrUrl(result.url);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setErrorMessage("QR Code couldn't be displayed. Please try again later.");
     } finally {
       setLoading(false);
     }
-  }
+  };
 
-  useEffect(() => {
-    executeGetQR(text);
-  }, [text])
-
-  return { qrUrl, loading, errorMessage };
+  return { qrUrl, loading, errorMessage, executeGetQR };
 }
