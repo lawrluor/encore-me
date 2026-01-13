@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { createAct } from '../services/actService';
 
 type ActFormPayload = {
-  title: string,
+  name: string,
   description: string
 }
 

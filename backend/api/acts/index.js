@@ -47,8 +47,8 @@ async function handler(req, res) {
         return sendError(res, 'Validation failed', 400, validation.errors);
       }
 
-      const { title, description } = validation.value;
-      const newAct = await createAct(title, description || '');
+      const { name, description } = validation.value;
+      const newAct = await createAct(name, description || '');
 
       // Automatically add the creator as a member with 'creator' role
       await addUserToAct(user.userId, newAct.id, 'creator');

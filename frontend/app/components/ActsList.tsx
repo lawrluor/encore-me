@@ -15,7 +15,7 @@ export const ActsList = () => {
       <h2 className="text-bold text-xl">ACTS</h2>
       {acts?.map((act) => (
         <div key={act.id}>
-          <Link href={{ pathname: 'Sets', query: { actId: act.id } }}><h2 className="text-bold cursor-pointer hover:opacity-80">{act.title}</h2></Link>
+          <Link href={{ pathname: 'Sets', query: { actId: act.id } }}><h2 className="text-bold cursor-pointer hover:opacity-80">{act.name}</h2></Link>
         </div>
       ))}
     </div>

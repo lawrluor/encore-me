@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 
 type Act = {
   id: string,
-  title: string,
-  description: string
+  name: string,
+  description: string,
+  qr_code: string
 }
 
 type GetActsResult = {

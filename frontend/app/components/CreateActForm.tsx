@@ -21,7 +21,7 @@ export const CreateActForm = ({ id, hidden }: Props) => {
   */
   const executeCreateAct = async () => {
     try {
-      const data = { 'title': name, 'description': description };
+      const data = { 'name': name, 'description': description };
       const result = await createAct(data);
       return { 'success': result.message };
     } catch (err) {
@@ -37,13 +37,13 @@ export const CreateActForm = ({ id, hidden }: Props) => {
 
   return <form id={id} action={formAction} hidden={hidden}>
     <div className="py-5">
-      <label htmlFor="title" className="opacity-80">Name</label>
-      <input id="title" name="title" type="text" className="block p-5 border-1 border-white border-solid" value={name} onChange={e => setName(e.target.value)} required />
+      <label htmlFor="name" className="opacity-80">Name</label>
+      <input id="name" name="name" type="text" className="block p-5 border-1 border-white border-solid" value={name} onChange={e => setName(e.target.value)} required />
     </div>
 
     <div className="py-5">
       <label htmlFor="description" className="opacity-80">Description</label>
-      <input id="description" name="description" type="text" className="block p-5 border-1 border-white border-solid" value={description} onChange={e => setDescription(e.target.value)} required />
+      <input id="description" name="description" type="text" className="block p-5 border-1 border-white border-solid" value={description} onChange={e => setDescription(e.target.value)} />
     </div>
 
     <div className="py-5">

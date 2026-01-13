@@ -1,11 +1,11 @@
 const { sql } = require('./client');
 const QRCode = require('qrcode');
 
-const createAct = async (title, description = '') => {
+const createAct = async (name, description = '') => {
   // First insert the act to get the ID
   const result = await sql`
-    INSERT INTO acts (title, description)
-    VALUES (${title}, ${description})
+    INSERT INTO acts (name, description)
+    VALUES (${name}, ${description})
     RETURNING *
   `;
 
@@ -64,11 +64,11 @@ const getActMembers = async (actId) => {
 };
 
 const updateAct = async (id, updates) => {
-  const { title, description } = updates;
+  const { name, description } = updates;
   const result = await sql`
     UPDATE acts 
     SET 
-      title = COALESCE(${title}, title),
+      name = COALESCE(${name}, name),
       description = COALESCE(${description}, description),
       updated_at = CURRENT_TIMESTAMP
     WHERE id = ${id}

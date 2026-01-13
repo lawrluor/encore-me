@@ -28,8 +28,8 @@ const songSchema = Joi.object({
 });
 
 const actSchema = Joi.object({
-  title: Joi.string().min(1).max(200).required(),
-  description: Joi.string().max(1000).optional()
+  name: Joi.string().min(1).max(200).required(),
+  description: Joi.string().max(1000).allow('').optional()
 });
 
 const userActSchema = Joi.object({

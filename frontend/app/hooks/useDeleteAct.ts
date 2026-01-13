@@ -1,26 +1,37 @@
 import { useState } from 'react';
 import { deleteAct } from '../services/actService';
 
-export const useDeleteAct = () => {
-  const [result, setResult] = useState<object | Error | null>(null);
-  const [loading, setLoading] = useState(false);
+type useDeleteActState = { success?: string, error?: never } |
+{ error?: string, success?: never } |
+  null;
+
+
+type useDeleteActReturn = {
+  state: useDeleteActState,
+  executeDelete: (actId: string) => Promise<void>,
+  pending: boolean
+}
+
+export const useDeleteAct = (): useDeleteActReturn => {
+  const [state, setState] = useState<useDeleteActState>(null);
+  const [pending, setPending] = useState(false);
 
   const executeDelete = async (actId: string) => {
-    if (loading) return;
+    if (pending) return;
 
     try {
-      setLoading(true);
-      setResult(null);
+      setPending(true);
+      setState(null);
       const result = await deleteAct(actId);
-      setResult({ 'success': result.message });
+      setState({ 'success': result.message });
     } catch (err) {
       console.error(err);
       // const message = err instanceof Error ? err.message : String(err);
-      setResult({ 'error': 'Something went wrong. Please try again later.' });
+      setState({ 'error': 'Something went wrong. Please try again later.' });
     } finally {
-      setLoading(false);
+      setPending(false);
     }
   }
 
-  return { result, executeDelete, loading }
+  return { state, executeDelete, pending }
 }

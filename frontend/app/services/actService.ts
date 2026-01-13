@@ -1,5 +1,5 @@
 type ActFormPayload = {
-  title: string,
+  name: string,
   description: string
 }
 
