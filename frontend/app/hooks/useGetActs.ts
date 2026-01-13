@@ -36,7 +36,6 @@ export const useGetActs = (): GetActsResult => {
           throw new Error(`Error fetching acts: ${response.status}`);
         }
         const result = await response.json();
-        console.log("attempting to hit endpoint:", endpoint);
 
         if (!result?.data || !(Array.isArray(result.data)))
           throw new Error("Malformed data. Expected an array of Act objects.");

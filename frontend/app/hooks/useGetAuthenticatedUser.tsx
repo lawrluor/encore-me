@@ -31,9 +31,7 @@ export const useGetAuthenticatedUser = (): GetAuthenticatedUserResult => {
       }
 
       try {
-        const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/me`; // User must sign in
-
-        console.log(endpoint, token);
+        const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/me`;
 
         const response = await fetch(endpoint, {
           headers: {

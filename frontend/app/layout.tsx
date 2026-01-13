@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
-import "./globals.css";
+import { Geist, Geist_Mono } from "next/font/google";
+
 import { AuthProvider } from "./context/AuthProvider";
+
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,11 +21,7 @@ export const metadata: Metadata = {
   description: "For audiences to share a stage with live musicians",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children?: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children?: React.ReactNode }>) {
   return (
     <html lang="en">
       <body

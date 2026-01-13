@@ -7,14 +7,6 @@ import Form from 'next/form';
 
 type PageType = 'login' | 'signup';
 
-type User = {
-  id: string,
-  email: string,
-  name: string,
-  createdAt: string,
-  updatedAt: string
-};
-
 const Signup = () => {
   const { setUser } = useAuth();
   const [pageType, setPageType] = useState<PageType>("signup");
@@ -73,7 +65,6 @@ const Signup = () => {
         "password": info.password
       }
 
-
       const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`;
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -81,15 +72,11 @@ const Signup = () => {
         body: JSON.stringify(data)
       });
 
-      console.log(response);
-
       const result = await response.json();
-      console.log(result);
 
       if (!response.ok) throw new Error(result.message || String(response.status));
 
       if (!result || !result.data) throw new Error(`Unexpected result: ${JSON.stringify(result)}`);
-      console.log(result);
       return result.data;
     } finally {
       setLoading(false);
@@ -142,13 +129,12 @@ const Signup = () => {
     try {
       const userData = await loginAccount();
       if (userData) {
-        console.log('Login successful:', userData);
         localStorage.setItem('token', userData.token);
         setUser(userData.user);
       }
     } catch (err) {
-      setErrorMessage("Something went wrong. Please try again later.");
       console.error("Login error", err);
+      setErrorMessage("Something went wrong. Please try again later.");
     }
   }
 
@@ -183,14 +169,14 @@ const Signup = () => {
             </div>
 
             <div className="py-5">
-              <button id="submit" type="submit" className={`min-h-44cursor-pointer p-10 rounded-sm ${loading ? 'bg-gray-500' : 'bg-blue-500'}`} disabled={loading}>CREATE ACCOUNT</button>
+              <button id="submit" type="submit" className={`min-h-44 p-10 rounded-sm ${loading ? 'bg-gray-500 cursor-loading' : 'bg-blue-500 cursor-pointer'}`} disabled={loading}>CREATE ACCOUNT</button>
             </div>
 
             {errorMessage && <div className="py-5"><p className="text-red-50">{errorMessage}</p></div>}
           </Form>
 
           <button type="button" onClick={() => switchPageType("login")} className="h-44 cursor-pointer">
-            <p className="opacity-80 text-sm">I already have an account</p>
+            <p className="opacity-80 text-sm underline">I already have an account</p>
           </button>
         </section>
       </main>
@@ -220,8 +206,8 @@ const Signup = () => {
           </Form>
 
           <div className="py-5">
-            <button type="button" className="h-44 cursor-pointer" onClick={() => switchPageType("signup")}>
-              <p className="opacity-80 text-sm">I don&apos;t have an account</p>
+            <button type="button" className={`h-44 ${loading ? 'cursor-loading' : 'cursor-pointer'}`} disabled={loading} onClick={() => switchPageType("signup")}>
+              <p className="opacity-80 text-sm underline">I don&apos;t have an account</p>
             </button>
           </div>
         </section>
