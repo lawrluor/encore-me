@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       router.replace('/Signup');
     } else if (user && isPublicRoute) {
       // User is authenticated and on public route (like signup/login)
-      router.replace('/Home');
+      router.replace('/');
     }
   }, [user, loading, pathname, router]);
 

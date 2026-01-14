@@ -1,14 +1,16 @@
+'use client';
+
 import { useState, useActionState } from 'react';
 
 import { createAct } from '../services/actService';
 // import { useCreateAct } from '../hooks/useCreateAct';
 
 type Props = {
-  id: string,
-  hidden: boolean
+  visible: boolean
 }
 
-export const CreateActForm = ({ id, hidden }: Props) => {
+export const CreateActForm = ({ visible }: Props) => {
+  const [isFormVisible, setIsFormVisible] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
@@ -35,7 +37,12 @@ export const CreateActForm = ({ id, hidden }: Props) => {
   // const { errorMessage, executeCreateAct, loading } = useCreateAct(); 
   const [state, formAction, pending] = useActionState(executeCreateAct, null);  // state starts null
 
-  return <form id={id} action={formAction} hidden={hidden}>
+  return <>
+    <button onClick={() => setIsFormVisible(!isFormVisible)} className="h-44 p-5 font-bold cursor-pointer" aria-controls="createActForm" aria-expanded={!isFormVisible}>
+      {isFormVisible ? "- hide form" : "+ add an act"}
+    </button>
+
+  <form id="createActForm" action={formAction} hidden={!isFormVisible}>
     <div className="py-5">
       <label htmlFor="name" className="opacity-80">Name</label>
       <input id="name" name="name" type="text" className="block p-5 border-1 border-white border-solid" value={name} onChange={e => setName(e.target.value)} required />
@@ -55,4 +62,5 @@ export const CreateActForm = ({ id, hidden }: Props) => {
       {state?.success && <p className="text-green-500">{state.success}</p>}
     </div>
   </form>
+  </>
 }

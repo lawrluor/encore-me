@@ -6,7 +6,7 @@ import user from '@testing-library/user-event';
 
 jest.mock('next/navigation', () => ({
   usePathname: () => {
-    return '/home'
+    return '/'
   },
   useRouter: () => ({
     push: jest.fn(),

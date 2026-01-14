@@ -172,6 +172,87 @@ curl -X POST http://localhost:3000/api/songs \
 4. Copy the token from the response
 5. Paste it in the "Authorization Token" field for protected endpoints
 
+## Database Schema
+
+### Tables Overview
+
+The database consists of 5 main tables with the following relationships:
+- **users** ↔ **user_acts** ↔ **acts** (many-to-many)
+- **users** → **songs** (one-to-many)
+- **acts** → **sets** (one-to-many)
+- **users** → **sets** (one promoted set per user)
+
+### User
+```typescript
+{
+  id: string;              // UUID, primary key
+  email: string;           // Unique, required
+  password: string;        // Hashed, required
+  name?: string;           // Optional
+  is_admin: boolean;       // Default: false
+  promoted_set_id?: string; // UUID, references sets(id)
+  created_at: string;      // Timestamp
+  updated_at: string;      // Timestamp
+}
+```
+
+### Song
+```typescript
+{
+  id: string;              // UUID, primary key
+  user_id: string;         // UUID, references users(id), required
+  title: string;           // Required, max 200 chars
+  description?: string;    // Optional
+  genre?: string;          // Optional, max 50 chars
+  tempo?: string;          // Optional, max 50 chars
+  created_at: string;      // Timestamp
+  updated_at: string;      // Timestamp
+}
+```
+
+### Act
+```typescript
+{
+  id: string;              // UUID, primary key
+  name: string;            // Required, max 200 chars
+  description?: string;    // Optional
+  qr_code?: string;        // Base64 data URL, auto-generated
+  created_at: string;      // Timestamp
+  updated_at: string;      // Timestamp
+}
+```
+
+### UserAct (Join Table)
+```typescript
+{
+  user_id: string;         // UUID, references users(id), required
+  act_id: string;          // UUID, references acts(id), required
+  role?: string;           // Optional, max 100 chars (e.g., "creator", "member")
+  joined_at: string;       // Timestamp
+  // Primary key: (user_id, act_id)
+}
+```
+
+### Set
+```typescript
+{
+  id: string;              // UUID, primary key
+  act_id: string;          // UUID, references acts(id), required
+  title: string;           // Required, max 200 chars
+  description?: string;    // Optional
+  created_at: string;      // Timestamp
+  updated_at: string;      // Timestamp
+}
+```
+
+### Relationships
+- A **User** can create many **Songs**
+- A **User** can belong to many **Acts** (via **UserAct**)
+- An **Act** can have many **Users** as members (via **UserAct**)
+- An **Act** can have many **Sets**
+- A **User** can promote one **Set** (optional)
+- Each **Act** automatically gets a QR code generated on creation
+
 ## API Endpoints
 
 ### Public Endpoints

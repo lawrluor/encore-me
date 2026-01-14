@@ -1,3 +1,5 @@
+'use client';
+
 import { useGetActs } from '../hooks/useGetActs';
 import Link from 'next/link';
 

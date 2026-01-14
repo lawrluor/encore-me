@@ -8,6 +8,7 @@ import { usePostSet } from '../hooks/usePostSet';
 import Form from 'next/form';
 import { TopNav } from '../components/TopNav';
 import { ActsList } from '../components/ActsList';
+import { SetsList } from '../components/SetsList';
 
 const Sets = () => {
   const searchParams = useSearchParams();
@@ -47,9 +48,8 @@ const Sets = () => {
         <ActsList />
       </aside>
 
-      <section className="p-5">
+      <section className="p-5 w-300 mx-auto">
         <h1 className="text-3xl">Sets</h1>
-        <h2 className="text-bold">Add New Set</h2>
         <Form action={submitForm}>
           <div className="p-5">
             <label htmlFor="title" className="opacity-80">Title</label><span aria-hidden="true">*</span>
@@ -70,6 +70,8 @@ const Sets = () => {
             <p className="text-green-500" hidden={!responseOk}>Created Set Successfully</p>
           </div>
         </Form>
+
+        {actId && <SetsList actId={actId} showCta={false} />}
       </section>
     </main>
   )

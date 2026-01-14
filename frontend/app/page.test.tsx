@@ -13,7 +13,7 @@ global.fetch = jest.fn(() => {
 
 jest.mock('next/navigation', () => ({
   usePathname: () => {
-    return '/home'
+    return '/'
   },
   useRouter: () => {
     return {

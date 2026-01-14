@@ -144,6 +144,140 @@
       </div>
     </div>
 
+    <!-- Database Schema -->
+    <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">
+        <i class="fas fa-database text-indigo-600"></i> Database Schema
+        <a href="https://console.neon.tech/app/projects/soft-glade-78242452/branches/br-mute-feather-af4xguic/tables"
+          target="_blank" class="text-indigo-600 hover:text-indigo-800">(Neon Database)</a>
+      </h2>
+      <p class="text-gray-600 mb-6">Reference guide for all database object shapes and relationships</p>
+
+      <!-- Relationships Overview -->
+      <div class="bg-indigo-50 rounded-lg p-6 mb-6">
+        <h3 class="text-xl font-bold text-gray-800 mb-3">Table Relationships</h3>
+        <ul class="space-y-2 text-gray-700">
+          <li><i class="fas fa-arrow-right text-indigo-600"></i> <strong>users</strong> ↔ <strong>user_acts</strong> ↔
+            <strong>acts</strong> (many-to-many)
+          </li>
+          <li><i class="fas fa-arrow-right text-indigo-600"></i> <strong>users</strong> → <strong>songs</strong>
+            (one-to-many)</li>
+          <li><i class="fas fa-arrow-right text-indigo-600"></i> <strong>acts</strong> → <strong>sets</strong>
+            (one-to-many)</li>
+          <li><i class="fas fa-arrow-right text-indigo-600"></i> <strong>users</strong> → <strong>sets</strong> (one
+            promoted set per user)</li>
+        </ul>
+      </div>
+
+      <!-- Object Shapes Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- User -->
+        <div class="border border-gray-200 rounded-lg p-4">
+          <h4 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <i class="fas fa-user text-blue-600"></i> User
+          </h4>
+          <div class="code-block text-xs">
+            <pre>{
+  id: string,              // UUID, primary key
+  email: string,           // Unique, required
+  password: string,        // Hashed, required
+  name?: string,           // Optional
+  is_admin: boolean,       // Default: false
+  promoted_set_id?: string, // UUID, references sets(id)
+  created_at: string,      // Timestamp
+  updated_at: string       // Timestamp
+}</pre>
+          </div>
+        </div>
+
+        <!-- Song -->
+        <div class="border border-gray-200 rounded-lg p-4">
+          <h4 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <i class="fas fa-music text-purple-600"></i> Song
+          </h4>
+          <div class="code-block text-xs">
+            <pre>{
+  id: string,              // UUID, primary key
+  user_id: string,         // UUID, references users(id)
+  title: string,           // Required, max 200 chars
+  description?: string,    // Optional
+  genre?: string,          // Optional, max 50 chars
+  tempo?: string,          // Optional, max 50 chars
+  created_at: string,      // Timestamp
+  updated_at: string       // Timestamp
+}</pre>
+          </div>
+        </div>
+
+        <!-- Act -->
+        <div class="border border-gray-200 rounded-lg p-4">
+          <h4 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <i class="fas fa-users text-green-600"></i> Act
+          </h4>
+          <div class="code-block text-xs">
+            <pre>{
+  id: string,              // UUID, primary key
+  name: string,            // Required, max 200 chars
+  description?: string,    // Optional
+  qr_code?: string,        // Base64 data URL, auto-generated
+  created_at: string,      // Timestamp
+  updated_at: string       // Timestamp
+}</pre>
+          </div>
+        </div>
+
+        <!-- UserAct -->
+        <div class="border border-gray-200 rounded-lg p-4">
+          <h4 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <i class="fas fa-link text-orange-600"></i> UserAct (Join Table)
+          </h4>
+          <div class="code-block text-xs">
+            <pre>{
+  user_id: string,         // UUID, references users(id)
+  act_id: string,          // UUID, references acts(id)
+  role?: string,           // Optional, max 100 chars
+  joined_at: string        // Timestamp
+  // Primary key: (user_id, act_id)
+}</pre>
+          </div>
+        </div>
+
+        <!-- Set -->
+        <div class="border border-gray-200 rounded-lg p-4">
+          <h4 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <i class="fas fa-list text-red-600"></i> Set
+          </h4>
+          <div class="code-block text-xs">
+            <pre>{
+  id: string,              // UUID, primary key
+  act_id: string,          // UUID, references acts(id)
+  title: string,           // Required, max 200 chars
+  description?: string,    // Optional
+  created_at: string,      // Timestamp
+  updated_at: string       // Timestamp
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Notes -->
+      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-6">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <i class="fas fa-lightbulb text-yellow-600"></i>
+          </div>
+          <div class="ml-3">
+            <h4 class="text-sm font-bold text-yellow-800">Key Notes</h4>
+            <ul class="mt-2 text-sm text-yellow-700 space-y-1">
+              <li>• All IDs are UUIDs (auto-generated)</li>
+              <li>• Acts automatically get QR codes generated on creation</li>
+              <li>• Users can belong to multiple acts via the UserAct join table</li>
+              <li>• Each user can promote one set to be featured</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Endpoints -->
     <div class="space-y-6">

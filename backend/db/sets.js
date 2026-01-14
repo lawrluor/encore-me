@@ -28,7 +28,7 @@ const getSetsByActId = async (actId) => {
 
 const getAllSets = async () => {
   const result = await sql`
-    SELECT s.*, a.title as act_title
+    SELECT s.*, a.name as act_name
     FROM sets s
     INNER JOIN acts a ON s.act_id = a.id
     ORDER BY s.created_at DESC
