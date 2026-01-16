@@ -31,6 +31,7 @@ const Sets = () => {
       description: description
     }
 
+    // reset form state if successful
     const result = await postData(data);
     if (result) {
       setTitle("");

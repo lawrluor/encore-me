@@ -6,7 +6,8 @@ type User = {
   id: string
   name: string,
   email: string,
-  createdAt: string
+  createdAt: string,
+  promoted_set_id: null | string
 }
 
 type GetAuthenticatedUserResult = {

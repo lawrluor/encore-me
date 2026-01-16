@@ -18,11 +18,49 @@ const findUserByEmail = async (email) => {
 
 const findUserById = async (id) => {
   const result = await sql`
-    SELECT id, email, name, is_admin, promoted_set_id, created_at, updated_at 
-    FROM users 
-    WHERE id = ${id}
+    SELECT 
+      u.id, 
+      u.email, 
+      u.name, 
+      u.is_admin, 
+      u.created_at, 
+      u.updated_at,
+      s.id as promoted_set_id,
+      s.title as promoted_set_title,
+      s.description as promoted_set_description,
+      s.act_id as promoted_set_act_id,
+      s.created_at as promoted_set_created_at,
+      s.updated_at as promoted_set_updated_at
+    FROM users u
+    LEFT JOIN sets s ON u.promoted_set_id = s.id
+    WHERE u.id = ${id}
   `;
-  return result.rows[0];
+
+  const user = result.rows[0];
+  if (!user) return null;
+
+  // Restructure to nest promoted set data
+  const {
+    promoted_set_id,
+    promoted_set_title,
+    promoted_set_description,
+    promoted_set_act_id,
+    promoted_set_created_at,
+    promoted_set_updated_at,
+    ...userData
+  } = user;
+
+  return {
+    ...userData,
+    promoted_set: promoted_set_id ? {
+      id: promoted_set_id,
+      title: promoted_set_title,
+      description: promoted_set_description,
+      act_id: promoted_set_act_id,
+      created_at: promoted_set_created_at,
+      updated_at: promoted_set_updated_at
+    } : null
+  };
 };
 
 const getAllUsers = async () => {

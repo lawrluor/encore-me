@@ -1,12 +1,12 @@
 'use client'
 
 import { useGetAuthenticatedUser } from '../hooks/useGetAuthenticatedUser';
-import { useContext, ReactNode, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import AuthContext, { AuthContextType } from './AuthContext';
 
 type AuthProviderProps = {
-  children: ReactNode;
+  children: React.ReactNode;
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       // User is authenticated and on public route (like signup/login)
       router.replace('/');
     }
+    console.log(user);
   }, [user, loading, pathname, router]);
 
   return (
