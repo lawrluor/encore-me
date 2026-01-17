@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 
+import { QueryProvider } from "./providers/QueryProvider";
 import { AuthProvider } from "./context/AuthProvider";
 
 import "./globals.css";
@@ -27,9 +28,11 @@ export default function RootLayout({ children }: Readonly<{ children?: React.Rea
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <QueryProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </QueryProvider>
         <Script
           src="https://unpkg.com/react-scan/dist/auto.global.js"
           strategy="afterInteractive"

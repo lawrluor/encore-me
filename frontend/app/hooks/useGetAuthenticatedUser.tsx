@@ -2,12 +2,22 @@
 
 import { useState, useEffect } from 'react';
 
+type PromotedSet = {
+  id: string,
+  title: string,
+  description: string,
+  act_id: string,
+  created_at: string,
+  updated_at: string
+}
+
 type User = {
   id: string
   name: string,
   email: string,
-  createdAt: string,
-  promoted_set_id: null | string
+  created_at: string,
+  updated_at: string,
+  promoted_set: PromotedSet | null
 }
 
 type GetAuthenticatedUserResult = {

@@ -26,26 +26,32 @@ async function handler(req, res) {
         return sendError(res, 'Set not found', 404);
       }
 
+      console.log('DEBUG - User from JWT:', user);
+      console.log('DEBUG - Set:', set);
+
       // Verify the user has access to this set (through their acts)
       const userHasAccess = await sql`
         SELECT 1 
         FROM user_acts ua
         INNER JOIN sets s ON s.act_id = ua.act_id
-        WHERE ua.user_id = ${user.id} AND s.id = ${setId}
+        WHERE ua.user_id = ${user.userId} AND s.id = ${setId}
       `;
+
+      console.log('DEBUG - Access check result:', userHasAccess.rows);
+      console.log('DEBUG - Checking user.userId:', user.userId, 'against setId:', setId);
 
       if (userHasAccess.rows.length === 0) {
         return sendError(res, 'You do not have access to this set', 403);
       }
 
       // Update the promoted set
-      const updatedUser = await updatePromotedSet(user.id, setId);
+      const updatedUser = await updatePromotedSet(user.userId, setId);
       return sendSuccess(res, updatedUser, 'Promoted set updated successfully');
     }
 
     if (req.method === 'DELETE') {
       // Clear the promoted set
-      const updatedUser = await updatePromotedSet(user.id, null);
+      const updatedUser = await updatePromotedSet(user.userId, null);
       return sendSuccess(res, updatedUser, 'Promoted set cleared successfully');
     }
 
