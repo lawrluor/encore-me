@@ -1,12 +1,9 @@
 export const deleteSet = async (setId: string): Promise<boolean | Error> => {
-  const token = localStorage.getItem('token');
-  if (!token) throw new Error("No authentication token found");
-
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sets/${setId}`;
   const response = await fetch(endpoint, {
     method: 'DELETE',
+    credentials: 'include',
     headers: {
-      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     }
   });
@@ -23,16 +20,13 @@ export const deleteSet = async (setId: string): Promise<boolean | Error> => {
 }
 
 export const promoteSet = async (setId: string) => {
-  const token = localStorage.getItem('token');
-  if (!token) throw new Error("Token not found");
-
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/promoted-set`;
   const data = { setId: setId };
 
   const response = await fetch(endpoint, {
     method: 'PATCH',
+    credentials: 'include',
     headers: {
-      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)

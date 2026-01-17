@@ -34,8 +34,13 @@ async function handler(req, res) {
         email: newUser.email
       });
 
+      // Set HTTP-only cookie
+      const isProduction = process.env.NODE_ENV === 'production';
+      res.setHeader('Set-Cookie', [
+        `authToken=${token}; HttpOnly; ${isProduction ? 'Secure;' : ''} SameSite=Strict; Path=/; Max-Age=604800`
+      ]);
+
       return sendSuccess(res, {
-        token,
         user: newUser
       }, 'User created successfully', 201);
     }

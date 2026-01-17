@@ -18,19 +18,12 @@ export const useGetAuthenticatedUser = (): GetAuthenticatedUserResult => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const token = localStorage.getItem('token');
-
-      if (!token) {
-        setLoading(false);
-        return;
-      }
-
       try {
         const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/me`;
 
         const response = await fetch(endpoint, {
+          credentials: 'include',
           headers: {
-            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
         })
@@ -45,7 +38,6 @@ export const useGetAuthenticatedUser = (): GetAuthenticatedUserResult => {
       } catch (err) {
         console.error(err);
         setErrorMessage(err instanceof Error ? err.message : String(err));
-        localStorage.removeItem('token');
       } finally {
         setLoading(false);
       }

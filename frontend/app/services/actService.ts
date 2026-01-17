@@ -4,15 +4,12 @@ type ActFormPayload = {
 }
 
 export const createAct = async (payload: ActFormPayload) => {
-  const token = localStorage.getItem('token');
-  if (!token) throw new Error('Token not found');
-
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acts`;
   const response = await fetch(endpoint, {
     method: 'POST',
+    credentials: 'include',
     headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(payload)
   })
@@ -34,12 +31,11 @@ export const createAct = async (payload: ActFormPayload) => {
 
 // : Promise<object | Error>
 export const deleteAct = async (actId: string) => {
-  const token = localStorage.getItem('token');
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acts/${actId}`;
   const response = await fetch(endpoint, {
     method: 'DELETE',
+    credentials: 'include',
     headers: {
-      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     }
   });

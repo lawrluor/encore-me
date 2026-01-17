@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
 
-type Set = {
-  id: string,
-  title: string,
-  description?: string
-}
+import { type Set } from '../types/set';
 
 type GetSetsResults = {
   data: Set[],
@@ -26,13 +22,12 @@ export const useGetSets = ({ actId }: Props): GetSetsResults => {
     const fetchSets = async () => {
       try {
         setLoading(true);
-        const token = localStorage.getItem('token');
-        if (!token) throw new Error('No authorization token found.');
 
         const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sets?actId=${actId}`;
         const response = await fetch(endpoint, {
+          method: 'GET',
+          credentials: 'include',
           headers: {
-            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
         });

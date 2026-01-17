@@ -25,8 +25,8 @@ export const useGetActs = (): GetActsResult => {
         const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acts`;
         const response = await fetch(endpoint, {
           method: 'GET',
+          credentials: 'include',
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json'
           }
         });

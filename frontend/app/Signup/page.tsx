@@ -69,6 +69,7 @@ const Signup = () => {
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(data)
       });
 
@@ -87,7 +88,6 @@ const Signup = () => {
     try {
       const userData = await createAccount();
       if (userData) {
-        localStorage.setItem('token', userData.token);
         setUser(userData.user);
       }
     } catch (err) {
@@ -110,6 +110,7 @@ const Signup = () => {
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(data)
       })
 
@@ -129,7 +130,6 @@ const Signup = () => {
     try {
       const userData = await loginAccount();
       if (userData) {
-        localStorage.setItem('token', userData.token);
         setUser(userData.user);
       }
     } catch (err) {

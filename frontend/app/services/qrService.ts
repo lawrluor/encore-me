@@ -1,13 +1,8 @@
 export const getQR = async (text: string) => {
-  const token = localStorage.getItem('token');
-  if (!token) throw new Error("Token not found");
-
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/qr?text=${encodeURIComponent(text)}`;
   const response = await fetch(endpoint, {
     method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
+    credentials: 'include'
   });
 
   if (!response.ok) {

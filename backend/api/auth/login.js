@@ -33,10 +33,15 @@ async function handler(req, res) {
       email: user.email
     });
 
+    // Set HTTP-only cookie
+    const isProduction = process.env.NODE_ENV === 'production';
+    res.setHeader('Set-Cookie', [
+      `authToken=${token}; HttpOnly; ${isProduction ? 'Secure;' : ''} SameSite=Strict; Path=/; Max-Age=604800`
+    ]);
+
     const { password: _, ...userWithoutPassword } = user;
 
     return sendSuccess(res, {
-      token,
       user: userWithoutPassword
     }, 'Login successful');
   } catch (error) {

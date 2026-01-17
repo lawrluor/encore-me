@@ -9,11 +9,11 @@ export const LastPerformance = () => {
 
   if (loading) return <p>Loading...</p>;
 
-  if (errorMessage) return <p className="text-red-500">Something went wrong. Please try again later.</p>
+  if (errorMessage) return <p className="text-red-500">Something went wrong. Please try again later.</p>;
 
   return (
     <div>
-      <h2>Last Performance</h2>
+      <h2 className="text-2xl">Last Performance</h2>
       {user?.promoted_set ?
         <SetCard
           actId={user.promoted_set.act_id}
@@ -24,7 +24,7 @@ export const LastPerformance = () => {
       }
       {/*<Image src={act.qr_code} alt="QR Code" width={200} height={200} />*/}
     </div>
-  )
+  );
 }
 
 

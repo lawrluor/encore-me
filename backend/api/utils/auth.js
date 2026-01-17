@@ -15,13 +15,27 @@ const verifyToken = (token) => {
 };
 
 const authenticateRequest = (req, res) => {
-  const authHeader = req.headers.authorization;
+  // Try to get token from cookie first
+  const cookies = req.headers.cookie?.split(';').reduce((acc, cookie) => {
+    const [key, value] = cookie.trim().split('=');
+    acc[key] = value;
+    return acc;
+  }, {});
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  let token = cookies?.authToken;
+
+  // Fall back to Authorization header if no cookie
+  if (!token) {
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.substring(7);
+    }
+  }
+
+  if (!token) {
     return null;
   }
 
-  const token = authHeader.substring(7);
   return verifyToken(token);
 };
 
