@@ -1,6 +1,5 @@
-import Link from 'next/link';
-
 import { useMutation } from '@tanstack/react-query';
+import Link from 'next/link';
 
 import { useDeleteSet } from '../hooks/useDeleteSet';
 import { promoteSet } from '../services/setService';

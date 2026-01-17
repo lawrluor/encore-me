@@ -1,9 +1,8 @@
 import Link from 'next/link';
 
-import { SetCard } from './SetCard';
-
 import { useGetSets } from '../hooks/useGetSets';
-import { useDeleteSet } from '../hooks/useDeleteSet';
+
+import { SetCard } from './SetCard';
 
 type Props = {
   actId: string,

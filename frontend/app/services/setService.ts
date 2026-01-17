@@ -18,7 +18,6 @@ export const deleteSet = async (setId: string): Promise<boolean | Error> => {
   }
 
   const result = await response.json();
-  console.log(result);
   if (!result?.success) throw new Error(`Response unsuccessful: ${result.message}`);
   return result.success;  // true
 }
@@ -46,7 +45,5 @@ export const promoteSet = async (setId: string) => {
 
   const result = await response.json();
   if (!result || !result.success) throw new Error(`Response unsuccessful: ${result.message}`);
-
-  console.log(result);
   return result.success;
 }

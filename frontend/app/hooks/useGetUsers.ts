@@ -1,10 +1,6 @@
-type User = {
-  id: string,
-  name: string,
-  email: string,
-  createdAt: string,
-  updatedAt: string
-}
+import { useState, useEffect } from 'react';
+
+import type { User } from '../types/user';
 
 type GetUsersResult = {
   data: User[],
@@ -12,9 +8,7 @@ type GetUsersResult = {
   errorMessage: string
 }
 
-import { useState, useEffect } from 'react';
-
-export const useGetUsers = ():GetUsersResult => {
+export const useGetUsers = (): GetUsersResult => {
   const [data, setData] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
@@ -26,7 +20,6 @@ export const useGetUsers = ():GetUsersResult => {
         const response = await fetch(endpoint);
         if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
         const result = await response.json();
-        console.log(result.data);
         setData(result?.data);
       } catch (err) {
         if (err instanceof Error) {

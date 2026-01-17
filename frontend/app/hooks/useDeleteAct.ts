@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { deleteAct } from '../services/actService';
 
 type useDeleteActState = { success?: string, error?: never } |

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+
 import { useGetQR } from '../hooks/useGetQR';
 
 export const QRGenerator = () => {

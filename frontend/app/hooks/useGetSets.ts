@@ -43,7 +43,7 @@ export const useGetSets = ({ actId }: Props): GetSetsResults => {
         setData(result.data);
         return result.data;
       } catch (err) {
-        console.log(err);
+        console.error(err);
         setErrorMessage('Something went wrong. Please try again later');
       } finally {
         setLoading(false);

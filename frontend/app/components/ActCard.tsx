@@ -1,7 +1,8 @@
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { useDeleteAct } from '../hooks/useDeleteAct';
+
 import { SetsList } from './SetsList';
 
 type Props = {

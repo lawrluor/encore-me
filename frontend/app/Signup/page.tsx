@@ -1,9 +1,9 @@
 'use client';
+
+import Form from 'next/form';
 import { useState } from 'react';
 
 import { useAuth } from "../context/AuthProvider";
-
-import Form from 'next/form';
 
 type PageType = 'login' | 'signup';
 

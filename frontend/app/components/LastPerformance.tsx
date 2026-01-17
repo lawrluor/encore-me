@@ -1,7 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-
 import { useAuth } from '../context/AuthProvider';
 
 import { SetCard } from './SetCard';
@@ -10,7 +8,9 @@ export const LastPerformance = () => {
   const { user, loading, errorMessage } = useAuth();
 
   if (loading) return <p>Loading...</p>;
-  
+
+  if (errorMessage) return <p className="text-red-500">Something went wrong. Please try again later.</p>
+
   return (
     <div>
       <h2>Last Performance</h2>

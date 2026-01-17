@@ -1,20 +1,6 @@
 import { createContext } from 'react';
 
-type PromotedSet = {
-    id: string,
-    act_id: string,
-    title: string,
-    description: string,
-}
-
-type User = {
-  id: string,
-  name: string,
-  email: string,
-  created_at: string,
-  updated_at: string,
-  promoted_set: PromotedSet | null
-};
+import type { User } from '../types/user';
 
 type AuthContextType = {
   user: User | null;

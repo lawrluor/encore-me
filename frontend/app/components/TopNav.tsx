@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link';
+
 import { useAuth } from '../context/AuthProvider';
 
 export const TopNav = () => {

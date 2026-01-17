@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { getQR } from '../services/qrService';
 
 export const useGetQR = () => {

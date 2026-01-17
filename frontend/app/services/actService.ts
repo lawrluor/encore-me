@@ -51,7 +51,6 @@ export const deleteAct = async (actId: string) => {
   }
 
   const result = await response.json();
-  console.log(result);
   if (!result?.success) throw new Error('Unexpected format for server response');
   return result;
 }

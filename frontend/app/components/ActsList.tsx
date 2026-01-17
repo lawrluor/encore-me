@@ -1,7 +1,8 @@
 'use client';
 
-import { useGetActs } from '../hooks/useGetActs';
 import Link from 'next/link';
+
+import { useGetActs } from '../hooks/useGetActs';
 
 export const ActsList = () => {
   const { acts, loading, errorMessage } = useGetActs();

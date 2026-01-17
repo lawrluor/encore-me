@@ -1,4 +1,5 @@
 import { useGetActs } from '../hooks/useGetActs';
+
 import { ActCard } from './ActCard';
 
 export const ActCardsList = () => {
