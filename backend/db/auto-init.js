@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { sql } = require('@vercel/postgres');
+const QRCode = require('qrcode');
 
 const initializeDatabase = async () => {
   try {
@@ -13,6 +14,7 @@ const initializeDatabase = async () => {
         name VARCHAR(100),
         is_admin BOOLEAN DEFAULT FALSE,
         promoted_set_id UUID REFERENCES sets(id) ON DELETE SET NULL,
+        qr_code TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
@@ -36,11 +38,35 @@ const initializeDatabase = async () => {
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         name VARCHAR(200) NOT NULL,
         description TEXT,
-        qr_code TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `;
+
+    await sql`
+      ALTER TABLE users
+      ADD COLUMN IF NOT EXISTS qr_code TEXT
+    `;
+
+    await sql`
+      ALTER TABLE acts
+      DROP COLUMN IF EXISTS qr_code
+    `;
+
+    const usersMissingQr = await sql`
+      SELECT id
+      FROM users
+      WHERE qr_code IS NULL
+    `;
+
+    for (const user of usersMissingQr.rows) {
+      const qrCodeDataUrl = await QRCode.toDataURL(user.id);
+      await sql`
+        UPDATE users
+        SET qr_code = ${qrCodeDataUrl}
+        WHERE id = ${user.id}
+      `;
+    }
 
     await sql`
       CREATE TABLE IF NOT EXISTS user_acts (

@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 import { useAuth } from '../context/AuthProvider';
 
 import { SetCard } from './SetCard';
@@ -12,8 +14,8 @@ export const LastPerformance = () => {
   if (errorMessage) return <p className="text-red-500">Something went wrong. Please try again later.</p>;
 
   return (
-    <div>
-      <h2 className="text-2xl">Last Performance</h2>
+    <div className="p-20 bg-gray-900 rounded-md">
+      <h2 className="text-2xl">Recent Sets</h2>
       {user?.promoted_set ?
         <SetCard
           actId={user.promoted_set.act_id}
@@ -22,7 +24,10 @@ export const LastPerformance = () => {
         :
         <p>You haven&apos;t promoted a set yet.</p>
       }
-      {/*<Image src={act.qr_code} alt="QR Code" width={200} height={200} />*/}
+
+      {user?.qr_code && (
+        <Image src={user.qr_code} alt="User QR Code" width={200} height={200} />
+      )}
     </div>
   );
 }

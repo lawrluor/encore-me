@@ -34,8 +34,8 @@ async function handler(req, res) {
         return sendError(res, 'Unauthorized', 401);
       }
 
-      const { title, description } = req.body;
-      const updatedAct = await updateAct(id, { title, description });
+      const { name, description } = req.body;
+      const updatedAct = await updateAct(id, { name, description });
 
       if (!updatedAct) {
         return sendError(res, 'Act not found', 404);

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { useDeleteAct } from '../hooks/useDeleteAct';
@@ -9,8 +8,7 @@ type Props = {
   act: {
     id: string,
     name: string,
-    description: string,
-    qr_code: string
+    description: string
   }
 }
 
@@ -33,9 +31,5 @@ export const ActCard = ({ act }: Props) => {
       <h2>Sets</h2>
       <SetsList actId={act.id} />
     </div>
-    <div>
-      <Image src={act.qr_code} alt="QR Code" width={200} height={200} />
-    </div>
   </div>
 }
-

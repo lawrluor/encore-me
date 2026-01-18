@@ -3,8 +3,7 @@ import { useState, useEffect } from 'react';
 type Act = {
   id: string,
   name: string,
-  description: string,
-  qr_code: string
+  description: string
 }
 
 type GetActsResult = {
@@ -51,5 +50,5 @@ export const useGetActs = (): GetActsResult => {
     fetchActs();
   }, [])
 
-  return { acts, loading, errorMessage };
+  return { acts, setActs, loading, errorMessage };
 }

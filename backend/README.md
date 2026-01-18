@@ -191,6 +191,7 @@ The database consists of 5 main tables with the following relationships:
   name?: string;           // Optional
   is_admin: boolean;       // Default: false
   promoted_set_id?: string; // UUID, references sets(id)
+  qr_code?: string;        // Base64 data URL, auto-generated
   created_at: string;      // Timestamp
   updated_at: string;      // Timestamp
 }
@@ -216,7 +217,6 @@ The database consists of 5 main tables with the following relationships:
   id: string;              // UUID, primary key
   name: string;            // Required, max 200 chars
   description?: string;    // Optional
-  qr_code?: string;        // Base64 data URL, auto-generated
   created_at: string;      // Timestamp
   updated_at: string;      // Timestamp
 }
@@ -251,7 +251,7 @@ The database consists of 5 main tables with the following relationships:
 - An **Act** can have many **Users** as members (via **UserAct**)
 - An **Act** can have many **Sets**
 - A **User** can promote one **Set** (optional)
-- Each **Act** automatically gets a QR code generated on creation
+- Each **User** automatically gets a QR code generated on creation
 
 ## API Endpoints
 

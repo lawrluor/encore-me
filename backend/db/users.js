@@ -1,12 +1,24 @@
 const { sql } = require('./client');
+const QRCode = require('qrcode');
 
 const createUser = async (email, hashedPassword, name = '') => {
   const result = await sql`
     INSERT INTO users (email, password, name)
     VALUES (${email}, ${hashedPassword}, ${name})
-    RETURNING id, email, name, created_at
+    RETURNING id, email, name, created_at, updated_at
   `;
-  return result.rows[0];
+
+  const newUser = result.rows[0];
+  const qrCodeDataUrl = await QRCode.toDataURL(newUser.id);
+
+  const updatedResult = await sql`
+    UPDATE users
+    SET qr_code = ${qrCodeDataUrl}
+    WHERE id = ${newUser.id}
+    RETURNING id, email, name, qr_code, created_at, updated_at
+  `;
+
+  return updatedResult.rows[0];
 };
 
 const findUserByEmail = async (email) => {
@@ -25,6 +37,7 @@ const findUserById = async (id) => {
       u.is_admin, 
       u.created_at, 
       u.updated_at,
+      u.qr_code,
       s.id as promoted_set_id,
       s.title as promoted_set_title,
       s.description as promoted_set_description,
@@ -65,7 +78,7 @@ const findUserById = async (id) => {
 
 const getAllUsers = async () => {
   const result = await sql`
-    SELECT id, email, name, promoted_set_id, created_at, updated_at 
+    SELECT id, email, name, promoted_set_id, qr_code, created_at, updated_at 
     FROM users 
     ORDER BY created_at DESC
   `;
@@ -81,7 +94,7 @@ const updateUser = async (id, updates) => {
       name = COALESCE(${name}, name),
       updated_at = CURRENT_TIMESTAMP
     WHERE id = ${id}
-    RETURNING id, email, name, promoted_set_id, created_at, updated_at
+    RETURNING id, email, name, promoted_set_id, qr_code, created_at, updated_at
   `;
   return result.rows[0];
 };
@@ -109,7 +122,7 @@ const updatePromotedSet = async (userId, setId) => {
       promoted_set_id = ${setId},
       updated_at = CURRENT_TIMESTAMP
     WHERE id = ${userId}
-    RETURNING id, email, name, promoted_set_id, created_at, updated_at
+    RETURNING id, email, name, promoted_set_id, qr_code, created_at, updated_at
   `;
   return result.rows[0];
 };

@@ -184,6 +184,7 @@
   name?: string,           // Optional
   is_admin: boolean,       // Default: false
   promoted_set_id?: string, // UUID, references sets(id)
+  qr_code?: string,        // Base64 data URL, auto-generated
   created_at: string,      // Timestamp
   updated_at: string       // Timestamp
 }</pre>
@@ -219,7 +220,6 @@
   id: string,              // UUID, primary key
   name: string,            // Required, max 200 chars
   description?: string,    // Optional
-  qr_code?: string,        // Base64 data URL, auto-generated
   created_at: string,      // Timestamp
   updated_at: string       // Timestamp
 }</pre>
@@ -270,7 +270,7 @@
             <h4 class="text-sm font-bold text-yellow-800">Key Notes</h4>
             <ul class="mt-2 text-sm text-yellow-700 space-y-1">
               <li>• All IDs are UUIDs (auto-generated)</li>
-              <li>• Acts automatically get QR codes generated on creation</li>
+              <li>• Users automatically get QR codes generated on creation</li>
               <li>• Users can belong to multiple acts via the UserAct join table</li>
               <li>• Each user can promote one set to be featured</li>
             </ul>

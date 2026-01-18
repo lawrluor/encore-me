@@ -6,5 +6,6 @@ export type User = {
   email: string,
   created_at: string,
   updated_at: string,
+  qr_code: string | null,
   promoted_set: Set | null
 }

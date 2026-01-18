@@ -1,24 +1,28 @@
 'use client';
-
-import Link from 'next/link';
+import { useRef } from 'react';
+import Link from 'next/link'; 
 
 import { useGetActs } from '../hooks/useGetActs';
+import { useDraggable } from '../hooks/useDraggable';
 
 export const ActsList = () => {
-  const { acts, loading, errorMessage } = useGetActs();
+  const { acts, setActs, loading, errorMessage } = useGetActs();
+  const { handleDragStart, handleDragOver, handleDrop } = useDraggable(acts);  // derive data from acts
 
+  // Guard original acts state, then map over data
   if (loading) return (<p>Loading...</p>);
 
   if (errorMessage) return (<p className="text-red-500">{errorMessage}</p>);
 
   if (acts.length === 0) return (<p>No acts created</p>);
 
+  // Cards are both draggable and drag targets
   return (
     <div>
       <h2 className="text-bold text-xl">ACTS</h2>
-      {acts?.map((act) => (
-        <div key={act.id}>
-          <Link href={{ pathname: 'Sets', query: { actId: act.id } }}><h2 className="text-bold cursor-pointer hover:opacity-80">{act.name}</h2></Link>
+      {acts?.map((act, index) => (
+        <div draggable={true} onDragStart={(e) => handleDragStart(e, act, index)} onDragOver={(e, index) => handleDragOver(e, index)} onDrop={(e) => handleDrop(e, index, acts, setActs)} className="p-20 m-20 w-200 bg-red-500" key={act.id}>
+          <Link draggable={false} href={{ pathname: 'Sets', query: { actId: act.id } }}><h2 className="text-bold cursor-pointer hover:opacity-80">{act.name}</h2></Link>
         </div>
       ))}
     </div>
