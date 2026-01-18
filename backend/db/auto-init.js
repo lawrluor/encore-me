@@ -24,6 +24,7 @@ const initializeDatabase = async () => {
       CREATE TABLE IF NOT EXISTS songs (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        act_id UUID REFERENCES acts(id) ON DELETE CASCADE,
         title VARCHAR(200) NOT NULL,
         description TEXT,
         genre VARCHAR(50),
@@ -69,6 +70,11 @@ const initializeDatabase = async () => {
     }
 
     await sql`
+      ALTER TABLE songs
+      ADD COLUMN IF NOT EXISTS act_id UUID REFERENCES acts(id) ON DELETE CASCADE
+    `;
+
+    await sql`
       CREATE TABLE IF NOT EXISTS user_acts (
         user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         act_id UUID NOT NULL REFERENCES acts(id) ON DELETE CASCADE,
@@ -89,13 +95,26 @@ const initializeDatabase = async () => {
       )
     `;
 
+    await sql`
+      CREATE TABLE IF NOT EXISTS set_songs (
+        set_id UUID NOT NULL REFERENCES sets(id) ON DELETE CASCADE,
+        song_id UUID NOT NULL REFERENCES songs(id) ON DELETE CASCADE,
+        position INTEGER,
+        added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (set_id, song_id)
+      )
+    `;
+
     await sql`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_users_promoted_set_id ON users(promoted_set_id)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_songs_user_id ON songs(user_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_songs_act_id ON songs(act_id)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_songs_genre ON songs(genre)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_user_acts_user_id ON user_acts(user_id)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_user_acts_act_id ON user_acts(act_id)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_sets_act_id ON sets(act_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_set_songs_set_id ON set_songs(set_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_set_songs_song_id ON set_songs(song_id)`;
 
     console.log('✅ Database tables initialized successfully');
   } catch (error) {

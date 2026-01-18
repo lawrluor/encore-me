@@ -200,6 +200,7 @@
             <pre>{
   id: string,              // UUID, primary key
   user_id: string,         // UUID, references users(id)
+  act_id?: string,         // UUID, references acts(id), optional
   title: string,           // Required, max 200 chars
   description?: string,    // Optional
   genre?: string,          // Optional, max 50 chars
@@ -258,6 +259,22 @@
 }</pre>
           </div>
         </div>
+
+        <!-- SetSong -->
+        <div class="border border-gray-200 rounded-lg p-4">
+          <h4 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <i class="fas fa-link text-indigo-600"></i> SetSong (Join Table)
+          </h4>
+          <div class="code-block text-xs">
+            <pre>{
+  set_id: string,          // UUID, references sets(id)
+  song_id: string,         // UUID, references songs(id)
+  position?: number,       // Optional ordering within set
+  added_at: string         // Timestamp
+  // Primary key: (set_id, song_id)
+}</pre>
+          </div>
+        </div>
       </div>
 
       <!-- Key Notes -->
@@ -272,6 +289,8 @@
               <li>• All IDs are UUIDs (auto-generated)</li>
               <li>• Users automatically get QR codes generated on creation</li>
               <li>• Users can belong to multiple acts via the UserAct join table</li>
+              <li>• Acts can have many songs (one-to-many relationship)</li>
+              <li>• Sets can have many songs via the SetSong join table (many-to-many)</li>
               <li>• Each user can promote one set to be featured</li>
             </ul>
           </div>

@@ -3,7 +3,7 @@ const logger = require('./logger');
 const allowCors = fn => logger(async (req, res) => {
   res.setHeader('Access-Control-Allow-Credentials', true);
   // Must use specific origin when credentials are enabled, not '*'
-  const origin = req.headers.origin;  // || process.env.FRONTEND_URL;
+  const origin = req.headers.origin || process.env.FRONTEND_URL;
   res.setHeader('Access-Control-Allow-Origin', origin);
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader(

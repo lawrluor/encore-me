@@ -1,4 +1,5 @@
 export const useDraggable = () => {
+  // item can be Act, Song, or Set
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>, item, idx: number) => {
     e.dataTransfer.setData("application/json", JSON.stringify({ item, idx }));
   }
@@ -13,7 +14,7 @@ export const useDraggable = () => {
     } */
   }
 
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>, dropIndex: number, state, setState) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>, dropIndex: number, state: any[], setState: React.Dispatch<React.SetStateAction<any[]>>) => {
     e.preventDefault();
 
     try {

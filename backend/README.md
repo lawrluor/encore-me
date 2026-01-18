@@ -179,7 +179,9 @@ curl -X POST http://localhost:3000/api/songs \
 The database consists of 5 main tables with the following relationships:
 - **users** ↔ **user_acts** ↔ **acts** (many-to-many)
 - **users** → **songs** (one-to-many)
+- **acts** → **songs** (one-to-many)
 - **acts** → **sets** (one-to-many)
+- **sets** ↔ **set_songs** ↔ **songs** (many-to-many)
 - **users** → **sets** (one promoted set per user)
 
 ### User
@@ -202,6 +204,7 @@ The database consists of 5 main tables with the following relationships:
 {
   id: string;              // UUID, primary key
   user_id: string;         // UUID, references users(id), required
+  act_id?: string;         // UUID, references acts(id), optional
   title: string;           // Required, max 200 chars
   description?: string;    // Optional
   genre?: string;          // Optional, max 50 chars
@@ -245,11 +248,25 @@ The database consists of 5 main tables with the following relationships:
 }
 ```
 
+### SetSong (Join Table)
+```typescript
+{
+  set_id: string;          // UUID, references sets(id), required
+  song_id: string;         // UUID, references songs(id), required
+  position?: number;       // Optional ordering within set
+  added_at: string;        // Timestamp
+  // Primary key: (set_id, song_id)
+}
+```
+
 ### Relationships
 - A **User** can create many **Songs**
 - A **User** can belong to many **Acts** (via **UserAct**)
 - An **Act** can have many **Users** as members (via **UserAct**)
+- An **Act** can have many **Songs** (one-to-many)
 - An **Act** can have many **Sets**
+- A **Set** can have many **Songs** (via **SetSong**)
+- A **Song** can belong to many **Sets** (via **SetSong**)
 - A **User** can promote one **Set** (optional)
 - Each **User** automatically gets a QR code generated on creation
 
@@ -322,11 +339,18 @@ Authorization: Bearer <your_jwt_token>
 
 #### Songs
 
-**Get All Songs**
+**Get Songs**
 ```
 GET /api/songs
+GET /api/songs?actId={actId}
+GET /api/songs?setId={setId}
 Authorization: Bearer <token>
 ```
+
+Query Parameters:
+- No params: Returns all songs created by the authenticated user
+- `actId`: Returns all songs for the specified act (requires act membership)
+- `setId`: Returns all songs in the specified set (requires act membership)
 
 **Create Song**
 ```
@@ -335,12 +359,15 @@ Authorization: Bearer <token>
 Content-Type: application/json
 
 {
+  "actId": "act-uuid-here",  // Optional, associates song with act
   "title": "My Song",
   "description": "Song description",
   "genre": "Rock",
   "tempo": "Fast"
 }
 ```
+
+Note: If `actId` is provided, the user must be a member of that act.
 
 **Get Song by ID**
 ```

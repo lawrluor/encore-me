@@ -99,6 +99,14 @@ const deleteAllActs = async () => {
   return result.rows;
 };
 
+const isUserMemberOfAct = async (userId, actId) => {
+  const result = await sql`
+    SELECT 1 FROM user_acts
+    WHERE user_id = ${userId} AND act_id = ${actId}
+  `;
+  return result.rows.length > 0;
+};
+
 module.exports = {
   createAct,
   findActById,
@@ -109,5 +117,6 @@ module.exports = {
   deleteAct,
   addUserToAct,
   removeUserFromAct,
-  deleteAllActs
+  deleteAllActs,
+  isUserMemberOfAct
 };
