@@ -1,11 +1,11 @@
-export const useDraggable = () => {
-  // item can be Act, Song, or Set
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, item, idx: number) => {
+export const useDraggable = <T,>() => {
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, item: T, idx: number) => {
     e.dataTransfer.setData("application/json", JSON.stringify({ item, idx }));
   }
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>, dropIndex: number) => {
     e.preventDefault();
+    dropIndex;
     /* try {
       const startIndex = String(e.dataTransfer.getData("application/json")?.idx);
       if (startIndex === dropIndex) return; 
@@ -14,7 +14,7 @@ export const useDraggable = () => {
     } */
   }
 
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>, dropIndex: number, state: any[], setState: React.Dispatch<React.SetStateAction<any[]>>) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>, dropIndex: number, state: T[], setState: React.Dispatch<React.SetStateAction<T[]>>) => {
     e.preventDefault();
 
     try {
@@ -23,7 +23,7 @@ export const useDraggable = () => {
 
       if (startIndex === dropIndex) return;
 
-      let reorderedData = [...state];
+      const reorderedData = [...state];
 
       // Delete the current item (so when we re-insert it, we don't get a duplicate)
       // Insert the new item at the dropIndex

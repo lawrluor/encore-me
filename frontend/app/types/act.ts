@@ -1,8 +1,7 @@
-export type Set = {
+export type Act = {
   id: string,
-  title: string,
+  name: string,
   description?: string,
-  act_id: string,
   created_at?: string,
   updated_at?: string
 }

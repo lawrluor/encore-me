@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
 
-type Act = {
-  id: string,
-  name: string,
-  description: string
-}
+import { type Act } from '../types/act';
 
 type GetActsResult = {
   acts: Act[],
+  setActs: React.Dispatch<React.SetStateAction<Act[]>>,
   loading: boolean,
   errorMessage: string
 }
