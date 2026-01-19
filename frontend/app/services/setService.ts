@@ -1,3 +1,24 @@
+export const getSets = async (actId: string) => {
+    const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sets?actId=${actId}`;
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      headers: {
+        'Cookie': cookieStorage.toString(),
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.json();
+      console.error(errorBody);
+      throw new Error(`${response.status}: ${errorBody.message}`);
+    }
+
+    const payload = await response.json();
+    if (!payload || !payload.data) throw new Error(`Expected array of objects, got ${payload}`);
+    return payload.data;
+}
+
 export const deleteSet = async (setId: string): Promise<boolean | Error> => {
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sets/${setId}`;
   const response = await fetch(endpoint, {
@@ -9,14 +30,14 @@ export const deleteSet = async (setId: string): Promise<boolean | Error> => {
   });
 
   if (!response.ok) {
-    const errorResponse = await response.json();
-    console.error(errorResponse);
-    throw new Error(errorResponse.message || `Failed to delete set: ${setId}`);
+    const error = await response.json();
+    console.error(error);
+    throw new Error(error.message || `Failed to delete set: ${setId}`);
   }
 
-  const result = await response.json();
-  if (!result?.success) throw new Error(`Response unsuccessful: ${result.message}`);
-  return result.success;  // true
+  const payload = await response.json();
+  if (!payload?.success) throw new Error(`Response unsuccessful: ${payload.message}`);
+  return payload.success;  // true
 }
 
 export const promoteSet = async (setId: string) => {
@@ -37,7 +58,7 @@ export const promoteSet = async (setId: string) => {
     throw new Error(error.message);
   }
 
-  const result = await response.json();
-  if (!result || !result.success) throw new Error(`Response unsuccessful: ${result.message}`);
-  return result.success;
+  const payload = await response.json();
+  if (!payload || !payload.success) throw new Error(`Response unsuccessful: ${payload.message}`);
+  return payload.success;
 }
