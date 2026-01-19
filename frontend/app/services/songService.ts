@@ -13,7 +13,14 @@ const postSong = async (formData: FormData) => {
       'Cookie': cookieStorage.toString(),
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ actId: formData.get('actId'), title: formData.get('title'), description: formData.get('description'), genre: formData.get('genre'), tempo: formData.get('tempo') })
+    body: JSON.stringify({
+      actId: formData.get('actId'),
+      setId: formData.get('setId'),
+      title: formData.get('title'),
+      description: formData.get('description'),
+      genre: formData.get('genre'),
+      tempo: formData.get('tempo')
+    })
   });
 
   if (!response.ok) {
@@ -44,7 +51,7 @@ export const createSong = async (formData: FormData) => {
       redirect('/Sets');
     }
   } finally {
-    
+
   }
   // Let error bubble up
 }

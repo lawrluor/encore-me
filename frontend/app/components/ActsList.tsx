@@ -21,7 +21,14 @@ export const ActsList = () => {
     <div>
       <h2 className="text-bold text-xl">ACTS</h2>
       {acts?.map((act, index) => (
-        <div draggable={true} onDragStart={(e) => handleDragStart(e, act, index)} onDragOver={(e) => handleDragOver(e, index)} onDrop={(e) => handleDrop(e, index, acts, setActs)} className="p-20 m-20 w-200 bg-red-500" key={act.id}>
+        <div
+          draggable={true}
+          onDragStart={(e) => handleDragStart(e, act, index)}
+          onDragOver={(e) => handleDragOver(e, index)}
+          onDrop={(e) => handleDrop(e, index, acts, setActs)}
+          className="p-20 m-20 w-200 bg-red-500"
+          key={act.id}
+        >
           <Link draggable={false} href={{ pathname: 'Sets', query: { actId: act.id } }}><h2 className="text-bold cursor-pointer hover:opacity-80">{act.name}</h2></Link>
         </div>
       ))}

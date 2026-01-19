@@ -22,6 +22,7 @@ const userSchema = Joi.object({
 
 const songSchema = Joi.object({
   actId: Joi.string().uuid().optional(),
+  setId: Joi.string().uuid().optional(),
   title: Joi.string().min(1).max(200).required(),
   description: Joi.string().max(1000).allow('').optional(),
   genre: Joi.string().max(50).allow('').optional(),

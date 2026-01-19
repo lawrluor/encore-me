@@ -53,17 +53,41 @@ async function handler(req, res) {
         return sendError(res, 'Validation failed', 400, validation.errors);
       }
 
-      const { actId, title, description, genre, tempo } = validation.value;
+      const { actId, setId, title, description, genre, tempo } = validation.value;
 
-      // Verify user is member of act if actId provided
-      if (actId) {
+      let finalActId = actId;
+
+      // If setId provided, lookup set to get act_id and verify membership
+      if (setId) {
+        const set = await findSetById(setId);
+        if (!set) {
+          return sendError(res, 'Set not found', 404);
+        }
+
+        // Verify user is member of the act that owns this set
+        const isMember = await isUserMemberOfAct(user.userId, set.act_id);
+        if (!isMember) {
+          return sendError(res, 'Forbidden: You must be a member of the act that owns this set', 403);
+        }
+
+        // Use the set's act_id for the song (song belongs to ONE act)
+        finalActId = set.act_id;
+      } else if (actId) {
+        // If only actId provided, verify user is member of act
         const isMember = await isUserMemberOfAct(user.userId, actId);
         if (!isMember) {
           return sendError(res, 'Forbidden: You must be a member of this act', 403);
         }
       }
 
-      const newSong = await createSong(user.userId, actId || null, title, description || '', genre || '', tempo || '');
+      // Create song with act_id (song belongs to ONE act)
+      const newSong = await createSong(user.userId, finalActId || null, title, description || '', genre || '', tempo || '');
+
+      // If setId provided, add song to set_songs join table (song can belong to MULTIPLE sets)
+      if (setId) {
+        const { addSongToSet } = require('../../db/songs');
+        await addSongToSet(setId, newSong.id);
+      }
 
       return sendSuccess(res, newSong, 'Song created successfully', 201);
     }
