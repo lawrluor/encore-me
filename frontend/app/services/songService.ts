@@ -1,10 +1,30 @@
-'use server';
+import { cookies } from 'next/headers';
 
-import { revalidatePath } from 'next/cache';
-import { cookies, headers } from 'next/headers';
-import { redirect } from 'next/navigation';
+export const getSongs = async (idType: 'actId' | 'setId', id: string) => {
+  // By default, doesn't have authorization because fetching from server and doesn't have client auth
+  // We cannot include cookies in header with credentials: 'include', that only works from client side
+  // So, we need to get cookie another way
+  const cookieStore = await cookies();
 
-const postSong = async (formData: FormData) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/songs?${idType}=${id}`, {
+    headers: {
+      // pass all cookies as key-value pair string separated by semicolons,
+      //   just like the client side would
+      'Cookie': cookieStore.toString()
+    }
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(`${response.status}: ${error.message}`);
+  };
+
+  const payload = await response.json();
+  const songs = payload.data;
+  return songs;
+}
+
+export const postSong = async (formData: FormData) => {
   const cookieStorage = await cookies();
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/songs`, {
@@ -29,29 +49,7 @@ const postSong = async (formData: FormData) => {
     throw new Error(error.status, error.message);
   }
 
-  const result = await response.json();
-  if (!result || !result.data) throw new Error("Result in unexpected format");
-  return result.data;
-}
-
-// Wrapper for postSong to actually navigate after successful post
-export const createSong = async (formData: FormData) => {
-  try {
-    await postSong(formData);
-
-    // Because this is a server action, we can't call history.back(),
-    //   there is no knowledge of client route history
-    //   Instead, retrieve the URL we came from, and redirect back there
-    const headersList = await headers();
-    const referer = headersList.get('referer');
-    if (referer) {
-      revalidatePath(referer);
-      redirect(referer)
-    } else {
-      redirect('/Sets');
-    }
-  } finally {
-
-  }
-  // Let error bubble up
+  const payload = await response.json();
+  if (!payload || !payload.data) throw new Error("Result in unexpected format");
+  return payload.data;
 }

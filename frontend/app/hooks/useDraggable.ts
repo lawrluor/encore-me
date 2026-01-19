@@ -5,8 +5,9 @@ export const useDraggable = <T,>() => {
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>, dropIndex: number) => {
     e.preventDefault();
-    const startIndex = e.dataTransfer.getData("application/json")?.idx;
-    if (startIndex === String(dropIndex)) return;
+    // const payload = JSON.parse(e.dataTransfer.getData("application/json"));
+    // const startIndex = payload?.idx;
+    // if (startIndex === String(dropIndex)) return;
 
     /* try {
       const startIndex = String(e.dataTransfer.getData("application/json")?.idx);

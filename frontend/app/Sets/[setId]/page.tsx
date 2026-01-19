@@ -1,43 +1,26 @@
-import { cookies } from 'next/headers';
-
+import { getSongsAction } from '../../actions/songActions';
 import { CreateSongForm } from '../../components/CreateSongForm';
 import { SongList } from '../../components/SongList';
-
-type idType = 'setId' | 'actId';
+import { TopNav } from '../../components/TopNav';
 
 type Props = {
   params: Promise<{ setId: string }>,
   searchParams: Promise<{ actId?: string }>
 }
 
-const fetchSongs = async (idType: idType, id: string) => {
-  // By default, doesn't have authorization because fetching from server and doesn't have client auth
-  // We cannot include cookies in header with credentials: 'include', that only works from client side
-  // So, we need to get cookie another way
-  const cookieStore = await cookies();
-
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/songs?${idType}=${id}`, {
-    headers: {
-      // pass all cookies as key-value pair string separated by semicolons,
-      //   just like the client side would
-      'Cookie': cookieStore.toString()
-    }
-  });
-  if (!response.ok) { throw new Error(`${response.status}: ${JSON.stringify(await response.json())}`) };
-  const result = await response.json();
-  const songs = result.data;
-  return songs;
-}
-
 const EditSet = async ({ params, searchParams }: Props) => {
   const { setId } = await params;
   const { actId } = await searchParams;
 
-  const setSongs = await fetchSongs('setId', setId);
-  const actSongs = await fetchSongs('actId', actId);
+  const setSongs = await getSongsAction('setId', setId);
+  const actSongs = await getSongsAction('actId', actId);
 
   return <div>
+    <TopNav /> 
+
     <CreateSongForm actId={actId} setId={setId} />
+    <p>Act: {actId}</p>
+    <p>Set: {setId}</p>
 
     <section>
       <h2>Songs in Set</h2>
@@ -55,7 +38,7 @@ const EditSet = async ({ params, searchParams }: Props) => {
         ?
         <SongList initialSongs={actSongs} />
         :
-        <p>No songs in the set yet.</p>}
+        <p>No songs for this act yet.</p>}
     </section>
   </div>
 }
