@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 
 import { CreateSongForm } from '../../components/CreateSongForm';
-import { SongListClient } from '../../components/SongListClient';
+import { SongList } from '../../components/SongList';
 
 type idType = 'setId' | 'actId';
 
@@ -43,7 +43,7 @@ const EditSet = async ({ params, searchParams }: Props) => {
       <h2>Songs in Set</h2>
       {setSongs && setSongs.length > 0
         ?
-        <SongListClient initialSongs={setSongs} />
+        <SongList initialSongs={setSongs} />
 
         :
         <p>No songs in the set yet.</p>}
@@ -53,7 +53,7 @@ const EditSet = async ({ params, searchParams }: Props) => {
       <h2>Recent Songs</h2>
       {actSongs && actSongs.length > 0
         ?
-        <SongListClient initialSongs={actSongs} />
+        <SongList initialSongs={actSongs} />
         :
         <p>No songs in the set yet.</p>}
     </section>

@@ -1,8 +1,8 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { revalidatePath } from 'next/cache';
 
 const postSong = async (formData: FormData) => {
   const cookieStorage = await cookies();
@@ -24,7 +24,7 @@ const postSong = async (formData: FormData) => {
   });
 
   if (!response.ok) {
-    let error = await response.json();
+    const error = await response.json();
     console.error(error);
     throw new Error(error.status, error.message);
   }
