@@ -1,14 +1,41 @@
+import { cookies } from 'next/headers';
+
+import { type Act } from '../types/act';
+
 type ActFormPayload = {
   name: string;
-  description: string;
+  description?: string;
 }
 
-export const createAct = async (payload: ActFormPayload) => {
+export const getActs = async (): Promise<Act[]> => {
+  const cookieStorage = await cookies();
+
+  const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acts`;
+  const response = await fetch(endpoint, {
+    method: 'GET',
+    headers: {
+      'Cookie': cookieStorage.toString(),
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!response.ok) {
+    const errorPayload = await response.json();
+    console.error(errorPayload);
+    throw new Error(`Status: ${response.status}, ${errorPayload.message}`);
+  }
+
+  const payload = await response.json();
+  if (!payload || !payload.data) throw new Error(`Unexpected payload format: ${payload}`);
+  return payload.data;
+}
+
+export const postAct = async (payload: ActFormPayload): Promise<boolean> => {
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acts`;
   const response = await fetch(endpoint, {
     method: 'POST',
-    credentials: 'include',
     headers: {
+      'Cookie': cookieStorage.toString(),
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(payload)
@@ -20,17 +47,16 @@ export const createAct = async (payload: ActFormPayload) => {
     throw new Error(`Response failed - ${response.status}: ${error.message}`);
   }
 
-  const result = await response.json();
-  if (!result.success) {
-    console.error(result);
-    throw new Error(`Response not successful.`);
+  const responsePayload = await response.json();
+  if (!responsePayload || !responsePayload.success) {
+    console.error(responsePayload);
+    throw new Error(`Response unsuccessful: ${responsePayload}`);
   }
 
-  return result;
+  return responsePayload.success;
 }
 
-// : Promise<object | Error>
-export const deleteAct = async (actId: string) => {
+export const deleteAct = async (actId: string): Promise<boolean> => {
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acts/${actId}`;
   const response = await fetch(endpoint, {
     method: 'DELETE',
@@ -48,5 +74,5 @@ export const deleteAct = async (actId: string) => {
 
   const result = await response.json();
   if (!result?.success) throw new Error('Unexpected format for server response');
-  return result;
+  return result.success;
 }

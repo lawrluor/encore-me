@@ -12,22 +12,18 @@ export const getSongsAction = async (idType: 'actId' | 'setId', id: string) => {
 
 // Wrapper for postSong to actually navigate after successful post
 export const postSongAction = async (formData: FormData) => {
-  try {
-    await postSong(formData);
+  await postSong(formData);
 
-    // Because this is a server action, we can't call history.back(),
-    //   there is no knowledge of client route history
-    //   Instead, retrieve the URL we came from, and redirect back there
-    const headersList = await headers();
-    const referer = headersList.get('referer');
-    if (referer) {
-      revalidatePath(referer);
-      redirect(referer)
-    } else {
-      redirect('/Sets');
-    }
-  } finally {
-
+  // Because this is a server action, we can't call history.back(),
+  //   there is no knowledge of client route history
+  //   Instead, retrieve the URL we came from, and redirect back there
+  const headersList = await headers();
+  const referer = headersList.get('referer');
+  if (referer) {
+    revalidatePath(referer);
+    redirect(referer)
+  } else {
+    redirect('/Sets');
   }
   // Let error bubble up
 }

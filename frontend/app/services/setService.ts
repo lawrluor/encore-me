@@ -24,7 +24,7 @@ export const getSets = async (actId: string) => {
     return payload.data;
 }
 
-export const deleteSet = async (setId: string): Promise<boolean | Error> => {
+export const deleteSet = async (setId: string): Promise<boolean> => {
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sets/${setId}`;
 
   const cookieStorage = await cookies();
