@@ -1,3 +1,4 @@
+import { getActAction } from '../actions/actActions';
 
 import { ActsList } from '../components/ActsList';
 import { CreateSetForm } from '../components/CreateSetForm';
@@ -12,6 +13,7 @@ type Props = {
 const Sets = async ({ searchParams }: Props) => {
   let { actId } = await searchParams;
   actId = typeof actId === "string" ? actId : undefined;  // narrow type
+  let act = await getActAction(actId);  // if errors, take to error component
 
   return (
     <div className="min-h-dvh flex flex-col">
@@ -24,7 +26,8 @@ const Sets = async ({ searchParams }: Props) => {
           <ActsList />
         </aside>
 
-        <section className="p-10 rounded-md flex-[3_1_200px]">
+        <section className="p-20 rounded-md flex-[3_1_200px]">
+          <h2 className="text-2xl">{act?.name}</h2>  
           {actId && <CreateSetForm actId={actId} />}
           {actId && <SetPanelsList actId={actId} showCta={false} />}
         </section>

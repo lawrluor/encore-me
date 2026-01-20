@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { useDraggable } from '../hooks/useDraggable';
 import { type Act } from '../types/act';
@@ -12,7 +12,11 @@ type Props = {
 
 export const ActsListDraggables = ({ initialActs }: Props) => {
   const { handleDragStart, handleDragOver, handleDrop } = useDraggable<Act>();
-  const [acts, setActs] = useState(initialActs);
+  const [acts, setActs] = useState<Act[]>(initialActs);
+
+  useEffect(() => {
+    setActs(initialActs);
+  }, [initialActs]);
 
   // Each item is both draggable and a drag targets
   return (

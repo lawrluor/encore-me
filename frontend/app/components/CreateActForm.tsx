@@ -8,20 +8,17 @@ export const CreateActForm = () => {
       {isFormVisible ? <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-minus-icon lucide-minus"><path d="M5 12h14" /></svg> : <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-plus-icon lucide-circle-plus inline"><circle cx="12" cy="12" r="10" /><path d="M8 12h8" /><path d="M12 8v8" /></svg>}
     </button>*/}
 
-    {
-      <div
-        className="pb-5 w-100% flex gap-10 bg-background hover:opacity-80 hover:cursor-pointer"
-      >
-        <div className="w-44 h-44 bg-accent rounded-md shrink-0"></div>
-        <Form action={postActAction}>
-          <input type="text" placeholder="Name" />
-          <input type="text" placeholder="Description" className="text-sm" />
-        </Form>
 
-        {/*        <div className="py-5">
-          <button type="submit" className={`p-5 ${pending ? 'bg-gray-500 cursor-wait' : 'bg-blue-500 cursor-pointer'}`} disabled={pending}>ADD ACT</button>
-        </div>*/}
-      </div>}
+    <div
+      className="pb-5 w-100% flex gap-10 bg-background hover:opacity-80 hover:cursor-pointer"
+    >
+      <div className="w-44 h-44 bg-accent rounded-md shrink-0"></div>
+      <Form action={postActAction}>
+        <input type="text" name="name" placeholder="Name" required />
+        <input type="text" name="description" placeholder="Description" className="text-sm" />
+        <button type="submit" className="p-5 bg-accent cursor-pointer">ADD ACT</button>
+      </Form>
+    </div>
   </>
 
   return <>

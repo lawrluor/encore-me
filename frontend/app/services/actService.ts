@@ -7,16 +7,43 @@ type ActFormPayload = {
   description?: string;
 }
 
+export const getAct = async (id: string): Act => {
+  const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acts/${id}`;
+
+  const cookieStorage = await cookies();
+  const response = await fetch(endpoint, {
+    method: 'GET',
+    headers: {
+      'Cookie': cookieStorage.toString(),
+      'Content-Type': 'application/JSON'
+    }
+  });
+
+  if (!response.ok) {
+    const errorPayload = await response.json();
+    console.error(errorPayload);
+    throw new Error(`${errorPayload.status}: ${errorPayload.message}`);
+  }
+
+  const payload = await response.json();
+  if (!payload || !payload.data) {
+    console.error(payload);
+    throw new Error(`Unexpected payload: ${JSON.stringify(payload)}`)
+  } 
+
+  return payload.data;
+}
+
 export const getActs = async (): Promise<Act[]> => {
+  const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acts`;
   const cookieStorage = await cookies();
 
-  const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acts`;
   const response = await fetch(endpoint, {
     method: 'GET',
     headers: {
       'Cookie': cookieStorage.toString(),
       'Content-Type': 'application/json'
-    }
+    },
   });
 
   if (!response.ok) {
@@ -26,12 +53,14 @@ export const getActs = async (): Promise<Act[]> => {
   }
 
   const payload = await response.json();
-  if (!payload || !payload.data) throw new Error(`Unexpected payload format: ${payload}`);
+  if (!payload || !payload.data) throw new Error(`Unexpected payload format: ${JSON.stringify(payload)}`);
   return payload.data;
 }
 
 export const postAct = async (payload: ActFormPayload): Promise<boolean> => {
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acts`;
+  const cookieStorage = await cookies();
+
   const response = await fetch(endpoint, {
     method: 'POST',
     headers: {
