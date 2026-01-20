@@ -1,7 +1,8 @@
 
 import { ActsList } from '../components/ActsList';
 import { CreateSetForm } from '../components/CreateSetForm';
-import { SetsList } from '../components/SetsList';
+import { Footer } from '../components/Footer';
+import { SetPanelsList } from '../components/SetPanelsList';
 import { TopNav } from '../components/TopNav';
 
 type Props = {
@@ -13,21 +14,26 @@ const Sets = async ({ searchParams }: Props) => {
   actId = typeof actId === "string" ? actId : undefined;  // narrow type
 
   return (
-    <main>
+    <div className="min-h-dvh flex flex-col">
       <header>
         <TopNav />
       </header>
 
-      <aside>
-        <ActsList />
-      </aside>
+      <main className="flex flex-auto overflow-hidden">
+        <aside className="flex-[1_0_0] ">
+          <ActsList />
+        </aside>
 
-      <section className="p-5 w-300 mx-auto">
-        {actId && <CreateSetForm actId={actId} />}
+        <section className="p-10 rounded-md flex-[4_1_200px]">
+          {actId && <CreateSetForm actId={actId} />}
+          {actId && <SetPanelsList actId={actId} showCta={false} />}
+        </section>
+      </main>
 
-        {actId && <SetsList actId={actId} showCta={false} />}
-      </section>
-    </main>
+      <footer>
+        <Footer />
+      </footer>
+    </div>
   )
 }
 

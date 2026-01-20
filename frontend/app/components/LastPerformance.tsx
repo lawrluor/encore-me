@@ -14,7 +14,7 @@ export const LastPerformance = () => {
   if (errorMessage) return <p className="text-red-500">Something went wrong. Please try again later.</p>;
 
   return (
-    <div className="p-20 bg-gray-900 rounded-md">
+    <div className="p-20 bg-gray-900 rounded-md w-400">
       <h2 className="text-2xl">Recent Sets</h2>
       {user?.promoted_set ?
         <SetCard

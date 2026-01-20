@@ -1,23 +1,22 @@
 
 import { ActsList } from './components/ActsList';
-import { CreateActForm } from './components/CreateActForm';
+import { Footer } from './components/Footer';
 import { LastPerformance } from './components/LastPerformance';
 import { TopNav } from './components/TopNav';
 
 const Home = () => {
   return (
-    <div>
+    <div className="min-h-dvh flex flex-col">
       <header>
         <TopNav />
       </header>
 
-      <aside>
-        <ActsList />
-        <CreateActForm />
-      </aside>
+      <main className="flex flex-auto overflow-hidden">
+        <aside className="flex-[1_0_0] ">
+          <ActsList />
+        </aside>
 
-      <main>
-        <section className="w-6/10 mx-auto p-10 rounded-md">
+        <section className="p-10 rounded-md flex-[4_1_200px]">
           <LastPerformance />
         </section>
       </main>
@@ -25,6 +24,9 @@ const Home = () => {
       {/*<section className="p-5">
         <h2 className="text-bold">SETS</h2>
       </section>*/}
+      <footer>
+        <Footer />
+      </footer>
     </div>
   )
 }

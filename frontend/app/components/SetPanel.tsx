@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { deleteSetAction, promoteSetAction } from '../actions/setActions';
+import { getSongsAction } from '../actions/songActions';
 import { Button } from '../components/Button';
 
 type Props = {
@@ -12,14 +13,15 @@ type Props = {
   }
 }
 
-export const SetCard = ({ actId, set }: Props) => {
+export const SetPanel = async ({ actId, set }: Props) => {
+  const data = await getSongsAction('setId', set.id);
+  
   const deleteSetWithId = deleteSetAction.bind(null, set.id);
   const promoteSetWithId = promoteSetAction.bind(null, set.id);
-
+      // {/*{deleteErrorMessage && <p className="text-red-500">{deleteErrorMessage}</p>}
+      // {promoteError && <p className="text-red-500">{promoteError.message}</p>}*/}
   return (
-    <div>
-      {/*{deleteErrorMessage && <p className="text-red-500">{deleteErrorMessage}</p>}
-      {promoteError && <p className="text-red-500">{promoteError.message}</p>}*/}
+
       <div className="gap-10 p-10 bg-blue-500">
         <div>
           <Link className="hover:opacity-80" href={{ pathname: `/Sets/${set.id}`, query: { actId } }} draggable={false}><p className="font-bold">{set.title}</p></Link>
@@ -28,7 +30,12 @@ export const SetCard = ({ actId, set }: Props) => {
         </div>
         {set.description && <p>Description: {set.description}</p>}
 
-      </div>
+        {data?.map((song) => {
+          <div>
+            <p>{song.title}</p>
+            <p>{song.description}</p>
+          </div>
+        })}
     </div>
   )
 }

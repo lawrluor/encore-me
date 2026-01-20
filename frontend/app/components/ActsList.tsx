@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 
+import { CreateActForm } from '../components/CreateActForm';
 import { useDraggable } from '../hooks/useDraggable';
 import { useGetActs } from '../hooks/useGetActs';
 import { type Act } from '../types/act';
@@ -19,20 +20,30 @@ export const ActsList = () => {
 
   // Cards are both draggable and drag targets
   return (
-    <div>
-      <h2 className="text-bold text-xl">ACTS</h2>
-      {acts?.map((act, index) => (
-        <div
-          draggable={true}
-          onDragStart={(e) => handleDragStart(e, act, index)}
-          onDragOver={(e) => handleDragOver(e)}
-          onDrop={(e) => handleDrop(e, index, acts, setActs)}
-          className="p-20 m-20 w-200 bg-red-500"
-          key={act.id}
-        >
-          <Link draggable={false} href={{ pathname: 'Sets', query: { actId: act.id } }}><h2 className="text-bold cursor-pointer hover:opacity-80">{act.name}</h2></Link>
-        </div>
-      ))}
-    </div>
+    <>
+      <div>
+        <h2 className="ml-10 text-bold text-xl">ACTS</h2>
+        <CreateActForm /> 
+      </div>
+
+      <div>
+        {acts?.map((act, index) => (
+          <div
+            draggable={true}
+            onDragStart={(e) => handleDragStart(e, act, index)}
+            onDragOver={(e) => handleDragOver(e)}
+            onDrop={(e) => handleDrop(e, index, acts, setActs)}
+            className="p-20 mb-1 w-100% flex gap-10 bg-background hover:opacity-80 hover:cursor-pointer"
+            key={act.id}
+          >
+            <div className="w-44 h-44 bg-accent rounded-md"></div>
+            <div>
+              <Link draggable={false} href={{ pathname: 'Sets', query: { actId: act.id } }}><p className="text-bold">{act.name}</p></Link>
+              <p className="text-sm">{act.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   )
 }

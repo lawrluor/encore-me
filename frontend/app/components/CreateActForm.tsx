@@ -34,7 +34,28 @@ export const CreateActForm = () => {
 
   return <>
     <button onClick={() => setIsFormVisible(!isFormVisible)} className="h-44 p-5 font-bold cursor-pointer" aria-controls="createActForm" aria-expanded={!isFormVisible}>
-      {isFormVisible ? "- hide form" : "+ add an act"}
+      {isFormVisible ? <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-minus-icon lucide-minus"><path d="M5 12h14" /></svg> : <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-plus-icon lucide-circle-plus inline"><circle cx="12" cy="12" r="10" /><path d="M8 12h8" /><path d="M12 8v8" /></svg>}
+    </button>
+
+    {isFormVisible &&
+      <div
+        className="p-20 mb-1 w-100% flex gap-10 bg-background hover:opacity-80 hover:cursor-pointer"
+      >
+        <div className="w-44 h-44 bg-accent rounded-md shrink-0"></div>
+        <form id="createActForm" action={formAction} hidden={!isFormVisible}>
+          <input type="text" placeholder="Name" />
+          <input type="text" placeholder="Description" />
+        </form>
+
+        {/*        <div className="py-5">
+          <button type="submit" className={`p-5 ${pending ? 'bg-gray-500 cursor-wait' : 'bg-blue-500 cursor-pointer'}`} disabled={pending}>ADD ACT</button>
+        </div>*/}
+      </div>}
+  </>
+
+  return <>
+    <button onClick={() => setIsFormVisible(!isFormVisible)} className="h-44 p-5 font-bold cursor-pointer" aria-controls="createActForm" aria-expanded={!isFormVisible}>
+      {isFormVisible ? <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" className="lucide lucide-minus-icon lucide-minus"><path d="M5 12h14" /></svg> : <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" className="lucide lucide-circle-plus-icon lucide-circle-plus inline"><circle cx="12" cy="12" r="10" /><path d="M8 12h8" /><path d="M12 8v8" /></svg>}
     </button>
 
     <form id="createActForm" action={formAction} hidden={!isFormVisible}>
@@ -53,8 +74,8 @@ export const CreateActForm = () => {
       </div>
 
       <div className="py-5">
-        {state?.error && <p className="text-red-500">{state.error}</p>}
-        {state?.success && <p className="text-green-500">{state.success}</p>}
+        {state?.error && <p className="text-red-500">{state?.error}</p>}
+        {state?.success && <p className="text-green-500">{state?.success}</p>}
       </div>
     </form>
   </>
