@@ -16,7 +16,7 @@ const Home = () => {
           <ActsList />
         </aside>
 
-        <section className="p-10 rounded-md flex-[4_1_200px]">
+        <section className="p-10 rounded-md flex-[3_1_200px]">
           <LastPerformance />
         </section>
       </main>

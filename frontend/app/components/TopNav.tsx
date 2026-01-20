@@ -20,7 +20,7 @@ export const TopNav = () => {
   }
 
   return (
-    <nav className="h-80 px-10 flex justify-between w-full" aria-label="Primary">
+    <nav className="h-80 p-20 flex justify-between w-full" aria-label="Primary">
       <Link className="hover:opacity-80" href={{ pathname: '/' }}><p className="text-2xl">ENCORE ME</p></Link>
 
       <span>
