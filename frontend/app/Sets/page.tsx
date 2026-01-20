@@ -4,8 +4,13 @@ import { CreateSetForm } from '../components/CreateSetForm';
 import { SetsList } from '../components/SetsList';
 import { TopNav } from '../components/TopNav';
 
-const Sets = async ({ searchParams }) => {
-  const { actId } = await searchParams;
+type Props = {
+  searchParams: Record<string, string | string[] | undefined>;
+}
+
+const Sets = async ({ searchParams }: Props) => {
+  let { actId } = await searchParams;
+  actId = typeof actId === "string" ? actId : undefined;  // narrow type
 
   return (
     <main>
@@ -18,7 +23,7 @@ const Sets = async ({ searchParams }) => {
       </aside>
 
       <section className="p-5 w-300 mx-auto">
-        <CreateSetForm actId={actId} />
+        {actId && <CreateSetForm actId={actId} />}
 
         {actId && <SetsList actId={actId} showCta={false} />}
       </section>

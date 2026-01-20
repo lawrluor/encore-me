@@ -25,7 +25,7 @@ export const ActsList = () => {
         <div
           draggable={true}
           onDragStart={(e) => handleDragStart(e, act, index)}
-          onDragOver={(e) => handleDragOver(e, index)}
+          onDragOver={(e) => handleDragOver(e)}
           onDrop={(e) => handleDrop(e, index, acts, setActs)}
           className="p-20 m-20 w-200 bg-red-500"
           key={act.id}

@@ -4,7 +4,13 @@ import { useState } from 'react';
 
 import { deleteSet } from '../services/setService';
 
-export const useDeleteSet = () => {
+type ReturnProps = {
+  executeDelete: (setId: string) => void;
+  loading: boolean;
+  errorMessage: string;
+}
+
+export const useDeleteSet = (): ReturnProps => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -13,8 +19,7 @@ export const useDeleteSet = () => {
 
     try {
       setLoading(true);
-      const result = await deleteSet(setId);  // true or throws error
-      return result;
+      await deleteSet(setId);  // true or throws error
     } catch (err) {
       console.error(err);
       setErrorMessage("An unexpected error occurred. Please try again later.");

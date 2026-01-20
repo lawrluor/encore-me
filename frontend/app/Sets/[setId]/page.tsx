@@ -5,15 +5,16 @@ import { TopNav } from '../../components/TopNav';
 
 type Props = {
   params: Promise<{ setId: string }>;
-  searchParams: Promise<{ actId?: string }>;
+  searchParams: Record<string, string | string[] | undefined>;
 }
 
 const EditSet = async ({ params, searchParams }: Props) => {
   const { setId } = await params;
-  const { actId } = await searchParams;
+  let { actId } = await searchParams;
+  actId = typeof actId === "string" ? actId : undefined;  // narrow type to only allow string or undefined
 
   const setSongs = await getSongsAction('setId', setId);
-  const actSongs = await getSongsAction('actId', actId);
+  const actSongs = typeof actId === 'string' ? await getSongsAction('actId', actId) : [];
 
   return <div>
     <TopNav />

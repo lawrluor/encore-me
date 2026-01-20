@@ -5,11 +5,13 @@ import { AuthProvider } from './context/AuthProvider';
 import Home from "./page";
 
 global.fetch = jest.fn(() => {
-  return Promise.resolve({
-    ok: true,
-    json: () => Promise.resolve({ data: ['data1', 'data2'] })
-  })
-})
+  return Promise.resolve(
+    new Response(JSON.stringify({ data: ['data1', 'data2'] }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  );
+}) as typeof fetch;
 
 jest.mock('next/navigation', () => ({
   usePathname: () => {

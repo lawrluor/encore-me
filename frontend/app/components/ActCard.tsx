@@ -1,15 +1,12 @@
 import Link from 'next/link';
 
 import { useDeleteAct } from '../hooks/useDeleteAct';
+import { type Act } from '../types/act';
 
 import { SetsList } from './SetsList';
 
 type Props = {
-  act: {
-    id: string;
-    name: string;
-    description: string;
-  }
+  act: Act;
 }
 
 export const ActCard = ({ act }: Props) => {

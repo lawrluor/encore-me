@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3200",
-    "build": "next build && npm run postbuild",
+    "dev": "npm run typecheck && next dev --port 3200",
+    "build": "npm run typecheck && next build && npm run postbuild",
     "postbuild": "node scripts/remove-react-scan.js",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "test": "jest",
     "coverage": "jest --coverage --watchAll"
   },

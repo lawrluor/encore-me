@@ -3,7 +3,7 @@ export const useDraggable = <T,>() => {
     e.dataTransfer.setData("application/json", JSON.stringify({ item, idx }));
   }
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>, dropIndex: number) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     // const payload = JSON.parse(e.dataTransfer.getData("application/json"));
     // const startIndex = payload?.idx;
