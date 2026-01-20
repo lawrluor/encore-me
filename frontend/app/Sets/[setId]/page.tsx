@@ -4,8 +4,8 @@ import { SongList } from '../../components/SongList';
 import { TopNav } from '../../components/TopNav';
 
 type Props = {
-  params: Promise<{ setId: string }>,
-  searchParams: Promise<{ actId?: string }>
+  params: Promise<{ setId: string }>;
+  searchParams: Promise<{ actId?: string }>;
 }
 
 const EditSet = async ({ params, searchParams }: Props) => {
@@ -16,7 +16,7 @@ const EditSet = async ({ params, searchParams }: Props) => {
   const actSongs = await getSongsAction('actId', actId);
 
   return <div>
-    <TopNav /> 
+    <TopNav />
 
     <CreateSongForm actId={actId} setId={setId} />
     <p>Act: {actId}</p>

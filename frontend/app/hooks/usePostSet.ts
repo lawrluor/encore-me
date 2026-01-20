@@ -1,16 +1,16 @@
 import { useState } from 'react';
 
 type postData = {
-  actId: string,
-  title: string,
-  description: string
+  actId: string;
+  title: string;
+  description: string;
 }
 
 type PostSetResults = {
-  responseOk: boolean | undefined,
-  loading: boolean,
-  errorMessage: string,
-  postData: (data: postData) => Promise<boolean | undefined>
+  responseOk: boolean | undefined;
+  loading: boolean;
+  errorMessage: string;
+  postData: (data: postData) => Promise<boolean | undefined>;
 }
 
 export const usePostSet = (): PostSetResults => {

@@ -5,10 +5,14 @@ import { useState } from 'react';
 
 import { usePostSet } from '../hooks/usePostSet';
 
-export const CreateSetForm = () => {
-	  const { responseOk, loading, errorMessage, postData } = usePostSet();
+type Props = {
+  actId: string;
+}
 
-	    const [title, setTitle] = useState("");
+export const CreateSetForm = ({ actId }: Props) => {
+  const { responseOk, loading, errorMessage, postData } = usePostSet();
+
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const submitForm = async () => {
@@ -31,8 +35,8 @@ export const CreateSetForm = () => {
     }
   }
 
-	return <div>
-	<h2 className="text-3xl">Sets</h2>
+  return <div>
+    <h2 className="text-3xl">Sets</h2>
     <Form action={submitForm}>
       <div className="p-5">
         <label htmlFor="title" className="opacity-80">Title</label><span aria-hidden="true">*</span>
@@ -53,5 +57,5 @@ export const CreateSetForm = () => {
         <p className="text-green-500" hidden={!responseOk}>Created Set Successfully</p>
       </div>
     </Form>
-   </div>
+  </div>
 }

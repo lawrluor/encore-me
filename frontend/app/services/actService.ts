@@ -1,6 +1,6 @@
 type ActFormPayload = {
-  name: string,
-  description: string
+  name: string;
+  description: string;
 }
 
 export const createAct = async (payload: ActFormPayload) => {

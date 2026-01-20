@@ -1,8 +1,8 @@
-import { CreateSetForm } from '../components/CreateSetForm';
+
 import { ActsList } from '../components/ActsList';
+import { CreateSetForm } from '../components/CreateSetForm';
 import { SetsList } from '../components/SetsList';
 import { TopNav } from '../components/TopNav';
-import { usePostSet } from '../hooks/usePostSet';
 
 const Sets = async ({ searchParams }) => {
   const { actId } = await searchParams;
@@ -18,7 +18,7 @@ const Sets = async ({ searchParams }) => {
       </aside>
 
       <section className="p-5 w-300 mx-auto">
-        <CreateSetForm />
+        <CreateSetForm actId={actId} />
 
         {actId && <SetsList actId={actId} showCta={false} />}
       </section>

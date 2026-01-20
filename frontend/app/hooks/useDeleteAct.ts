@@ -8,9 +8,9 @@ type useDeleteActState = { success?: string, error?: never } |
 
 
 type useDeleteActReturn = {
-  state: useDeleteActState,
-  executeDelete: (actId: string) => Promise<void>,
-  pending: boolean
+  state: useDeleteActState;
+  executeDelete: (actId: string) => Promise<void>;
+  pending: boolean;
 }
 
 export const useDeleteAct = (): useDeleteActReturn => {

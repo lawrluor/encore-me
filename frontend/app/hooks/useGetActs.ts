@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 import { type Act } from '../types/act';
 
 type GetActsResult = {
-  acts: Act[],
-  setActs: React.Dispatch<React.SetStateAction<Act[]>>,
-  loading: boolean,
-  errorMessage: string
+  acts: Act[];
+  setActs: React.Dispatch<React.SetStateAction<Act[]>>;
+  loading: boolean;
+  errorMessage: string;
 }
 
 export const useGetActs = (): GetActsResult => {

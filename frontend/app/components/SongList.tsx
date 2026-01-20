@@ -6,7 +6,7 @@ import { useDraggable } from '../hooks/useDraggable';
 import { type Song } from '../types/song';
 
 type Props = {
-  initialSongs: Song[]
+  initialSongs: Song[];
 }
 
 export const SongList = ({ initialSongs }: Props) => {

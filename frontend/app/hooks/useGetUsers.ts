@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import type { User } from '../types/user';
 
 type GetUsersResult = {
-  data: User[],
-  loading: boolean,
-  errorMessage: string
+  data: User[];
+  loading: boolean;
+  errorMessage: string;
 }
 
 export const useGetUsers = (): GetUsersResult => {

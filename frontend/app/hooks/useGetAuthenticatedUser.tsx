@@ -5,10 +5,10 @@ import { useState, useEffect } from 'react';
 import type { User } from '../types/user';
 
 type GetAuthenticatedUserResult = {
-  user: User | null,
-  setUser: (user: User | null) => void,
-  loading: boolean,
-  errorMessage: string
+  user: User | null;
+  setUser: (user: User | null) => void;
+  loading: boolean;
+  errorMessage: string;
 }
 
 export const useGetAuthenticatedUser = (): GetAuthenticatedUserResult => {

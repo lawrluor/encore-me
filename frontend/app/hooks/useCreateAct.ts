@@ -3,15 +3,15 @@ import { useState } from 'react';
 import { createAct } from '../services/actService';
 
 type ActFormPayload = {
-  name: string,
-  description: string
+  name: string;
+  description: string;
 }
 
 // optional
 type useCreateActReturn = {
   executeCreateAct: (payload: ActFormPayload) => Promise<boolean>,
-  loading: boolean,
-  errorMessage: string
+  loading: boolean;
+  errorMessage: string;
 }
 
 export const useCreateAct = (): useCreateActReturn => {

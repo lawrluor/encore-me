@@ -6,9 +6,9 @@ import { SetsList } from './SetsList';
 
 type Props = {
   act: {
-    id: string,
-    name: string,
-    description: string
+    id: string;
+    name: string;
+    description: string;
   }
 }
 

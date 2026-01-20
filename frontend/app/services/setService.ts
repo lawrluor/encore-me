@@ -1,5 +1,10 @@
+import { cookies } from 'next/headers';
+
 export const getSets = async (actId: string) => {
     const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sets?actId=${actId}`;
+
+    const cookieStorage = await cookies();
+
     const response = await fetch(endpoint, {
       method: 'GET',
       headers: {
@@ -21,10 +26,13 @@ export const getSets = async (actId: string) => {
 
 export const deleteSet = async (setId: string): Promise<boolean | Error> => {
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sets/${setId}`;
+
+  const cookieStorage = await cookies();
+
   const response = await fetch(endpoint, {
     method: 'DELETE',
-    credentials: 'include',
     headers: {
+      'Cookie': cookieStorage.toString(),
       'Content-Type': 'application/json'
     }
   });
@@ -44,10 +52,12 @@ export const promoteSet = async (setId: string) => {
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/promoted-set`;
   const data = { setId: setId };
 
+  const cookieStorage = await cookies();
+
   const response = await fetch(endpoint, {
     method: 'PATCH',
-    credentials: 'include',
     headers: {
+      'Cookie': cookieStorage.toString(),
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)

@@ -5,13 +5,13 @@ import { useState, useEffect } from 'react';
 import { type Set } from '../types/set';
 
 type GetSetsResults = {
-  data: Set[],
-  loading: boolean,
-  errorMessage: string
+  data: Set[];
+  loading: boolean;
+  errorMessage: string;
 }
 
 type Props = {
-  actId: string
+  actId: string;
 }
 
 // TODO: given user object from auth, get act id, and pass act id into body
