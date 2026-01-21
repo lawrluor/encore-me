@@ -14,7 +14,7 @@ type Props = {
 export const SetPanelsList = async ({ actId, showCta }: Props) => {
   const data = await getSets(actId);
 
-  if (data.length === 0) return <p>No sets created yet. {showCta && <Link href={{ pathname: 'Act', query: { actId } }} className="underline font-bold text-blue-500 cursor-pointer hover:opacity-75">Create a new set</Link>}</p>;
+  if (data.length === 0) return <p>No sets created yet. {showCta && <Link href={`/Act/${actId}`} className="underline font-bold text-blue-500 cursor-pointer hover:opacity-75">Create a new set</Link>}</p>;
 
   return (
     <Suspense fallback={<p>Loading...</p>}>

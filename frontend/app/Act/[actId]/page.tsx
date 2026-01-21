@@ -1,17 +1,17 @@
-import { deleteActAction, putActAction } from '../actions/actActions';
-import { ActsList } from '../components/ActsList';
-import { CreateSetForm } from '../components/CreateSetForm';
-import { Footer } from '../components/Footer';
-import { SetPanelsList } from '../components/SetPanelsList';
-import { TopNav } from '../components/TopNav';
-import { getAct } from '../services/actService';
+import { deleteActAction, putActAction } from '../../actions/actActions';
+import { ActsList } from '../../components/ActsList';
+import { CreateSetForm } from '../../components/CreateSetForm';
+import { Footer } from '../../components/Footer';
+import { SetPanelsList } from '../../components/SetPanelsList';
+import { TopNav } from '../../components/TopNav';
+import { getAct } from '../../services/actService';
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-const Sets = async ({ searchParams }: Props) => {
-  let { actId } = await searchParams;
+const Act = async ({ params }: Props) => {
+  let { actId } = await params;
   if (!actId) throw new Error("Act must have an ID");
 
   actId = String(actId);
@@ -57,4 +57,4 @@ const Sets = async ({ searchParams }: Props) => {
   )
 }
 
-export default Sets;
+export default Act;
