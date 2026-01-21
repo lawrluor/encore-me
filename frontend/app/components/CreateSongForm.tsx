@@ -12,16 +12,16 @@ export const CreateSongForm = ({ actId, setId }: { actId?: string, setId?: strin
       {actId && <input hidden={true} name="actId" value={actId} readOnly />}
 
       <label htmlFor="title">Title</label>
-      <input id="title" name="title" type="text" className="h-44 border-1 border-white border-solid" />
+      <input id="title" name="title" type="text" spellCheck={false} autoComplete="off" className="h-44 border-1 border-white border-solid" />
 
       <label htmlFor="description">Description (optional)</label>
-      <input id="description" name="description" type="text" className="h-44 border-1 border-white border-solid" />
+      <input id="description" name="description" type="text" spellCheck={false} autoComplete="off" className="h-44 border-1 border-white border-solid" />
 
       <label htmlFor="genre">Genre (optional)</label>
-      <input id="genre" name="genre" type="text" className="h-44 border-1 border-white border-solid" />
+      <input id="genre" name="genre" type="text" spellCheck={false} autoComplete="off" className="h-44 border-1 border-white border-solid" />
 
       <label htmlFor="tempo">Tempo (optional)</label>
-      <input id="tempo" name="tempo" type="text" className="h-44 border-1 border-white border-solid" />
+      <input id="tempo" name="tempo" type="text" spellCheck={false} autoComplete="off" className="h-44 border-1 border-white border-solid" />
 
       <button type="submit" className="h-44 bg-blue-500">CREATE NEW SONG</button>
     </Form>

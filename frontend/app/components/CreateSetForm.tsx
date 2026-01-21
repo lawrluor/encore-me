@@ -42,12 +42,12 @@ export const CreateSetForm = ({ actId }: Props) => {
       <Form action={submitForm}>
         <div className="p-5">
           <label htmlFor="title" className="opacity-80">Title</label><span aria-hidden="true">*</span>
-          <input id="title" name="title" type="text" className="block h-44 p-5 border-1 border-white border-solid" value={title} onChange={e => setTitle(e.target.value)} required />
+          <input id="title" name="title" type="text" spellCheck={false} autoComplete="off" className="block h-44 p-5 border-1 border-white border-solid" value={title} onChange={e => setTitle(e.target.value)} required />
         </div>
 
         <div className="p-5">
-          <label htmlFor="description" className="opacity-80">Description</label>
-          <input id="description" name="description" type="text" className="block h-44 p-5 border-1 border-white border-solid" value={description} onChange={e => setDescription(e.target.value)} />
+          <label htmlFor="description" className="opacity-80">Description (optional)</label>
+          <input id="description" name="description" type="text" spellCheck={false} autoComplete="off" className="block h-44 p-5 border-1 border-white border-solid" value={description} onChange={e => setDescription(e.target.value)} />
         </div>
 
         <div className="p-5">

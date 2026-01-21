@@ -150,22 +150,22 @@ const Signup = () => {
           <Form action={signup} className="w-1/4">
             <div className="py-5">
               <label htmlFor="name" className="opacity-80">Name</label>
-              <input id="name" name="name" type="text" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={info.name} onChange={e => handleSignupInfo(e)} required />
+              <input id="name" name="name" type="text" spellCheck={false} autoComplete="off" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={info.name} onChange={e => handleSignupInfo(e)} required />
             </div>
 
             <div className="py-5">
               <label htmlFor="email" className="opacity-80">Email</label>
-              <input id="email" name="email" type="email" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={info.email} onChange={e => handleSignupInfo(e)} required />
+              <input id="email" name="email" type="email" spellCheck={false} autoComplete="off" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={info.email} onChange={e => handleSignupInfo(e)} required />
             </div>
 
             <div className="py-5">
               <label htmlFor="password" className="opacity-80">Password</label>
-              <input id="password" name="password" type="password" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={info.password} onChange={e => handleSignupInfo(e)} required />
+              <input id="password" name="password" type="password" spellCheck={false} autoComplete="off" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={info.password} onChange={e => handleSignupInfo(e)} required />
             </div>
 
             <div className="py-5">
               <label htmlFor="passwordConfirm" className="opacity-80">Confirm Password</label>
-              <input id="passwordConfirm" name="passwordConfirm" type="password" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={info.passwordConfirm} onChange={e => handleSignupInfo(e)} required />
+              <input id="passwordConfirm" name="passwordConfirm" type="password" spellCheck={false} autoComplete="off" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={info.passwordConfirm} onChange={e => handleSignupInfo(e)} required />
             </div>
 
             <div className="py-5">
@@ -190,12 +190,12 @@ const Signup = () => {
           <Form action={login} className="w-1/4">
             <div className="py-5">
               <label htmlFor="email" className="opacity-80">Email</label>
-              <input id="email" name="email" type="email" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={info.email} onChange={e => handleSignupInfo(e)} />
+              <input id="email" name="email" type="email" spellCheck={false} autoComplete="off" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={info.email} onChange={e => handleSignupInfo(e)} />
             </div>
 
             <div className="py-5">
               <label htmlFor="password" className="opacity-80">Password</label>
-              <input id="password" name="password" type="password" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={info.password} onChange={e => handleSignupInfo(e)} />
+              <input id="password" name="password" type="password" spellCheck={false} autoComplete="off" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" value={info.password} onChange={e => handleSignupInfo(e)} />
             </div>
 
             <div className="py-5">

@@ -11,8 +11,11 @@ export const CreateActForm = () => {
       <div className="flex gap-10">
         <div className="w-44 h-44 bg-accent rounded-md shrink-0"></div>
         <Form action={postActAction}>
-          <input type="text" name="name" placeholder="Name" required />
-          <input type="text" name="description" placeholder="Description" className="text-sm" />
+          <label htmlFor="name" className="sr-only">Name</label>
+          <input id="name" type="text" spellCheck={false} autoComplete="off" name="name" placeholder="Name" required />
+
+          <label htmlFor="description" className="sr-only">Description (optional)</label>
+          <input id="description" type="text" spellCheck={false} autoComplete="off" name="description" placeholder="Description (optional)" className="text-sm" />
           <input hidden type="submit" />
           {/*<button type="submit" className="p-5 bg-accent cursor-pointer">ADD ACT</button>*/}
         </Form>
