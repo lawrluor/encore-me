@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-import { deleteAct, getAct, getActs, postAct, putAct } from '../services/actService';
+import { deleteAct, postAct, putAct } from '../services/actService';
 import { type Act } from '../types/act';
 
 export const deleteActAction = async (formData: FormData): Promise<void> => {
@@ -14,15 +14,6 @@ export const deleteActAction = async (formData: FormData): Promise<void> => {
   // Since the Act is deleted, navigate away from it and refresh Acts data in home
   revalidatePath('/');
   redirect('/');
-}
-
-export const getActAction = async (id: string): Promise<Act> => {
-  const data = await getAct(id);
-  return data;
-}
-
-export const getActsAction = async (): Promise<Act[]> => {
-  return await getActs();
 }
 
 export const postActAction = async (formData: FormData): Promise<void> => {

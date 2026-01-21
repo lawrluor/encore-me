@@ -1,9 +1,9 @@
-import { getActsAction } from '../actions/actActions';
 import { ActsListDraggables } from '../components/ActsListDraggables';
 import { CreateActForm } from '../components/CreateActForm';
+import { getActs } from '../services/actService';
 
 export const ActsList = async () => {
-  const acts = await getActsAction();
+  const acts = await getActs();
 
   return (
     <div className="p-20">

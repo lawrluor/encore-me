@@ -1,9 +1,10 @@
-import { getActAction, deleteActAction, putActAction } from '../actions/actActions';
+import { deleteActAction, putActAction } from '../actions/actActions';
 import { ActsList } from '../components/ActsList';
 import { CreateSetForm } from '../components/CreateSetForm';
 import { Footer } from '../components/Footer';
 import { SetPanelsList } from '../components/SetPanelsList';
 import { TopNav } from '../components/TopNav';
+import { getAct } from '../services/actService';
 
 type Props = {
   searchParams: Record<string, string | string[] | undefined>;
@@ -14,7 +15,7 @@ const Sets = async ({ searchParams }: Props) => {
   if (!actId) throw new Error("Act must have an ID");
 
   actId = String(actId);
-  const act = await getActAction(actId);
+  const act = await getAct(actId);
 
   return (
     <div className="min-h-dvh flex flex-col">
