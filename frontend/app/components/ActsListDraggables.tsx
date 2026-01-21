@@ -22,20 +22,21 @@ export const ActsListDraggables = ({ initialActs }: Props) => {
   return (
     <div>
       {acts?.map((act: Act, index: number) => (
-        <div
+        <Link 
+          key={act.id} 
+          href={{ pathname: 'Sets', query: { actId: act.id } }}
           draggable={true}
           onDragStart={(e) => handleDragStart(e, act, index)}
           onDragOver={(e) => handleDragOver(e)}
           onDrop={(e) => handleDrop(e, index, acts, setActs)}
           className="py-10 w-100% flex gap-10 hover:opacity-80 hover:cursor-pointer"
-          key={act.id}
         >
           <div className="w-44 h-44 bg-accent rounded-md shrink-0"></div>
           <div>
-            <Link draggable={false} href={{ pathname: 'Sets', query: { actId: act.id } }}><p className="text-bold">{act.name}</p></Link>
+            <p className="text-bold">{act.name}</p>
             <p className="text-sm opacity-60">{act.description}</p>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   )
