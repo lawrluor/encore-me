@@ -7,7 +7,7 @@ type ActFormPayload = {
   description?: string;
 }
 
-export const getAct = async (id: string): Act => {
+export const getAct = async (id: string): Promise<Act> => {
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acts/${id}`;
 
   const cookieStorage = await cookies();
@@ -79,18 +79,20 @@ export const postAct = async (payload: ActFormPayload): Promise<boolean> => {
   const responsePayload = await response.json();
   if (!responsePayload || !responsePayload.success) {
     console.error(responsePayload);
-    throw new Error(`Response unsuccessful: ${responsePayload}`);
+    throw new Error(`Response unsuccessful: ${JSON.stringify(responsePayload)}`);
   }
 
   return responsePayload.success;
 }
 
-export const deleteAct = async (actId: string): Promise<boolean> => {
-  const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acts/${actId}`;
+export const deleteAct = async (id: string): Promise<boolean> => {
+  const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acts/${id}`;
+
+  const cookieStorage = await cookies();
   const response = await fetch(endpoint, {
     method: 'DELETE',
-    credentials: 'include',
     headers: {
+      'Cookie': cookieStorage.toString(),
       'Content-Type': 'application/json'
     }
   });
@@ -101,7 +103,10 @@ export const deleteAct = async (actId: string): Promise<boolean> => {
     throw new Error(result.message || 'Failed to delete act');
   }
 
-  const result = await response.json();
-  if (!result?.success) throw new Error('Unexpected format for server response');
-  return result.success;
+  const payload = await response.json();
+  if (!payload || !payload.success) {
+    console.error(payload);
+    throw new Error(`Response unsuccessful: ${JSON.stringify(payload)}`);
+  }
+  return payload.success;
 }

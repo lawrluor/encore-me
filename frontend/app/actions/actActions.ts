@@ -1,13 +1,24 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
-import { postAct, getAct, getActs } from '../services/actService';
+import { deleteAct, getAct, getActs, postAct } from '../services/actService';
 import { type Act } from '../types/act';
 
-export const getActAction = async (id: string): Act => {
-	const data = await getAct(id);
-	return data;
+export const deleteActAction = async (formData: FormData): Promise<void> => {
+  if (!formData.get('id')) throw new Error('Act ID is required');
+  const id = String(formData.get('id'));
+  await deleteAct(id);
+
+  // Since the Act is deleted, navigate away from it and refresh Acts data in home
+  revalidatePath('/');
+  redirect('/');
+}
+
+export const getActAction = async (id: string): Promise<Act> => {
+  const data = await getAct(id);
+  return data;
 }
 
 export const getActsAction = async (): Promise<Act[]> => {

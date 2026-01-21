@@ -28,11 +28,6 @@ body {
   min-height: 100dvh;
 }
 
-button:hover {
-  opacity: 0.75;
-  transition: opacity 0.2s ease;
-}
-
 /*summary::marker {
   content: " +";
   transform: scale(2);

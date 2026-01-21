@@ -1,4 +1,4 @@
-import { getActAction } from '../actions/actActions';
+import { getActAction, deleteActAction } from '../actions/actActions';
 
 import { ActsList } from '../components/ActsList';
 import { CreateSetForm } from '../components/CreateSetForm';
@@ -27,7 +27,18 @@ const Sets = async ({ searchParams }: Props) => {
         </aside>
 
         <section className="p-20 rounded-md flex-[3_1_200px]">
-          <h2 className="text-2xl">{act?.name}</h2>  
+          <div className="flex items-center gap-5">
+            <h2 className="sr-only">{act?.name}</h2>
+            <button type="submit" className="opacity"><input className="text-2xl placeholder:text-foreground" type="text" placeholder={act?.name}/></button>
+            
+            <form action={deleteActAction}>
+              <input hidden defaultValue={act?.id} name="id" />
+              <button type="submit" className="hover:opacity-60 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-minus-icon lucide-circle-minus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+              </button>
+            </form>
+          </div>   
+          
           {actId && <CreateSetForm actId={actId} />}
           {actId && <SetPanelsList actId={actId} showCta={false} />}
         </section>
