@@ -6,10 +6,10 @@ import { promoteSet, deleteSet } from '../services/setService';
 
 export const promoteSetAction = async (setId: string): Promise<void> => {
   await promoteSet(setId);
-  revalidatePath('/Sets');
+  revalidatePath('/Act');
 }
 
 export const deleteSetAction = async (setId: string): Promise<void> => {
   await deleteSet(setId);
-  revalidatePath('/Sets');
+  revalidatePath('/Act');
 }

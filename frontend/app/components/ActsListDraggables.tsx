@@ -24,7 +24,7 @@ export const ActsListDraggables = ({ initialActs }: Props) => {
       {acts?.map((act: Act, index: number) => (
         <Link
           key={act.id}
-          href={{ pathname: 'Sets', query: { actId: act.id } }}
+          href={{ pathname: 'Act', query: { actId: act.id } }}
           draggable={true}
           onDragStart={(e) => handleDragStart(e, act, index)}
           onDragOver={(e) => handleDragOver(e)}
