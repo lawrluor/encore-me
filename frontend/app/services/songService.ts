@@ -1,6 +1,8 @@
 import { cookies } from 'next/headers';
 
-export const getSongs = async (idType: 'actId' | 'setId', id: string) => {
+import { type Song } from '../types/song';
+
+export const getSongs = async (idType: 'actId' | 'setId', id: string): Promise<Song[]> => {
   // By default, doesn't have authorization because fetching from server and doesn't have client auth
   // We cannot include cookies in header with credentials: 'include', that only works from client side
   // So, we need to get cookie another way
@@ -20,11 +22,15 @@ export const getSongs = async (idType: 'actId' | 'setId', id: string) => {
   };
 
   const payload = await response.json();
-  const songs = payload.data;
-  return songs;
+  if (!payload || !payload.data) {
+    console.error(payload);
+    throw new Error(`Response unsuccessful: ${JSON.stringify(payload)}`);
+  }
+
+  return payload.data;
 }
 
-export const postSong = async (formData: FormData) => {
+export const postSong = async (formData: FormData): Promise<boolean> => {
   const cookieStorage = await cookies();
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/songs`, {
@@ -50,6 +56,10 @@ export const postSong = async (formData: FormData) => {
   }
 
   const payload = await response.json();
-  if (!payload || !payload.data) throw new Error("Result in unexpected format");
-  return payload.data;
+  if (!payload || !payload.success) {
+    console.error(payload);
+    throw new Error(`Response unsuccessful: ${JSON.stringify(payload)}`);
+  }
+  
+  return payload.success;
 }

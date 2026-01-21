@@ -11,7 +11,7 @@ type Props = {
 
 export const SongList = ({ initialSongs }: Props) => {
   const [songs, setSongs] = useState<Song[]>(initialSongs);
-  const { handleDragStart, handleDragOver, handleDrop } = useDraggable<Song>();
+  const { handleDragStart, handleDragOver, handleDrop } = useDraggable<Song, HTMLDivElement>();
 
   return (
     <div>

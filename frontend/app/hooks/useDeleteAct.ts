@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { deleteAct } from '../services/actService';
 
-type useDeleteActState = { success?: string, error?: never } |
+type useDeleteActState = { success?: boolean, error?: never } |
 { error?: string, success?: never } |
   null;
 
@@ -24,7 +24,7 @@ export const useDeleteAct = (): useDeleteActReturn => {
       setPending(true);
       setState(null);
       const result = await deleteAct(actId);
-      setState({ 'success': result.message });
+      setState({ 'success': result });
     } catch (err) {
       console.error(err);
       // const message = err instanceof Error ? err.message : String(err);

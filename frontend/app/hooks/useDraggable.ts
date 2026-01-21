@@ -1,9 +1,9 @@
-export const useDraggable = <T,>() => {
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, item: T, idx: number) => {
+export const useDraggable = <T, E extends HTMLElement>() => {
+  const handleDragStart = (e: React.DragEvent<E>, item: T, idx: number) => {
     e.dataTransfer.setData("application/json", JSON.stringify({ item, idx }));
   }
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragOver = (e: React.DragEvent<E>) => {
     e.preventDefault();
     // const payload = JSON.parse(e.dataTransfer.getData("application/json"));
     // const startIndex = payload?.idx;
@@ -17,7 +17,7 @@ export const useDraggable = <T,>() => {
     } */
   }
 
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>, dropIndex: number, state: T[], setState: React.Dispatch<React.SetStateAction<T[]>>) => {
+  const handleDrop = (e: React.DragEvent<E>, dropIndex: number, state: T[], setState: React.Dispatch<React.SetStateAction<T[]>>) => {
     e.preventDefault();
 
     try {

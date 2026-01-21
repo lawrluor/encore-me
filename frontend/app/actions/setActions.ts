@@ -4,14 +4,12 @@ import { revalidatePath } from 'next/cache';
 
 import { promoteSet, deleteSet } from '../services/setService';
 
-export const promoteSetAction = async (setId: string) => {
-  const result = await promoteSet(setId);
+export const promoteSetAction = async (setId: string): Promise<void> => {
+  await promoteSet(setId);
   revalidatePath('/Sets');
-  return result;
 }
 
-export const deleteSetAction = async (setId: string) => {
-  const result = await deleteSet(setId);
+export const deleteSetAction = async (setId: string): Promise<void> => {
+  await deleteSet(setId);
   revalidatePath('/Sets');
-  return result;
 }

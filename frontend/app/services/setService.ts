@@ -1,6 +1,8 @@
 import { cookies } from 'next/headers';
 
-export const getSets = async (actId: string) => {
+import { type Set } from '../types/set';
+
+export const getSets = async (actId: string): Promise<Set[]> => {
     const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sets?actId=${actId}`;
 
     const cookieStorage = await cookies();
@@ -44,11 +46,15 @@ export const deleteSet = async (setId: string): Promise<boolean> => {
   }
 
   const payload = await response.json();
-  if (!payload?.success) throw new Error(`Response unsuccessful: ${payload.message}`);
-  return payload.success;  // true
+  if (!payload || !payload.success) {
+    console.error(payload)
+    throw new Error(`Response unsuccessful: ${JSON.stringify(payload)}`);
+  }
+  
+  return payload.success;
 }
 
-export const promoteSet = async (setId: string) => {
+export const promoteSet = async (setId: string): Promise<boolean> => {
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/promoted-set`;
   const data = { setId: setId };
 

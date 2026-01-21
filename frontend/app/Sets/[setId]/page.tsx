@@ -1,7 +1,7 @@
-import { getSongsAction } from '../../actions/songActions';
 import { CreateSongForm } from '../../components/CreateSongForm';
 import { SongList } from '../../components/SongList';
 import { TopNav } from '../../components/TopNav';
+import { getSongs } from '../../services/songService';
 
 type Props = {
   params: Promise<{ setId: string }>;
@@ -13,8 +13,8 @@ const EditSet = async ({ params, searchParams }: Props) => {
   let { actId } = await searchParams;
   actId = typeof actId === "string" ? actId : undefined;  // narrow type to only allow string or undefined
 
-  const setSongs = await getSongsAction('setId', setId);
-  const actSongs = typeof actId === 'string' ? await getSongsAction('actId', actId) : [];
+  const setSongs = await getSongs('setId', setId);
+  const actSongs = typeof actId === 'string' ? await getSongs('actId', actId) : [];
 
   return <div>
     <TopNav />

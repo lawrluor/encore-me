@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { Fragment } from 'react';
 
 import { deleteSetAction, promoteSetAction } from '../actions/setActions';
-import { getSongsAction } from '../actions/songActions';
 import { Button } from '../components/Button';
+import { getSongs } from '../services/songService';
 import { type Song } from '../types/song';
 
 type Props = {
@@ -16,7 +16,7 @@ type Props = {
 }
 
 export const SetPanel = async ({ actId, set }: Props) => {
-  const data = await getSongsAction('setId', set.id);
+  const data = await getSongs('setId', set.id);
 
   const deleteSetWithId = deleteSetAction.bind(null, set.id);
   const promoteSetWithId = promoteSetAction.bind(null, set.id);
@@ -25,16 +25,16 @@ export const SetPanel = async ({ actId, set }: Props) => {
   return (
     <div className="gap-10 p-20 bg-gray-900 rounded-md">
       <header className="mb-30">
-      <div className="flex justify-between">
-        <Link className="hover:opacity-80" href={{ pathname: `/Sets/${set.id}`, query: { actId } }} draggable={false}><h2 className="text-bold text-2xl">{set.title}</h2></Link>
-        <span>
-          <Button callback={promoteSetWithId}>Promote</Button>
-          <Button callback={deleteSetWithId} aria-label="Delete Set"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash-icon lucide-trash"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg></Button>
-        </span>
-      </div>
+        <div className="flex justify-between">
+          <Link className="hover:opacity-80" href={{ pathname: `/Sets/${set.id}`, query: { actId } }} draggable={false}><h2 className="text-bold text-2xl">{set.title}</h2></Link>
+          <span>
+            <Button callback={promoteSetWithId}>Promote</Button>
+            <Button callback={deleteSetWithId} aria-label="Delete Set"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash-icon lucide-trash"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg></Button>
+          </span>
+        </div>
 
-      {set.description && <p>Description: {set.description}</p>}
-    </header>
+        {set.description && <p>Description: {set.description}</p>}
+      </header>
 
 
       <main className="grid grid-cols-3 gap-10">

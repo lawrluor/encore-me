@@ -11,19 +11,19 @@ type Props = {
 }
 
 export const ActsListDraggables = ({ initialActs }: Props) => {
-  const { handleDragStart, handleDragOver, handleDrop } = useDraggable<Act>();
+  const { handleDragStart, handleDragOver, handleDrop } = useDraggable<Act, HTMLAnchorElement>();
   const [acts, setActs] = useState<Act[]>(initialActs);
 
   useEffect(() => {
     setActs(initialActs);
   }, [initialActs]);
 
-  // Each item is both draggable and a drag targets
+  // Each item is both draggable and a drag target
   return (
     <div>
       {acts?.map((act: Act, index: number) => (
-        <Link 
-          key={act.id} 
+        <Link
+          key={act.id}
           href={{ pathname: 'Sets', query: { actId: act.id } }}
           draggable={true}
           onDragStart={(e) => handleDragStart(e, act, index)}

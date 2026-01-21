@@ -4,14 +4,10 @@ import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { getSongs, postSong } from '../services/songService';
-
-export const getSongsAction = async (idType: 'actId' | 'setId', id: string) => {
-  return await getSongs(idType, id);
-}
+import { postSong } from '../services/songService';
 
 // Wrapper for postSong to actually navigate after successful post
-export const postSongAction = async (formData: FormData) => {
+export const postSongAction = async (formData: FormData): Promise<void> => {
   await postSong(formData);
 
   // Because this is a server action, we can't call history.back(),
