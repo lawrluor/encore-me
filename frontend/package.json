@@ -7,6 +7,8 @@
     "build": "npm run typecheck && next build && npm run postbuild",
     "postbuild": "node scripts/remove-react-scan.js",
     "start": "next start",
+    "analyze": "ANALYZE=true next build --webpack",
+    "analyze-exp": "next experimental-analyze",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "jest",
@@ -19,6 +21,7 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^16.1.4",
     "@tailwindcss/postcss": "^4",
     "@tanstack/react-query-devtools": "^5.91.2",
     "@testing-library/dom": "^10.4.1",

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Script from "next/script";
 
 import { AuthProvider } from "./context/AuthProvider";
 import { QueryProvider } from "./providers/QueryProvider";
@@ -28,12 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children?: React.Rea
           <AuthProvider>
             {children}
           </AuthProvider>
-        </QueryProvider>
-        <Script
-          src="https://unpkg.com/react-scan/dist/auto.global.js"
-          strategy="afterInteractive"
-        />
-      </body>
+        </QueryProvider>      </body>
     </html>
   );
 }

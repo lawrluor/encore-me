@@ -7,7 +7,7 @@ import { TopNav } from '../components/TopNav';
 import { getAct } from '../services/actService';
 
 type Props = {
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 const Sets = async ({ searchParams }: Props) => {

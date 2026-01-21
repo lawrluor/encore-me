@@ -38,7 +38,7 @@ export const CreateSetForm = ({ actId }: Props) => {
   return (
     <details>
       <summary>Create Set</summary>
-      
+
       <Form action={submitForm}>
         <div className="p-5">
           <label htmlFor="title" className="opacity-80">Title</label><span aria-hidden="true">*</span>
@@ -51,7 +51,7 @@ export const CreateSetForm = ({ actId }: Props) => {
         </div>
 
         <div className="p-5">
-          <button type="submit" className="p-5 bg-blue-500 cursor-pointer" disabled={loading}>CREATE SET</button>
+          <button type="submit" className="p-5 bg-accent-muted cursor-pointer" disabled={loading}>CREATE SET</button>
         </div>
 
         <div className="p-5">

@@ -5,7 +5,7 @@ import { getSongs } from '../../services/songService';
 
 type Props = {
   params: Promise<{ setId: string }>;
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 const EditSet = async ({ params, searchParams }: Props) => {

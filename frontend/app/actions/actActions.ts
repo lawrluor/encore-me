@@ -4,7 +4,6 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import { deleteAct, postAct, putAct } from '../services/actService';
-import { type Act } from '../types/act';
 
 export const deleteActAction = async (formData: FormData): Promise<void> => {
   if (!formData.get('id')) throw new Error('Act ID is required');
@@ -31,7 +30,7 @@ export const postActAction = async (formData: FormData): Promise<void> => {
 export const putActAction = async (formData: FormData): Promise<void> => {
   if (!formData.get('id')) throw new Error('Act ID must not be blank');
   if (!formData.get('name')) throw new Error('Act name must not be blank');
-  
+
   const id = String(formData.get('id'));
   const payload = {
     name: String(formData.get('name'))
