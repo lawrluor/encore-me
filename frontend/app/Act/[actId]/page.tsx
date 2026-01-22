@@ -7,7 +7,7 @@ import { TopNav } from '../../components/TopNav';
 import { getAct } from '../../services/actService';
 
 type Props = {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  params: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 const Act = async ({ params }: Props) => {
