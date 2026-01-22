@@ -12,6 +12,10 @@
       "destination": "/api/auth/login.js"
     },
     {
+      "source": "/api/auth/logout",
+      "destination": "/api/auth/logout.js"
+    },
+    {
       "source": "/api/admin/setup",
       "destination": "/api/admin/setup.js"
     },
