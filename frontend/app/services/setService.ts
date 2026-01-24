@@ -88,7 +88,7 @@ export const promoteSet = async (setId: string): Promise<boolean> => {
 export const postSet = async (data: PostSetPayload) => {
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sets`;
   const cookieStorage = await cookies();
-  
+
   const response = await fetch(endpoint, {
     method: 'POST',
     headers: {
@@ -97,8 +97,6 @@ export const postSet = async (data: PostSetPayload) => {
     },
     body: JSON.stringify(data)
   });
-
-  console.log("post data", data);
 
   if (!response.ok) {
     const errorData = await response.json();

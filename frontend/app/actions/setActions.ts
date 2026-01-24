@@ -9,7 +9,7 @@ export const deleteSetAction = async (setId: string): Promise<void> => {
   revalidatePath('/Act');
 }
 
-export const postSetAction = async (formData: formData): Promise<void> => {
+export const postSetAction = async (formData: FormData): Promise<void> => {
   const data = {
     actId: String(formData.get('actId')),
     title: String(formData.get('title')),
