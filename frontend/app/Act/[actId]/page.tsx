@@ -45,8 +45,13 @@ const Act = async ({ params }: Props) => {
             </form>
           </div>
 
-          {actId && <CreateSetForm actId={actId} />}
-          {actId && <SetPanelsList actId={actId} showCta={false} />}
+          <div className="mb-10">
+            {actId && <CreateSetForm actId={actId} />}
+          </div>
+
+          <div>
+            {actId && <SetPanelsList actId={actId} showCta={false} />}
+          </div>
         </section>
       </main>
 

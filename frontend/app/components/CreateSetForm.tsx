@@ -3,43 +3,23 @@
 import Form from 'next/form';
 import { useState } from 'react';
 
-import { usePostSet } from '../hooks/usePostSet';
+import { postSetAction } from '../actions/setActions';
 
 type Props = {
   actId: string;
 }
 
 export const CreateSetForm = ({ actId }: Props) => {
-  const { responseOk, loading, errorMessage, postData } = usePostSet();
-
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-
-  const submitForm = async () => {
-    if (!actId) {
-      console.error('No actId provided');
-      return;
-    }
-
-    const data = {
-      actId: actId,
-      title: title,
-      description: description
-    }
-
-    // reset form state if successful
-    const result = await postData(data);
-    if (result) {
-      setTitle("");
-      setDescription("");
-    }
-  }
 
   return (
     <details>
       <summary>Create Set</summary>
 
-      <Form action={submitForm}>
+      <Form action={postSetAction}>
+        <input hidden type="text" name="actId" defaultValue={actId} />
+
         <div className="p-5">
           <label htmlFor="title" className="opacity-80">Title</label><span aria-hidden="true">*</span>
           <input id="title" name="title" type="text" spellCheck={false} autoComplete="off" className="block h-44 p-5 border-1 border-white border-solid" value={title} onChange={e => setTitle(e.target.value)} required />
@@ -51,12 +31,7 @@ export const CreateSetForm = ({ actId }: Props) => {
         </div>
 
         <div className="p-5">
-          <button type="submit" className="p-5 bg-accent-muted cursor-pointer" disabled={loading}>CREATE SET</button>
-        </div>
-
-        <div className="p-5">
-          <p className="text-red-500" hidden={!errorMessage}>{errorMessage}</p>
-          <p className="text-green-500" hidden={!responseOk}>Created Set Successfully</p>
+          <button type="submit" className="p-5 bg-accent-muted cursor-pointer">CREATE SET</button>
         </div>
       </Form>
     </details>

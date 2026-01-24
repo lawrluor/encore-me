@@ -27,7 +27,8 @@ export default function RootLayout({ children }: Readonly<{ children?: React.Rea
           <AuthProvider>
             {children}
           </AuthProvider>
-        </QueryProvider>      </body>
+        </QueryProvider>
+      </body>
     </html>
   );
 }

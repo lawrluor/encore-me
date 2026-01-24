@@ -55,7 +55,7 @@ export const getAct = async (id: string): Promise<Act> => {
   if (!payload || !payload.data) {
     console.error(payload);
     throw new Error(`Unexpected payload: ${JSON.stringify(payload)}`)
-  } 
+  }
 
   return payload.data;
 }
