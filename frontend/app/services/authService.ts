@@ -41,28 +41,28 @@ export const loginUser = async (data: { email: string, password: string }) => {
   if (!response.ok) {
     const errorPayload = await response.json();
     console.error('Error in loginUser():', errorPayload);
+
+    // only throw for unexpected errors, not for logic erros
     return null;
   }
 
   // 1. Extract the cookie from the Backend response
   const setCookieHeader = response.headers.get('set-cookie');
 
-  if (setCookieHeader) {
-    // 2. Parse the cookie (Simple version)
-    // The backend might send: "authToken=abc12345; Path=/; HttpOnly"
-    // We need to parse this or simply set it blindly if the names match.
+  // 2. Parse the cookie (Simple version)
+  // The backend might send: "authToken=abc12345; Path=/; HttpOnly"
+  // We need to parse this or simply set it blindly if the names match.
 
-    // A robust way to forward it:
-    const token = setCookieHeader.split(';')[0].split('=')[1]; // Very rough parsing
+  // A robust way to forward it:
+  const token = setCookieHeader?.split(';')[0]?.split('=')?.[1] || ''; // Very rough parsing
 
-    // BETTER WAY: Use the exact name your backend uses
-    (await cookies()).set('authToken', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      path: '/',
-      // Add 'sameSite' and 'maxAge' based on your backend rules
-    });
-  }
+  // BETTER WAY: Use the exact name your backend uses
+  (await cookies()).set('authToken', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+    // Add 'sameSite' and 'maxAge' based on your backend rules
+  });
 
   const result = await response.json()
   if (!result) throw new Error(`Unexpected result: ${JSON.stringify(result)}`);
@@ -86,22 +86,20 @@ export const signupUser = async (payload: { name: string, email: string, passwor
   // 1. Extract the cookie from the Backend response
   const setCookieHeader = response.headers.get('set-cookie');
 
-  if (setCookieHeader) {
-    // 2. Parse the cookie (Simple version)
-    // The backend might send: "authToken=abc12345; Path=/; HttpOnly"
-    // We need to parse this or simply set it blindly if the names match.
+  // 2. Parse the cookie (Simple version)
+  // The backend might send: "authToken=abc12345; Path=/; HttpOnly"
+  // We need to parse this or simply set it blindly if the names match.
 
-    // A robust way to forward it:
-    const token = setCookieHeader.split(';')[0].split('=')[1]; // Very rough parsing
+  // A robust way to forward it:
+  const token = setCookieHeader?.split(';')[0]?.split('=')?.[1] || ''; // Very rough parsing
 
-    // BETTER WAY: Use the exact name your backend uses
-    (await cookies()).set('authToken', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      path: '/',
-      // Add 'sameSite' and 'maxAge' based on your backend rules
-    });
-  }
+  // BETTER WAY: Use the exact name your backend uses
+  (await cookies()).set('authToken', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+    // Add 'sameSite' and 'maxAge' based on your backend rules
+  });
 
   const result = await response.json();
   if (!result) throw new Error(`Unexpected result: ${JSON.stringify(result)}`);

@@ -22,7 +22,7 @@ export const TopNav = () => {
 
   return (
     <nav className="h-80 p-20 flex justify-between w-full" aria-label="Primary">
-      <Link className="hover:opacity-80" href={{ pathname: '/' }}><p className="text-2xl">ENCORE ME</p></Link>
+      <Link className="hover:opacity-80" href={{ pathname: '/Home' }}><p className="text-2xl">ENCORE ME</p></Link>
 
       <span>
         <button onClick={signOut} className="h-44 p-5 cursor-pointer">Sign Out</button>

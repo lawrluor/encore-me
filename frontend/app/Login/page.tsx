@@ -19,12 +19,12 @@ const Login = async () => {
         <Form action={loginUserAction} className="w-1/4">
           <div className="py-5">
             <label htmlFor="email" className="opacity-80">Email</label>
-            <input id="email" name="email" type="email" defaultValue={'rl@gmail.com'} spellCheck={false} autoComplete="off" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" />
+            <input id="email" name="email" type="email" defaultValue={process.env.NEXT_PUBLIC_USER_EMAIL || ''} spellCheck={false} autoComplete="off" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" />
           </div>
 
           <div className="py-5">
             <label htmlFor="password" className="opacity-80">Password</label>
-            <input id="password" name="password" type="password" defaultValue={'test123'} spellCheck={false} autoComplete="off" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" />
+            <input id="password" name="password" type="password" defaultValue={process.env.NEXT_PUBLIC_USER_PASSWORD || ''} spellCheck={false} autoComplete="off" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" />
           </div>
 
           <div className="py-5">
