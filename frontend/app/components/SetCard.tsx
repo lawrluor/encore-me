@@ -20,7 +20,7 @@ export const SetCard = ({ actId, set }: Props) => {
     <div>
       {/*{deleteErrorMessage && <p className="text-red-500">{deleteErrorMessage}</p>}
       {promoteError && <p className="text-red-500">{promoteError.message}</p>}*/}
-      <div className="gap-10 p-10 bg-blue-500">
+      <div className="gap-10 p-10 bg-accent">
         <div>
           <Link className="hover:opacity-80" href={{ pathname: `/Set/${set.id}`, query: { actId } }} draggable={false}><p className="font-bold">{set.title}</p></Link>
           <Button onClick={promoteSetWithId}>Promote</Button>

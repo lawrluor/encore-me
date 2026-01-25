@@ -28,7 +28,7 @@ const Login = async () => {
           </div>
 
           <div className="py-5">
-            <button id="submit" type="submit" className={'h-44 cursor-pointer p-10 rounded-sm bg-blue-500'}>LOG IN</button>
+            <button id="submit" type="submit" className={'h-44 cursor-pointer p-10 rounded-sm bg-accent'}>LOG IN</button>
           </div>
         </Form>
 

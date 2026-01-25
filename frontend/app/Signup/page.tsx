@@ -38,7 +38,7 @@ const Signup = async () => {
           </div>
 
           <div className="py-5">
-            <button id="submit" type="submit" className={`min-h-44 p-10 rounded-sm bg-blue-500 cursor-pointer`}>CREATE ACCOUNT</button>
+            <button id="submit" type="submit" className={`min-h-44 p-10 rounded-sm bg-accent cursor-pointer`}>CREATE ACCOUNT</button>
           </div>
         </Form>
 

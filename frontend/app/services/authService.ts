@@ -84,23 +84,9 @@ export const logoutUser = async () => {
   const result = await response.json();
   if (!result) throw new Error(`Unexpected result: ${JSON.stringify(result)}`);
 
-  // 1. Extract the cookie from the Backend response
-  const setCookieHeader = response.headers.get('set-cookie');
-
-  // 2. Parse the cookie (Simple version)
-  // The backend might send: "authToken=abc12345; Path=/; HttpOnly"
-  // We need to parse this or simply set it blindly if the names match.
-
-  // A robust way to forward it:
-  const token = setCookieHeader?.split(';')[0]?.split('=')?.[1] || ''; // Very rough parsing
-
-  // Match backend cookie name
-  (await cookies()).set('authToken', token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    path: '/',
-    expires: new Date(),
-    // Add 'sameSite' and 'maxAge' based on your backend rules
+  // Expire the cookie given from the server on client side, matching backend cookie name
+  (await cookies()).set('authToken', '', {
+    expires: new Date(0),
   });
 
   return result;

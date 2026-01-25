@@ -27,7 +27,7 @@ export const SongList = ({ initialSongs }: Props) => {
           <div
             key={song.id}
             style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr' }}
-            className="bg-blue-500 m-10"
+            className="bg-accent m-10"
             draggable={true}
             onDragStart={(e) => handleDragStart(e, song, idx)}
             onDragOver={(e) => handleDragOver(e)}

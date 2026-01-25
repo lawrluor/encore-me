@@ -11,7 +11,7 @@ export const QRGenerator = () => {
         <button
           onClick={() => executeGetQR("test")}
           disabled={loading}
-          className={`ml-2 p-2 ${loading ? 'bg-gray-500' : 'bg-blue-500'} cursor-pointer`}
+          className={`ml-2 p-2 ${loading ? 'bg-gray-500' : 'bg-accent'} cursor-pointer`}
         >
           {loading ? 'Generating...' : 'Generate QR'}
         </button>
