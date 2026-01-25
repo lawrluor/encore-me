@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 // import { AuthProvider } from "./context/AuthProvider";
-import { QueryProvider } from "./providers/QueryProvider";
+import { QueryProvider } from "../providers/QueryProvider";
 
 import "./globals.css";
 

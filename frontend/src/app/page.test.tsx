@@ -1,7 +1,8 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
 
-import { AuthProvider } from './context/AuthProvider';
+import { AuthProvider } from '../context/AuthProvider';
+
 import Home from "./page";
 
 global.fetch = jest.fn(() => {

@@ -1,13 +1,13 @@
 import { redirect } from 'next/navigation';
 
-import { deleteActAction, putActAction } from '../../actions/actActions';
-import { ActsList } from '../../components/ActsList';
-import { CreateSetForm } from '../../components/CreateSetForm';
-import { Footer } from '../../components/Footer';
-import { SetPanelsList } from '../../components/SetPanelsList';
-import { TopNav } from '../../components/TopNav';
-import { getAct } from '../../services/actService';
-import { getAuthUser } from '../../services/authService';
+import { deleteActAction, putActAction } from '../../../actions/actActions';
+import { ActsList } from '../../../components/ActsList';
+import { CreateSetForm } from '../../../components/CreateSetForm';
+import { Footer } from '../../../components/Footer';
+import { SetPanelsList } from '../../../components/SetPanelsList';
+import { TopNav } from '../../../components/TopNav';
+import { getAct } from '../../../services/actService';
+import { getAuthUser } from '../../../services/authService';
 
 type Props = {
   params: Promise<{ [key: string]: string | string[] | undefined }>;

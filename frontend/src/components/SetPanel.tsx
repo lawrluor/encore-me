@@ -20,8 +20,7 @@ export const SetPanel = async ({ actId, set }: Props) => {
 
   const deleteSetWithId = deleteSetAction.bind(null, set.id);
   const promoteSetWithId = promoteSetAction.bind(null, set.id);
-  // {/*{deleteErrorMessage && <p className="text-red-500">{deleteErrorMessage}</p>}
-  // {promoteError && <p className="text-red-500">{promoteError.message}</p>}*/}
+
   return (
     <div className="gap-10 p-20 bg-gray-900 rounded-md">
       <header className="mb-30">

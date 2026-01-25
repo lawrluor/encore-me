@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from "../../components/Button";
+import { Button } from "../../../components/Button";
 
 const Error = ({ error, reset }: { error: Error & { digest?: string }, reset: () => void }) => {
   console.error(error);
