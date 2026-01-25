@@ -12,6 +12,11 @@ type AuthProviderProps = {
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
+  return (
+    <AuthContext.Provider value={{ user: null, setUser: () => { }, loading: false, errorMessage: '' }}>
+      {children}
+    </AuthContext.Provider>
+  )
   const { user, setUser, loading, errorMessage } = useGetAuthenticatedUser();
   const router = useRouter();
   const pathname = usePathname();

@@ -1,24 +1,6 @@
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 
-export function proxy(request: NextRequest) {
-  const token = request.cookies.get('authToken');
-  const { pathname } = request.nextUrl;
-
-  // Public routes that don't require authentication
-  const publicRoutes = ['/Signup'];
-  const isPublicRoute = publicRoutes.some(route => pathname.startsWith(route));
-
-  // If no token and trying to access protected route, redirect to Signup
-  if (!token && !isPublicRoute) {
-    return NextResponse.redirect(new URL('/Signup', request.url));
-  }
-
-  // If has token and trying to access Signup/Login, redirect to home
-  if (token && isPublicRoute) {
-    return NextResponse.redirect(new URL('/', request.url));
-  }
-
+export function proxy() {
   // Set CSP and security headers
   const response = NextResponse.next();
 

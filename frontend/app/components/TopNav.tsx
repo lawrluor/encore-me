@@ -1,19 +1,20 @@
 'use client'
 
 import Link from 'next/link';
-
-import { useAuth } from '../context/AuthProvider';
+import { redirect } from 'next/navigation';
 
 export const TopNav = () => {
-  const { setUser } = useAuth();
 
   const signOut = async () => {
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/logout`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/logout`, {
         method: 'POST',
         credentials: 'include'
       });
-      setUser(null);
+
+      if (response.ok) {
+        redirect('/Login');
+      }
     } catch (err) {
       console.error('Logout error:', err);
     }

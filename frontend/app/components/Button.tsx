@@ -3,7 +3,6 @@
 import React from 'react';
 
 type Props = {
-  children: React.ReactNode;
   callback: () => void;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 

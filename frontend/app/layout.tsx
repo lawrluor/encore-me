@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { AuthProvider } from "./context/AuthProvider";
+// import { AuthProvider } from "./context/AuthProvider";
 import { QueryProvider } from "./providers/QueryProvider";
 
 import "./globals.css";
@@ -24,9 +24,7 @@ export default function RootLayout({ children }: Readonly<{ children?: React.Rea
         className={`${inter.className} ${inter.variable} antialiased`}
       >
         <QueryProvider>
-          <AuthProvider>
-            {children}
-          </AuthProvider>
+          {children}
         </QueryProvider>
       </body>
     </html>
