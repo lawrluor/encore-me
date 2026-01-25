@@ -16,14 +16,6 @@
       "destination": "/api/auth/logout.js"
     },
     {
-      "source": "/api/admin/setup",
-      "destination": "/api/admin/setup.js"
-    },
-    {
-      "source": "/api/users",
-      "destination": "/api/users/index.js"
-    },
-    {
       "source": "/api/users/me",
       "destination": "/api/users/me.js"
     },
@@ -40,20 +32,12 @@
       "destination": "/api/songs/index.js"
     },
     {
-      "source": "/api/songs/delete-all",
-      "destination": "/api/songs/delete-all.js"
-    },
-    {
       "source": "/api/songs/:id",
       "destination": "/api/songs/[id].js"
     },
     {
       "source": "/api/acts",
       "destination": "/api/acts/index.js"
-    },
-    {
-      "source": "/api/acts/delete-all",
-      "destination": "/api/acts/delete-all.js"
     },
     {
       "source": "/api/acts/:id/members",
@@ -68,24 +52,8 @@
       "destination": "/api/sets/index.js"
     },
     {
-      "source": "/api/sets/delete-all",
-      "destination": "/api/sets/delete-all.js"
-    },
-    {
       "source": "/api/sets/:id",
       "destination": "/api/sets/[id].js"
-    },
-    {
-      "source": "/api/users/delete-all",
-      "destination": "/api/users/delete-all.js"
-    },
-    {
-      "source": "/api/:path",
-      "destination": "/api/:path.js"
-    },
-    {
-      "source": "/",
-      "destination": "/api/index.js"
     }
   ],
   "env": {

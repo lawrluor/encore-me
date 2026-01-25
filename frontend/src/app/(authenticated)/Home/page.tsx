@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 import { ActsList } from '../../../components/ActsList';
@@ -30,9 +29,6 @@ const Home = async () => {
         </section>
       </main>
 
-      {/*<section className="p-5">
-        <h2 className="text-bold">SETS</h2>
-      </section>*/}
       <footer>
         <Footer />
       </footer>

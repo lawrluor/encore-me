@@ -12,15 +12,27 @@ export const getAuthUser = async () => {
     }
   })
 
+  const contentType = response.headers.get('content-type') || '';
+
   // handle expected and valid auth error
   if (response.status === 401) {
     return null;
   }
 
   if (!response.ok) {
+    if (!contentType.includes('application/json')) {
+      const text = await response.text();
+      throw new Error(`getAuthUser non-JSON response: ${response.status} - ${text.slice(0, 200)}`);
+    }
+
     const errorPayload = await response.json();
     console.error('Error in getAuthUser():', errorPayload);
     throw new Error(`getAuthUser response: ${response.status}`, { cause: errorPayload });
+  }
+
+  if (!contentType.includes('application/json')) {
+    const text = await response.text();
+    throw new Error(`getAuthUser non-JSON response: ${response.status} - ${text.slice(0, 200)}`);
   }
 
   const result = await response.json();
