@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const layoutPath = path.join(__dirname, '../app/layout.tsx');
+const layoutPath = path.join(__dirname, '../src/app/layout.tsx');
 
 let content = fs.readFileSync(layoutPath, 'utf8');
 
