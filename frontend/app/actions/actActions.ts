@@ -11,8 +11,8 @@ export const deleteActAction = async (formData: FormData): Promise<void> => {
   await deleteAct(id);
 
   // Since the Act is deleted, navigate away from it and refresh Acts data in home
-  revalidatePath('/');
-  redirect('/');
+  revalidatePath('/Home');
+  redirect('/Home');
 }
 
 export const postActAction = async (formData: FormData): Promise<void> => {

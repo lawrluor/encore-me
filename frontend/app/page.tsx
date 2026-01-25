@@ -6,7 +6,7 @@ const Root = async () => {
   const user = await getAuthUser();
 
   if (!user) {
-    redirect('/Signup');
+    redirect('/Login');
   } else {
     redirect('/Home');
   }

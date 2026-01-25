@@ -17,7 +17,7 @@ const Act = async ({ params }: Props) => {
   const user = await getAuthUser();
 
   if (!user) {
-    redirect('/Signup');
+    redirect('/Login');
   }
 
   let { actId } = await params;

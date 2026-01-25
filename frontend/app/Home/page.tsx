@@ -10,7 +10,7 @@ const Home = async () => {
   const user = await getAuthUser();
 
   if (!user) {
-    redirect('/Signup');
+    redirect('/Home');
   }
 
   return (

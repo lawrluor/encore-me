@@ -2,13 +2,9 @@
 
 import React from 'react';
 
-type Props = {
-  callback: () => void;
-} & React.ButtonHTMLAttributes<HTMLButtonElement>;
-
-export const Button = ({ callback, children, ...rest }: Props) => {
+export const Button = ({ children, ...rest }: React.ComponentProps<'button'>) => {
   return (
-    <button className="cursor-pointer disabled:cursor-wait" type="button" onClick={callback} {...rest}>
+    <button className="cursor-pointer disabled:cursor-wait" type="button" {...rest}>
       {children}
     </button>
   );

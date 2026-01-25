@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 
-import { loginUser, signupUser } from '../services/authService';
+import { loginUser, logoutUser, signupUser } from '../services/authService';
 
 export const loginUserAction = async (formData: FormData) => {
   const payload = {
@@ -13,6 +13,13 @@ export const loginUserAction = async (formData: FormData) => {
   const userData = await loginUser(payload);
   if (userData) {
     redirect('/Home');
+  }
+}
+
+export const logoutUserAction = async () => {
+  const result = await logoutUser();
+  if (result) {
+    redirect('/Login');
   }
 }
 

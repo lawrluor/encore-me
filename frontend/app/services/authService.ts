@@ -69,6 +69,43 @@ export const loginUser = async (data: { email: string, password: string }) => {
   return result;
 }
 
+export const logoutUser = async () => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/logout`, {
+    method: 'POST',
+    credentials: 'include'
+  });
+
+  if (!response.ok) {
+    const errorPayload = await response.json();
+    console.error('Error in logoutUser():', errorPayload);
+    throw new Error(errorPayload.message || `Logout failed: ${response.status}`, { cause: errorPayload });
+  }
+
+  const result = await response.json();
+  if (!result) throw new Error(`Unexpected result: ${JSON.stringify(result)}`);
+
+  // 1. Extract the cookie from the Backend response
+  const setCookieHeader = response.headers.get('set-cookie');
+
+  // 2. Parse the cookie (Simple version)
+  // The backend might send: "authToken=abc12345; Path=/; HttpOnly"
+  // We need to parse this or simply set it blindly if the names match.
+
+  // A robust way to forward it:
+  const token = setCookieHeader?.split(';')[0]?.split('=')?.[1] || ''; // Very rough parsing
+
+  // Match backend cookie name
+  (await cookies()).set('authToken', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+    expires: new Date(),
+    // Add 'sameSite' and 'maxAge' based on your backend rules
+  });
+
+  return result;
+}
+
 export const signupUser = async (payload: { name: string, email: string, password: string }) => {
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`;
   const response = await fetch(endpoint, {
@@ -83,6 +120,9 @@ export const signupUser = async (payload: { name: string, email: string, passwor
     throw new Error(errorPayload.message || `Signup failed: ${response.status}`, { cause: errorPayload });
   }
 
+  const result = await response.json();
+  if (!result) throw new Error(`Unexpected result: ${JSON.stringify(result)}`);
+
   // 1. Extract the cookie from the Backend response
   const setCookieHeader = response.headers.get('set-cookie');
 
@@ -93,15 +133,12 @@ export const signupUser = async (payload: { name: string, email: string, passwor
   // A robust way to forward it:
   const token = setCookieHeader?.split(';')[0]?.split('=')?.[1] || ''; // Very rough parsing
 
-  // BETTER WAY: Use the exact name your backend uses
+  // Match backend cookie name
   (await cookies()).set('authToken', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     path: '/',
-    // Add 'sameSite' and 'maxAge' based on your backend rules
+    // Add 'sameSite' and 'maxAge' later
   });
-
-  const result = await response.json();
-  if (!result) throw new Error(`Unexpected result: ${JSON.stringify(result)}`);
   return result;
 }
