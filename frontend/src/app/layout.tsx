@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-// import { AuthProvider } from "./context/AuthProvider";
-import { QueryProvider } from "../providers/QueryProvider";
-
 import "./globals.css";
 
 const inter = Inter({
@@ -23,9 +20,7 @@ export default function RootLayout({ children }: Readonly<{ children?: React.Rea
       <body
         className={`${inter.className} ${inter.variable} antialiased`}
       >
-        <QueryProvider>
-          {children}
-        </QueryProvider>
+        {children}
       </body>
     </html>
   );

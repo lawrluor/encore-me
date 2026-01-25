@@ -2,8 +2,8 @@ import Form from 'next/form';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
-import { loginUserAction } from '../../actions/authActions';
-import { getAuthUser } from '../../services/authService';
+import { loginUserAction } from '../../../actions/authActions';
+import { getAuthUser } from '../../../services/authService';
 
 const Login = async () => {
   const user = await getAuthUser();
