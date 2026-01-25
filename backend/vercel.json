@@ -2,7 +2,51 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/**/*.js",
+      "src": "api/auth/login.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/auth/logout.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/users/me.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/users/promoted-set.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/acts/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/acts/[id].js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/sets/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/sets/[id].js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/songs/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/songs/[id].js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/users/[id].js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/acts/members.js",
       "use": "@vercel/node"
     }
   ],
