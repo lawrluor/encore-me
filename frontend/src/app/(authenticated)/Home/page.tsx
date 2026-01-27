@@ -8,10 +8,7 @@ import { getAuthUser } from '../../../services/authService';
 
 const Home = async () => {
   const user = await getAuthUser();
-
-  if (!user) {
-    redirect('/Home');
-  }
+  if (!user) redirect('/Login');
 
   return (
     <div className="min-h-dvh flex flex-col">

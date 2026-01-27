@@ -8,7 +8,7 @@ type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-const EditSet = async ({ params, searchParams }: Props) => {
+const Set = async ({ params, searchParams }: Props) => {
   const { setId } = await params;
   let { actId } = await searchParams;
   actId = typeof actId === "string" ? actId : undefined;  // narrow type to only allow string or undefined
@@ -28,9 +28,9 @@ const EditSet = async ({ params, searchParams }: Props) => {
       {setSongs && setSongs.length > 0
         ?
         <SongList initialSongs={setSongs} />
-
         :
-        <p>No songs in the set yet.</p>}
+        <p>No songs in the set yet.</p>
+      }
     </section>
 
     <section>
@@ -39,9 +39,10 @@ const EditSet = async ({ params, searchParams }: Props) => {
         ?
         <SongList initialSongs={actSongs} />
         :
-        <p>No songs for this act yet.</p>}
+        <p>No songs for this act yet.</p>
+      }
     </section>
   </div>
 }
 
-export default EditSet;
+export default Set;
