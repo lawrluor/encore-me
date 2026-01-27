@@ -7,6 +7,7 @@ import { getSongs } from '../services/songService';
 import { type Song } from '../types/song';
 
 type Props = {
+  songs?: Song[];
   actId: string;
   set: {
     id: string;
@@ -15,8 +16,8 @@ type Props = {
   }
 }
 
-export const SetPanel = async ({ actId, set }: Props) => {
-  const data = await getSongs('setId', set.id);
+export const SetPanel = async ({ songs, actId, set }: Props) => {
+  if (!songs) songs = await getSongs('setId', set.id);
 
   const deleteSetWithId = deleteSetAction.bind(null, set.id);
   const promoteSetWithId = promoteSetAction.bind(null, set.id);
@@ -41,20 +42,26 @@ export const SetPanel = async ({ actId, set }: Props) => {
         <div><p className="opacity-60 text-xs">GENRE</p></div>
         <div><p className="opacity-60 text-xs">TEMPO</p></div>
 
-        {data?.map((song: Song) => {
-          return <Fragment key={song.id}>
-            <div className="flex items-center gap-10">
-              <div className="h-44 w-44 bg-gray-800 rounded-md shrink-0"></div>
-              <div className="shrink-0">
-                <p>{song.title}</p>
-                <p className="text-sm opacity-60">{song.description}</p>
+        {songs.length === 0
+          ?
+          <div className="col-span-3">
+            <p>No songs have been added to this set yet. <Link href={`/Set/${set.id}`} className="underline font-bold text-blue-500 cursor-pointer hover:opacity-75">Add songs</Link></p>
+          </div>
+          :
+          songs?.map((song: Song) => {
+            return <Fragment key={song.id}>
+              <div className="flex items-center gap-10">
+                <div className="h-44 w-44 bg-gray-800 rounded-md shrink-0"></div>
+                <div className="shrink-0">
+                  <p>{song.title}</p>
+                  <p className="text-sm opacity-60">{song.description}</p>
+                </div>
               </div>
-            </div>
 
-            <div><p>{song.genre}</p></div>
-            <div><p>{song.tempo}</p></div>
-          </Fragment>
-        })}
+              <div><p>{song.genre}</p></div>
+              <div><p>{song.tempo}</p></div>
+            </Fragment>
+          })}
       </main>
     </div>
   )

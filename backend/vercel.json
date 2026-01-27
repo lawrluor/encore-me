@@ -76,7 +76,7 @@
       "destination": "/api/users/promoted-set.js"
     },
     {
-      "source": "/api/users/tree",
+      "source": "/api/users/:id/tree",
       "destination": "/api/users/tree.js"
     },
     {

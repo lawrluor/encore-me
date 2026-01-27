@@ -490,11 +490,11 @@
 
         <!-- Get User Tree -->
         <div class="endpoint-card">
-          <div class="endpoint-header" onclick="toggleTestPanel('getUserTree', 'GET', '/api/users/tree')">
+          <div class="endpoint-header" onclick="toggleTestPanel('getUserTree', 'GET', '/api/users')">
             <div class="flex items-center justify-between mb-3">
               <div class="flex items-center gap-3">
                 <span class="method-badge method-get">GET</span>
-                <span class="font-mono text-lg">/api/users/tree</span>
+                <span class="font-mono text-lg">/api/users/{'{id}'}/tree</span>
               </div>
               <i class="fas fa-chevron-down text-gray-400"></i>
             </div>
@@ -508,13 +508,13 @@
                 in a single request.</p>
             </div>
             <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Query Parameters</label>
-              <input type="text" id="query-getUserTree" placeholder="id=user-uuid-here"
+              <label class="block text-sm font-medium text-gray-700 mb-2">User ID</label>
+              <input type="text" id="id-getUserTree" placeholder="Enter user ID..."
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
-              <p class="text-xs text-gray-500 mt-1">Required: id={uuid}</p>
+              <p class="text-xs text-gray-500 mt-1">The user ID to fetch the complete tree for</p>
             </div>
             <div class="flex gap-4 mb-4">
-              <button onclick="sendInlineRequestWithQuery('getUserTree', 'GET', '/api/users/tree')"
+              <button onclick="sendInlineRequestTree('getUserTree', 'GET', '/api/users')"
                 class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
                 <i class="fas fa-paper-plane"></i> Send Request
               </button>
@@ -1834,6 +1834,59 @@
         // If this is a login request and successful, store the token
         if (id === 'login' && data.success && data.data && data.data.token) {
           storeAuthToken(data.data.token, data.data.user);
+        }
+
+        responseContent.textContent = JSON.stringify({
+          status: response.status,
+          statusText: response.statusText,
+          data: data
+        }, null, 2);
+
+        responseSection.style.display = 'block';
+      } catch (error) {
+        responseContent.textContent = `Error: ${error.message}`;
+        responseSection.style.display = 'block';
+      }
+    }
+
+    // Special handler for tree endpoint with path parameter
+    async function sendInlineRequestTree(id, method, endpoint) {
+      const baseUrl = document.getElementById('baseUrl').textContent;
+      const authToken = localStorage.getItem('authToken') || '';
+      const idParamElem = document.getElementById(`id-${id}`);
+      const responseSection = document.getElementById(`response-${id}`);
+      const responseContent = document.getElementById(`response-content-${id}`);
+
+      if (!idParamElem || !idParamElem.value.trim()) {
+        responseContent.textContent = 'Error: User ID is required';
+        responseSection.style.display = 'block';
+        return;
+      }
+
+      const userId = idParamElem.value.trim();
+      const url = `${baseUrl}${endpoint}/${userId}/tree`;
+
+      const options = {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+
+      if (authToken) {
+        options.headers['Authorization'] = authToken.startsWith('Bearer ') ? authToken : `Bearer ${authToken}`;
+      }
+
+      try {
+        const response = await fetch(url, options);
+        let data;
+        const contentType = response.headers.get('content-type');
+
+        if (contentType && contentType.includes('application/json')) {
+          data = await response.json();
+        } else {
+          const text = await response.text();
+          data = { error: 'Non-JSON response', body: text.substring(0, 500) };
         }
 
         responseContent.textContent = JSON.stringify({

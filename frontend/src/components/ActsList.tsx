@@ -1,9 +1,17 @@
 import { ActsListDraggables } from '../components/ActsListDraggables';
 import { CreateActForm } from '../components/CreateActForm';
 import { getActs } from '../services/actService';
+import { type Act } from '../types/act';
 
-export const ActsList = async () => {
-  const acts = await getActs();
+type Props = {
+  acts?: Act[];
+}
+
+export const ActsList = async ({ acts }: Props) => {
+  // acts must be an array or undefined
+  // if acts is an array at all, it must have come from user tree data
+  // if not an array, must have been undefined and we must fetch it
+  if (!acts) acts = await getActs();
 
   return (
     <div className="p-20">

@@ -8,21 +8,28 @@ import { SetPanelsList } from '../../../../components/SetPanelsList';
 import { TopNav } from '../../../../components/TopNav';
 import { getAct } from '../../../../services/actService';
 import { getAuthUser } from '../../../../services/authService';
+import { getUserTree } from '../../../../services/userService';
+import { type Act } from '../../../../types/act';
 
 type Props = {
   params: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 const Act = async ({ params }: Props) => {
+  // TODO: parallelize first two requests
   const user = await getAuthUser();
-
   if (!user) redirect('/Login');
 
   let { actId } = await params;
   if (!actId) throw new Error("Act must have an ID");
-
   actId = String(actId);
-  const act = await getAct(actId);
+
+  const userTree = await getUserTree(user.id);
+  if (!userTree) throw new Error("Error fetching data for user");
+
+  let act = userTree.acts.find((act: Act) => act.id === actId);
+  if (!act) 
+    act = await getAct(actId);  // fallback if Act not in user tree
 
   return (
     <div className="min-h-dvh flex flex-col">
@@ -57,7 +64,7 @@ const Act = async ({ params }: Props) => {
           </div>
 
           <div>
-            {actId && <SetPanelsList actId={actId} showCta={false} />}
+            {actId && <SetPanelsList sets={act.sets} actId={actId} showCta={false} />}
           </div>
         </section>
       </main>

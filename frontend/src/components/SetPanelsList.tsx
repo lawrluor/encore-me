@@ -7,19 +7,21 @@ import { type Set } from '../types/set';
 import { SetPanel } from './SetPanel';
 
 type Props = {
+  sets?: Set[];
   actId: string;
   showCta?: boolean;
 }
 
-export const SetPanelsList = async ({ actId, showCta }: Props) => {
-  const data = await getSets(actId);
-
-  if (data.length === 0) return <p>No sets created yet. {showCta && <Link href={`/Act/${actId}`} className="underline font-bold text-blue-500 cursor-pointer hover:opacity-75">Create a new set</Link>}</p>;
+export const SetPanelsList = async ({ sets, actId, showCta }: Props) => {
+  // if sets undefined, query them here given the actId
+  // otherwise, they were passed directly from the Act from user tree data
+  if (!sets) sets = await getSets(actId);
+  if (sets.length === 0) return <p>No sets created yet. {showCta && <Link href={`/Act/${actId}`} className="underline font-bold text-blue-500 cursor-pointer hover:opacity-75">Create a new set</Link>}</p>;
 
   return (
     <Suspense fallback={<p>Loading Set...</p>}>
       <div className="flex flex-col gap-20">
-        {data.map((set: Set) => <SetPanel key={set.id} actId={actId} set={set} />)}
+        {sets.map((set: Set) => <SetPanel songs={set.songs} key={set.id} actId={actId} set={set} />)}
       </div>
     </Suspense>
   )
