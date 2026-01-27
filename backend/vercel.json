@@ -2,6 +2,10 @@
   "version": 2,
   "builds": [
     {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "api/auth/login.js",
       "use": "@vercel/node"
     },
@@ -42,15 +46,19 @@
       "use": "@vercel/node"
     },
     {
-      "src": "api/users/[id].js",
+      "src": "api/acts/members.js",
       "use": "@vercel/node"
     },
     {
-      "src": "api/acts/members.js",
+      "src": "api/users/tree.js",
       "use": "@vercel/node"
     }
   ],
   "rewrites": [
+    {
+      "source": "/",
+      "destination": "/api/index.js"
+    },
     {
       "source": "/api/auth/login",
       "destination": "/api/auth/login.js"
@@ -68,8 +76,8 @@
       "destination": "/api/users/promoted-set.js"
     },
     {
-      "source": "/api/users/:id",
-      "destination": "/api/users/[id].js"
+      "source": "/api/users/tree",
+      "destination": "/api/users/tree.js"
     },
     {
       "source": "/api/songs",

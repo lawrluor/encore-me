@@ -9,12 +9,17 @@ type Props = {
 }
 
 const Set = async ({ params, searchParams }: Props) => {
-  const { setId } = await params;
-  let { actId } = await searchParams;
-  actId = typeof actId === "string" ? actId : undefined;  // narrow type to only allow string or undefined
+  const setIdPromise = params;
+  const actIdPromise = searchParams;
+  const promises = await Promise.all([setIdPromise, actIdPromise]);  // returns object with fields
 
-  const setSongs = await getSongs('setId', setId);
-  const actSongs = typeof actId === 'string' ? await getSongs('actId', actId) : [];
+  // narrow type to only allow string or undefined
+  const setId = typeof promises[0].setId === "string" ? promises[0].setId : "";
+  const actId = typeof promises[1].actId === "string" ? promises[1].actId : "";
+  const actSongsPromise = getSongs('actId', actId);
+  const setSongsPromise = getSongs('setId', setId);
+
+  const [actSongs, setSongs] = await Promise.all([actSongsPromise, setSongsPromise]);
 
   return <div>
     <TopNav />
