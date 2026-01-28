@@ -9,7 +9,8 @@ export const getUserTree = async (id: string) => {
     headers: {
       'Cookie': cookieStorage.toString(),
       'Content-Type': 'application/json'
-    }
+    },
+    cache: 'force-cache'
   });
 
   if (!response.ok) {

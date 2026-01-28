@@ -4,8 +4,8 @@ import { ActsList } from '../../../components/ActsList';
 import { Footer } from '../../../components/Footer';
 import { LastPerformance } from '../../../components/LastPerformance';
 import { TopNav } from '../../../components/TopNav';
+import { getUserTree } from '../../../lib/db/users';
 import { getAuthUser } from '../../../services/authService';
-import { getUserTree } from '../../../services/userService';
 
 const Home = async () => {
   const user = await getAuthUser();
@@ -26,7 +26,7 @@ const Home = async () => {
 
       <main className="flex flex-auto overflow-hidden">
         <aside className="flex-[1_0_0] ">
-          <ActsList  />
+          <ActsList />
         </aside>
 
         <section className="p-10 rounded-md flex-[3_1_200px]">

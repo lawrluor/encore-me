@@ -6,6 +6,7 @@ export const getAuthUser = async () => {
   const cookieStorage = await cookies();
 
   const response = await fetch(endpoint, {
+    method: 'GET',
     headers: {
       'Cookie': cookieStorage.toString(),
       'Content-Type': 'application/json'

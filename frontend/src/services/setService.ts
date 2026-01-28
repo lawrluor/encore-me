@@ -18,7 +18,8 @@ export const getSets = async (actId: string): Promise<Set[]> => {
     headers: {
       'Cookie': cookieStorage.toString(),
       'Content-Type': 'application/json'
-    }
+    },
+    cache: 'force-cache'
   });
 
   if (!response.ok) {

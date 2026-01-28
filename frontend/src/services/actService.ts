@@ -70,6 +70,7 @@ export const getActs = async (): Promise<Act[]> => {
       'Cookie': cookieStorage.toString(),
       'Content-Type': 'application/json'
     },
+    cache: 'force-cache'
   });
 
   if (!response.ok) {

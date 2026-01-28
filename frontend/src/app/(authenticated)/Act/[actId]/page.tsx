@@ -6,9 +6,9 @@ import { CreateSetForm } from '../../../../components/CreateSetForm';
 import { Footer } from '../../../../components/Footer';
 import { SetPanelsList } from '../../../../components/SetPanelsList';
 import { TopNav } from '../../../../components/TopNav';
+import { getUserTree } from '../../../../lib/db/users';
 import { getAct } from '../../../../services/actService';
 import { getAuthUser } from '../../../../services/authService';
-import { getUserTree } from '../../../../services/userService';
 import { type Act } from '../../../../types/act';
 
 type Props = {
@@ -28,7 +28,7 @@ const Act = async ({ params }: Props) => {
   if (!userTree) throw new Error("Error fetching data for user");
 
   let act = userTree.acts.find((act: Act) => act.id === actId);
-  if (!act) 
+  if (!act)
     act = await getAct(actId);  // fallback if Act not in user tree
 
   return (

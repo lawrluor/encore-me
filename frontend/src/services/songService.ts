@@ -13,7 +13,8 @@ export const getSongs = async (idType: 'actId' | 'setId', id: string): Promise<S
       // pass all cookies as key-value pair string separated by semicolons,
       //   just like the client side would
       'Cookie': cookieStore.toString()
-    }
+    },
+    cache: 'force-cache'
   });
 
   if (!response.ok) {
@@ -60,6 +61,6 @@ export const postSong = async (formData: FormData): Promise<boolean> => {
     console.error(payload);
     throw new Error(`Response unsuccessful: ${JSON.stringify(payload)}`);
   }
-  
+
   return payload.success;
 }
