@@ -1,44 +1,24 @@
+import { jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 
-export const getAuthUser = async () => {
-  const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/me`;
+export const getAuthUser = async (): Promise<{ id: string, email: string } | null> => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('authToken')?.value;
 
-  const cookieStorage = await cookies();
+  if (!token) return null;  // not authenticated
 
-  const response = await fetch(endpoint, {
-    method: 'GET',
-    headers: {
-      'Cookie': cookieStorage.toString(),
-      'Content-Type': 'application/json'
-    }
-  })
+  try {
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
+    const { payload } = await jwtVerify(token, secret);
 
-  const contentType = response.headers.get('content-type') || '';
-
-  // handle expected and valid auth error
-  if (response.status === 401) {
-    return null;
+    // Map JWT payload (userId) to expected application user format (id)
+    return {
+      id: payload.userId as string,
+      email: payload.email as string
+    };
+  } catch {
+    return null;  // invalid or expired token
   }
-
-  if (!response.ok) {
-    if (!contentType.includes('application/json')) {
-      const text = await response.text();
-      throw new Error(`getAuthUser non-JSON response: ${response.status} - ${text.slice(0, 200)}`);
-    }
-
-    const errorPayload = await response.json();
-    console.error('Error in getAuthUser():', errorPayload);
-    throw new Error(`getAuthUser response: ${response.status}`, { cause: errorPayload });
-  }
-
-  if (!contentType.includes('application/json')) {
-    const text = await response.text();
-    throw new Error(`getAuthUser non-JSON response: ${response.status} - ${text.slice(0, 200)}`);
-  }
-
-  const result = await response.json();
-  if (!result?.data) throw new Error(`Expected an object with field 'data', got ${JSON.stringify(result)}`);
-  return result.data;
 }
 
 export const loginUser = async (data: { email: string, password: string }) => {
