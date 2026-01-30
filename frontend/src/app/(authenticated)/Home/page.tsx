@@ -1,20 +1,18 @@
 import { redirect } from 'next/navigation';
 
-import { ActsList } from '../../../components/ActsList';
-import { Footer } from '../../../components/Footer';
-import { LastPerformance } from '../../../components/LastPerformance';
-import { TopNav } from '../../../components/TopNav';
-import { getUserTree } from '../../../lib/db/users';
-import { getAuthUser } from '../../../services/authService';
+import { ActsList } from '@/components/ActsList';
+import { Footer } from '@/components/Footer';
+import { LastPerformance } from '@/components/LastPerformance';
+import { TopNav } from '@/components/TopNav';
+import { getUserTree } from '@/lib/db/users';
+import { getAuthUser } from '@/services/authService';
 
 const Home = async () => {
   const user = await getAuthUser();
   if (!user) redirect('/Login');
 
-  // getUserTree is dependendent on user id. 
-  // TODO: refactor to allow getAuthUser to also return the data tree to 
-  // avoid this request waterfall
-  // OR, just use user cookie to fetch getUserTree just like in getActs
+  // is dependent on result of getAuthUser(),
+  // but only takes a few ms for this function to finish verifying token cryptographically
   const userTree = await getUserTree(user.id);
   if (!userTree) throw new Error("Failed to fetch user data");
 

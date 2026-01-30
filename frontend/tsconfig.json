@@ -28,7 +28,7 @@
     ],
     "paths": {
       "@/*": [
-        "./*"
+        "./src/*"
       ]
     },
     /* Additional Strict Checks */
@@ -45,8 +45,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts",
-    "app/components/SongList.tsx"
+    "**/*.mts"
   ],
   "exclude": [
     "node_modules"

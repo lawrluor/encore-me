@@ -1,17 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { getSongs } from '../../../../services/songService';
-
 import Set from './page';
 
+import { getSongs } from '@/services/songService';
+
 // Mock dependencies
-jest.mock('../../../../services/songService', () => ({
+jest.mock('@/services/songService', () => ({
   getSongs: jest.fn(),
 }));
 
 // Mock child components
-jest.mock('../../../../components/CreateSongForm', () => ({
+jest.mock('@/components/CreateSongForm', () => ({
   CreateSongForm: ({ actId, setId }: { actId?: string, setId: string }) => (
     <div data-testid="create-song-form">
       CreateSongForm (Act: {actId}, Set: {setId})
@@ -19,7 +19,7 @@ jest.mock('../../../../components/CreateSongForm', () => ({
   ),
 }));
 
-jest.mock('../../../../components/SongList', () => ({
+jest.mock('@/components/SongList', () => ({
   SongList: ({ initialSongs }: { initialSongs: { id: string; title: string }[] }) => (
     <div data-testid="song-list">
       SongList ({initialSongs.length} items)
@@ -27,7 +27,7 @@ jest.mock('../../../../components/SongList', () => ({
   ),
 }));
 
-jest.mock('../../../../components/TopNav', () => ({
+jest.mock('@/components/TopNav', () => ({
   TopNav: () => <div data-testid="top-nav">TopNav Component</div>,
 }));
 

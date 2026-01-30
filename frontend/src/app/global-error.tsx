@@ -3,7 +3,6 @@
 import { Inter } from "next/font/google";
 
 import { Button } from "../components/Button";
-
 import "./globals.css";
 
 const inter = Inter({

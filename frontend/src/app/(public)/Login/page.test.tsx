@@ -2,16 +2,16 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { redirect } from 'next/navigation';
 
-import { getAuthUser } from '../../../services/authService';
-
 import Login from './page';
 
+import { getAuthUser } from '@/services/authService';
+
 // Mock dependencies
-jest.mock('../../../services/authService', () => ({
+jest.mock('@/services/authService', () => ({
   getAuthUser: jest.fn(),
 }));
 
-jest.mock('../../../actions/authActions', () => ({
+jest.mock('@/actions/authActions', () => ({
   loginUserAction: jest.fn(),
 }));
 

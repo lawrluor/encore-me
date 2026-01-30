@@ -2,12 +2,12 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { redirect } from 'next/navigation';
 
-import { getAuthUser } from '../../../services/authService';
-
 import Home from './page';
 
+import { getAuthUser } from '@/services/authService';
+
 // Mock dependencies
-jest.mock('../../../services/authService', () => ({
+jest.mock('@/services/authService', () => ({
   getAuthUser: jest.fn()
 }));
 
@@ -16,19 +16,19 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock child components to isolate the page test
-jest.mock('../../../components/ActsList', () => ({
+jest.mock('@/components/ActsList', () => ({
   ActsList: () => <div data-testid="acts-list">ActsList Component</div>
 }));
 
-jest.mock('../../../components/Footer', () => ({
+jest.mock('@/components/Footer', () => ({
   Footer: () => <div data-testid="footer">Footer Component</div>
 }));
 
-jest.mock('../../../components/LastPerformance', () => ({
+jest.mock('@/components/LastPerformance', () => ({
   LastPerformance: () => <div data-testid="last-performance">LastPerformance Component</div>
 }));
 
-jest.mock('../../../components/TopNav', () => ({
+jest.mock('@/components/TopNav', () => ({
   TopNav: () => <div data-testid="top-nav">TopNav Component</div>
 }));
 

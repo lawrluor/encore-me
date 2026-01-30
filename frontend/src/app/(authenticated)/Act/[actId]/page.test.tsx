@@ -2,21 +2,22 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { redirect } from 'next/navigation';
 
-import { getAct } from '../../../../services/actService';
-import { getAuthUser } from '../../../../services/authService';
-
 import Act from './page';
 
+import { getAct } from '@/services/actService';
+import { getAuthUser } from '@/services/authService';
+
+
 // Mock dependencies
-jest.mock('../../../../services/authService', () => ({
+jest.mock('@/services/authService', () => ({
   getAuthUser: jest.fn()
 }));
 
-jest.mock('../../../../services/actService', () => ({
+jest.mock('@/services/actService', () => ({
   getAct: jest.fn()
 }));
 
-jest.mock('../../../../actions/actActions', () => ({
+jest.mock('@/actions/actActions', () => ({
   deleteActAction: jest.fn(),
   putActAction: jest.fn()
 }));
@@ -26,23 +27,23 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock child components
-jest.mock('../../../../components/ActsList', () => ({
+jest.mock('@/components/ActsList', () => ({
   ActsList: () => <div data-testid="acts-list">ActsList Component</div>,
 }));
 
-jest.mock('../../../../components/CreateSetForm', () => ({
+jest.mock('@/components/CreateSetForm', () => ({
   CreateSetForm: () => <div data-testid="create-set-form">CreateSetForm Component</div>,
 }));
 
-jest.mock('../../../../components/Footer', () => ({
+jest.mock('@/components/Footer', () => ({
   Footer: () => <div data-testid="footer">Footer Component</div>,
 }));
 
-jest.mock('../../../../components/SetPanelsList', () => ({
+jest.mock('@/components/SetPanelsList', () => ({
   SetPanelsList: () => <div data-testid="set-panels-list">SetPanelsList Component</div>,
 }));
 
-jest.mock('../../../../components/TopNav', () => ({
+jest.mock('@/components/TopNav', () => ({
   TopNav: () => <div data-testid="top-nav">TopNav Component</div>,
 }));
 

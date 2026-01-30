@@ -1,7 +1,7 @@
-import { CreateSongForm } from '../../../../components/CreateSongForm';
-import { SongList } from '../../../../components/SongList';
-import { TopNav } from '../../../../components/TopNav';
-import { getSongs } from '../../../../services/songService';
+import { CreateSongForm } from '@/components/CreateSongForm';
+import { SongList } from '@/components/SongList';
+import { TopNav } from '@/components/TopNav';
+import { getSongs } from '@/services/songService';
 
 type Props = {
   params: Promise<{ setId: string }>;

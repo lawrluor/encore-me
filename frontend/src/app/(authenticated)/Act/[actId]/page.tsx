@@ -1,22 +1,21 @@
 import { redirect } from 'next/navigation';
 
-import { deleteActAction, putActAction } from '../../../../actions/actActions';
-import { ActsList } from '../../../../components/ActsList';
-import { CreateSetForm } from '../../../../components/CreateSetForm';
-import { Footer } from '../../../../components/Footer';
-import { SetPanelsList } from '../../../../components/SetPanelsList';
-import { TopNav } from '../../../../components/TopNav';
-import { getUserTree } from '../../../../lib/db/users';
-import { getAct } from '../../../../services/actService';
-import { getAuthUser } from '../../../../services/authService';
-import { type Act } from '../../../../types/act';
+import { deleteActAction, putActAction } from '@/actions/actActions';
+import { ActsList } from '@/components/ActsList';
+import { CreateSetForm } from '@/components/CreateSetForm';
+import { Footer } from '@/components/Footer';
+import { SetPanelsList } from '@/components/SetPanelsList';
+import { TopNav } from '@/components/TopNav';
+import { getUserTree } from '@/lib/db/users';
+import { getAct } from '@/services/actService';
+import { getAuthUser } from '@/services/authService';
+import { type Act } from '@/types/act';
 
 type Props = {
   params: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 const Act = async ({ params }: Props) => {
-  // TODO: parallelize first two requests
   const user = await getAuthUser();
   if (!user) redirect('/Login');
 
