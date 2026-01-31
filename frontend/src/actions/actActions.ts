@@ -23,7 +23,7 @@ export const postActAction = async (formData: FormData): Promise<void> => {
 
   // server actions return null on success, so we don't need to check the result
   await postAct(payload);
-  revalidatePath('/');
+  revalidatePath('/Home');
   revalidatePath('/Act');
 }
 
@@ -37,7 +37,7 @@ export const putActAction = async (formData: FormData): Promise<void> => {
   }
 
   await putAct(id, payload);
-  revalidatePath('/');
+  revalidatePath('/Home');
   revalidatePath('/Act')
 }
 

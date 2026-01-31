@@ -7,7 +7,7 @@ export const CreateActForm = () => {
     <details
       className="pb-5 w-100% bg-background hover:opacity-80 hover:cursor-pointer"
     >
-      <summary className="mb-5">Create New Act</summary>
+      <summary className="cursor-pointer hover:opacity-60 mb-5">Create New Act</summary>
       <div className="flex gap-10">
         <div className="w-44 h-44 bg-accent rounded-md shrink-0"></div>
         <Form action={postActAction}>

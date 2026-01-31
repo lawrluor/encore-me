@@ -4,6 +4,7 @@ import { deleteActAction, putActAction } from '@/actions/actActions';
 import { ActsList } from '@/components/ActsList';
 import { CreateSetForm } from '@/components/CreateSetForm';
 import { Footer } from '@/components/Footer';
+import { FormSubmitter } from '@/components/FormSubmitter';
 import { SetPanelsList } from '@/components/SetPanelsList';
 import { TopNav } from '@/components/TopNav';
 import { getUserTree } from '@/lib/db/users';
@@ -52,9 +53,9 @@ const Act = async ({ params }: Props) => {
 
             <form action={deleteActAction}>
               <input hidden defaultValue={act?.id} name="id" />
-              <button type="submit" className="hover:opacity-60 cursor-pointer flex justify-center">
+              <FormSubmitter type="submit" className="cursor-pointer hover:opacity-60 flex justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-minus-icon lucide-circle-minus"><circle cx="12" cy="12" r="10" /><path d="M8 12h8" /></svg>
-              </button>
+              </FormSubmitter>
             </form>
           </div>
 

@@ -2,6 +2,8 @@ import Form from 'next/form';
 
 import { postSongAction } from '../actions/songActions';
 
+import { FormSubmitButton } from './FormSubmitter';
+
 // Pass both setId and actId to backend. Backend will prioritize setId if provided,
 // automatically associating the song with the set's act and adding it to the set
 export const CreateSongForm = ({ actId, setId }: { actId?: string, setId?: string }) => {
@@ -12,7 +14,7 @@ export const CreateSongForm = ({ actId, setId }: { actId?: string, setId?: strin
       {actId && <input hidden={true} name="actId" value={actId} readOnly />}
 
       <label htmlFor="title">Title</label>
-      <input id="title" name="title" type="text" spellCheck={false} autoComplete="off" className="h-44 border-1 border-white border-solid" />
+      <input id="title" name="title" type="text" required spellCheck={false} autoComplete="off" className="h-44 border-1 border-white border-solid" />
 
       <label htmlFor="description">Description (optional)</label>
       <input id="description" name="description" type="text" spellCheck={false} autoComplete="off" className="h-44 border-1 border-white border-solid" />
@@ -23,7 +25,7 @@ export const CreateSongForm = ({ actId, setId }: { actId?: string, setId?: strin
       <label htmlFor="tempo">Tempo (optional)</label>
       <input id="tempo" name="tempo" type="text" spellCheck={false} autoComplete="off" className="h-44 border-1 border-white border-solid" />
 
-      <button type="submit" className="h-44 bg-accent">CREATE NEW SONG</button>
+      <FormSubmitButton title="CREATE NEW SONG" />
     </Form>
   </section>
 }
