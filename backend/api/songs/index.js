@@ -4,7 +4,7 @@ const { validateBody, songSchema } = require('../utils/validation');
 const { authenticateRequest } = require('../utils/auth');
 const { createSong, getSongsByUserId, getSongsByActId, getSongsBySetId } = require('../../db/songs');
 const { isUserMemberOfAct } = require('../../db/acts');
-const { findSetById } = require('../../db/sets');
+const { getSetById } = require('../../db/sets');
 
 async function handler(req, res) {
   try {
@@ -29,7 +29,7 @@ async function handler(req, res) {
 
       // Query by setId
       if (setId) {
-        const set = await findSetById(setId);
+        const set = await getSetById(setId);
         if (!set) {
           return sendError(res, 'Set not found', 404);
         }
@@ -59,7 +59,7 @@ async function handler(req, res) {
 
       // If setId provided, lookup set to get act_id and verify membership
       if (setId) {
-        const set = await findSetById(setId);
+        const set = await getSetById(setId);
         if (!set) {
           return sendError(res, 'Set not found', 404);
         }

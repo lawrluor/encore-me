@@ -38,8 +38,6 @@ const initDatabase = async () => {
     await sql`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_items_user_id ON items(user_id)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_items_status ON items(status)`;
-
-    console.log('Database initialized successfully');
   } catch (error) {
     console.error('Database initialization error:', error);
   }

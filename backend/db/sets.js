@@ -9,7 +9,7 @@ const createSet = async (actId, title, description = '') => {
   return result.rows[0];
 };
 
-const findSetById = async (id) => {
+const getSetById = async (id) => {
   const result = await sql`
     SELECT * FROM sets 
     WHERE id = ${id}
@@ -69,7 +69,7 @@ const deleteAllSets = async () => {
 
 module.exports = {
   createSet,
-  findSetById,
+  getSetById,
   getSetsByActId,
   getAllSets,
   updateSet,

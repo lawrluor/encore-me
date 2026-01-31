@@ -10,7 +10,7 @@ const createAct = async (name, description = '') => {
   return result.rows[0];
 };
 
-const findActById = async (id) => {
+const getActById = async (id) => {
   const result = await sql`
     SELECT * FROM acts 
     WHERE id = ${id}
@@ -109,7 +109,7 @@ const isUserMemberOfAct = async (userId, actId) => {
 
 module.exports = {
   createAct,
-  findActById,
+  getActById,
   getAllActs,
   getActsByUserId,
   getActMembers,

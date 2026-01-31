@@ -2,7 +2,7 @@ const allowCors = require('../utils/cors');
 const { sendSuccess, sendError } = require('../utils/response');
 const { validateBody, setSchema } = require('../utils/validation');
 const { authenticateRequest } = require('../utils/auth');
-const { findSetById, updateSet, deleteSet } = require('../../db/sets');
+const { getSetById, updateSet, deleteSet } = require('../../db/sets');
 
 async function handler(req, res) {
   try {
@@ -19,7 +19,7 @@ async function handler(req, res) {
     }
 
     if (req.method === 'GET') {
-      const set = await findSetById(id);
+      const set = await getSetById(id);
 
       if (!set) {
         return sendError(res, 'Set not found', 404);

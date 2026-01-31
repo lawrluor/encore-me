@@ -1,7 +1,7 @@
 const allowCors = require('../utils/cors');
 const { sendSuccess, sendError } = require('../utils/response');
 const { authenticateRequest } = require('../utils/auth');
-const { findActById, updateAct, deleteAct, getActMembers } = require('../../db/acts');
+const { getActById, updateAct, deleteAct, getActMembers } = require('../../db/acts');
 const { validateBody, actSchema } = require('../utils/validation');
 
 async function handler(req, res) {
@@ -15,7 +15,7 @@ async function handler(req, res) {
         return sendError(res, 'Unauthorized', 401);
       }
 
-      const act = await findActById(id);
+      const act = await getActById(id);
 
       if (!act) {
         return sendError(res, 'Act not found', 404);

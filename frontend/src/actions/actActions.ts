@@ -9,7 +9,7 @@ import { getAuthUser } from '../services/authService';
 
 type ValidationError = {
   field: string;
-  message: string
+  message: string;
 }
 
 export const deleteActAction = async (formData: FormData): Promise<void> => {
@@ -42,7 +42,9 @@ export const postActAction = async (formData: FormData): Promise<void> => {
   if (act) {
     await addUserToAct(user.id, act.id, 'creator');
     revalidatePath('/Home');
-    redirect('/Home');
+    revalidatePath('/Act');
+    revalidatePath(`/Act/${act.id}`);
+    redirect(`/Act/${act.id}`);  // redirect to new Act page
   }
 }
 
