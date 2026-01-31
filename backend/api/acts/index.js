@@ -35,6 +35,7 @@ async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
+      console.log("Putting or posting act");
       const user = authenticateRequest(req, res);
 
       if (!user) {

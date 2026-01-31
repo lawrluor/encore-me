@@ -2,6 +2,7 @@ const allowCors = require('../utils/cors');
 const { sendSuccess, sendError } = require('../utils/response');
 const { authenticateRequest } = require('../utils/auth');
 const { findActById, updateAct, deleteAct, getActMembers } = require('../../db/acts');
+const { validateBody, actSchema } = require('../utils/validation');
 
 async function handler(req, res) {
   try {
@@ -34,7 +35,14 @@ async function handler(req, res) {
         return sendError(res, 'Unauthorized', 401);
       }
 
-      const { name, description } = req.body;
+      const validation = validateBody(actSchema, req.body);
+
+      if (!validation.valid) {
+        return sendError(res, 'Validation failed', 400, validation.errors);
+      }
+
+      const { name, description } = validation.value;
+
       const updatedAct = await updateAct(id, { name, description });
 
       if (!updatedAct) {
