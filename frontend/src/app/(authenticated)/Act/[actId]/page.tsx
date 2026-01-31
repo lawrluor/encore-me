@@ -28,8 +28,7 @@ const Act = async ({ params }: Props) => {
   if (!userTree) throw new Error("Error fetching data for user");
 
   let act = userTree.acts.find((act: Act) => act.id === actId);
-  if (!act)
-    act = await getAct(actId);  // fallback if Act not in user tree
+  if (!act) act = await getAct(actId);  // fallback if Act not in user tree
 
   return (
     <div className="min-h-dvh flex flex-col">

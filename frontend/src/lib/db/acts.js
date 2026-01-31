@@ -107,7 +107,7 @@ const isUserMemberOfAct = async (userId, actId) => {
   return result.rows.length > 0;
 };
 
-module.exports = {
+export {
   createAct,
   findActById,
   getAllActs,
