@@ -22,7 +22,6 @@ export const FormSubmitter = ({ children, className = "", ...props }: FormSubmit
   )
 }
 
-
 export const FormSubmitButton = ({ title }: FormSubmitButtonProps) => {
   const { pending } = useFormStatus();
 

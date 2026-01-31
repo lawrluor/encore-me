@@ -25,7 +25,7 @@ const COLUMN_NAMES = {
 export const SetPanel = async ({ songs, actId, set }: Props) => {
   if (!songs) songs = await getSongs('setId', set.id);
 
-  const deleteSetWithId = deleteSetAction.bind(null, set.id);
+  const deleteSetWithId = deleteSetAction.bind(null, set.id, actId);
   const promoteSetWithId = promoteSetAction.bind(null, set.id);
 
   return (
