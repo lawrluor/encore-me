@@ -4,6 +4,7 @@ import Form from 'next/form';
 import { useState } from 'react';
 
 import { postSetAction } from '../actions/setActions';
+import { FormSubmitButton } from './FormSubmitter';
 
 type Props = {
   actId: string;
@@ -29,10 +30,9 @@ export const CreateSetForm = ({ actId }: Props) => {
           <label htmlFor="description" className="opacity-80">Description (optional)</label>
           <input id="description" name="description" type="text" spellCheck={false} autoComplete="off" className="block h-44 p-5 border-1 border-white border-solid" value={description} onChange={e => setDescription(e.target.value)} />
         </div>
-
-        <div className="p-5">
-          <button type="submit" className="p-5 bg-accent-muted cursor-pointer">CREATE SET</button>
-        </div>
+          <div className="p-5">
+            <FormSubmitButton title="CREATE SET" />
+          </div>
       </Form>
     </details>
   )

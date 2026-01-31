@@ -16,6 +16,12 @@ type Props = {
   }
 }
 
+const COLUMN_NAMES = {
+  SONG: 'SONG',
+  GENRE: 'GENRE',
+  TEMPO: 'TEMPO'
+} as const;
+
 export const SetPanel = async ({ songs, actId, set }: Props) => {
   if (!songs) songs = await getSongs('setId', set.id);
 
@@ -36,11 +42,10 @@ export const SetPanel = async ({ songs, actId, set }: Props) => {
         {set.description && <p>Description: {set.description}</p>}
       </header>
 
-
       <main className="grid grid-cols-3 gap-10">
-        <div><p className="opacity-60 text-xs">SONG</p></div>
-        <div><p className="opacity-60 text-xs">GENRE</p></div>
-        <div><p className="opacity-60 text-xs">TEMPO</p></div>
+        <div><p className="opacity-60 text-xs">{COLUMN_NAMES.SONG}</p></div>
+        <div><p className="opacity-60 text-xs">{COLUMN_NAMES.GENRE}</p></div>
+        <div><p className="opacity-60 text-xs">{COLUMN_NAMES.TEMPO}</p></div>
 
         {songs.length === 0
           ?
