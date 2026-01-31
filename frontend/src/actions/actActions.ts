@@ -18,7 +18,7 @@ export const deleteActAction = async (formData: FormData): Promise<void> => {
 
   if (await deleteAct(id)) {
     // Since the Act is deleted, navigate away from it and refresh Acts data in home
-    revalidatePath('/Act');
+    // revalidatePath('/Act');
     revalidatePath('/Home');
     redirect('/Home');  // If act is deleted, route path will fail. Navigate away
   }
@@ -42,7 +42,7 @@ export const postActAction = async (formData: FormData): Promise<void> => {
   if (act) {
     await addUserToAct(user.id, act.id, 'creator');
     revalidatePath('/Home');
-    revalidatePath('/Act');
+    redirect('/Home');
   }
 }
 
@@ -62,8 +62,10 @@ export const putActAction = async (formData: FormData): Promise<void> => {
 
   const updatedAct = await updateAct(id, { name, description });
   if (updatedAct) {
-    revalidatePath('/Home');
-    revalidatePath('/Act')
+    // revalidatePath('/Home');
+    // revalidatePath('/Act')
+    revalidatePath(`/Act/${id}`);
+    redirect(`/Act/${id}`);
   }
 }
 
