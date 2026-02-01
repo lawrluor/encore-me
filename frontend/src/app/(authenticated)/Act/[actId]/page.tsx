@@ -32,50 +32,34 @@ const Act = async ({ params }: Props) => {
   if (!act) throw new Error("Act not found");
 
   return (
-    <div className="min-h-dvh flex flex-col">
-      <header>
-        <TopNav />
-      </header>
-
-      <main className="flex flex-auto overflow-hidden">
-        <aside className="flex-[1_0_0] ">
-          <ActsList />
-        </aside>
-
-        <section className="p-20 rounded-md flex-[3_1_200px]">
-          <div className="flex flex-row items-center gap-5">
-            <form action={putActAction.bind(null, act.id)}>
-              <div>
-                <label className="sr-only">Name</label>
-                <input className="text-2xl block" type="text" name="name" defaultValue={act.name} />
-
-                <label className="sr-only">Description</label>
-                <input className="text-md block opacity-60" type="text" name="description" defaultValue={act.description} />
-              </div>
-
-              <input hidden type="submit" />
-            </form>
-
-            <form action={deleteActAction.bind(null, act.id)}>
-              <FormSubmitter type="submit" className="cursor-pointer hover:opacity-60 flex justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-minus-icon lucide-circle-minus"><circle cx="12" cy="12" r="10" /><path d="M8 12h8" /></svg>
-              </FormSubmitter>
-            </form>
-          </div>
-
-          <div className="mb-10">
-            {actId && <CreateSetForm actId={act.id} />}
-          </div>
-
+    <div>
+      <div className="flex flex-row items-center gap-5">
+        <form action={putActAction.bind(null, act.id)}>
           <div>
-            {actId && <SetPanelsList sets={act.sets} actId={act.id} showCta={false} />}
-          </div>
-        </section>
-      </main>
+            <label className="sr-only">Name</label>
+            <input className="text-2xl block" type="text" name="name" defaultValue={act.name} />
 
-      <footer>
-        <Footer />
-      </footer>
+            <label className="sr-only">Description</label>
+            <input className="text-md block opacity-60" type="text" name="description" defaultValue={act.description} />
+          </div>
+
+          <input hidden type="submit" />
+        </form>
+
+        <form action={deleteActAction.bind(null, act.id)}>
+          <FormSubmitter type="submit" className="cursor-pointer hover:opacity-60 flex justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-minus-icon lucide-circle-minus"><circle cx="12" cy="12" r="10" /><path d="M8 12h8" /></svg>
+          </FormSubmitter>
+        </form>
+      </div>
+
+      <div className="mb-10">
+        {actId && <CreateSetForm actId={act.id} />}
+      </div>
+
+      <div>
+        {actId && <SetPanelsList sets={act.sets} actId={act.id} showCta={false} />}
+      </div>
     </div>
   )
 }

@@ -22,8 +22,6 @@ const Set = async ({ params, searchParams }: Props) => {
   const [actSongs, setSongs] = await Promise.all([actSongsPromise, setSongsPromise]);
 
   return <div>
-    <TopNav />
-
     <CreateSongForm actId={actId} setId={setId} />
     <p>Act: {actId}</p>
     <p>Set: {setId}</p>

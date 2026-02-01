@@ -14,14 +14,14 @@ export const LastPerformance = async () => {
   const user = await findUserById(authUser.id) as User | null;
 
   return (
-    <div className="p-20 bg-gray-900 rounded-md w-400">
+    <div className="p-20 bg-gray-900 rounded-md">
       {user?.promoted_set ?
         <SetCard
           actId={user.promoted_set.act_id}
           set={user.promoted_set}
         />
         :
-        <p>Select a set to display when people scan your QR code.</p>
+        <p className="w-200">Select a set to display when people scan your QR code.</p>
       }
 
       {user?.qr_code && (

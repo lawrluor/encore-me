@@ -8,6 +8,9 @@
   --graygreen: #bcc9c1;
   --lightgraygreen: #eaeee1;
   --spacing: 1px;
+  scrollbar-width: 0;
+  scrollbar-color: transparent transparent;
+  -webkit-scrollbar: none;
 }
 
 @theme inline {
