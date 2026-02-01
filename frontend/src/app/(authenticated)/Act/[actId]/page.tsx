@@ -29,6 +29,7 @@ const Act = async ({ params }: Props) => {
 
   let act = userTree.acts.find((act: Act) => act.id === actId);
   if (!act) act = await getAct(actId);  // fallback if Act not in user tree
+  if (!act) throw new Error("Act not found");
 
   return (
     <div className="min-h-dvh flex flex-col">
@@ -43,20 +44,19 @@ const Act = async ({ params }: Props) => {
 
         <section className="p-20 rounded-md flex-[3_1_200px]">
           <div className="flex flex-row items-center gap-5">
-            <form action={putActAction.bind(null, actId)}>
+            <form action={putActAction.bind(null, act.id)}>
               <div>
                 <label className="sr-only">Name</label>
-                <input className="text-2xl block" type="text" name="name" defaultValue={act?.name} />
+                <input className="text-2xl block" type="text" name="name" defaultValue={act.name} />
 
                 <label className="sr-only">Description</label>
-                <input className="text-md block opacity-60" type="text" name="description" defaultValue={act?.description} />
+                <input className="text-md block opacity-60" type="text" name="description" defaultValue={act.description} />
               </div>
 
               <input hidden type="submit" />
             </form>
 
-            <form action={deleteActAction.bind(null, actId)}>
-              <input hidden defaultValue={act?.id} name="id" />
+            <form action={deleteActAction.bind(null, act.id)}>
               <FormSubmitter type="submit" className="cursor-pointer hover:opacity-60 flex justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-minus-icon lucide-circle-minus"><circle cx="12" cy="12" r="10" /><path d="M8 12h8" /></svg>
               </FormSubmitter>
@@ -64,11 +64,11 @@ const Act = async ({ params }: Props) => {
           </div>
 
           <div className="mb-10">
-            {actId && <CreateSetForm actId={actId} />}
+            {actId && <CreateSetForm actId={act.id} />}
           </div>
 
           <div>
-            {actId && <SetPanelsList sets={act.sets} actId={actId} showCta={false} />}
+            {actId && <SetPanelsList sets={act.sets} actId={act.id} showCta={false} />}
           </div>
         </section>
       </main>

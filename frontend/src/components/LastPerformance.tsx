@@ -15,14 +15,13 @@ export const LastPerformance = async () => {
 
   return (
     <div className="p-20 bg-gray-900 rounded-md w-400">
-      <h2 className="text-2xl">Recent Sets</h2>
       {user?.promoted_set ?
         <SetCard
           actId={user.promoted_set.act_id}
           set={user.promoted_set}
         />
         :
-        <p>You haven&apos;t promoted a set yet.</p>
+        <p>Select a set to display when people scan your QR code.</p>
       }
 
       {user?.qr_code && (
