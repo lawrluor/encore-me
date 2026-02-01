@@ -48,7 +48,7 @@ const Act = async ({ params }: Props) => {
               <input hidden type="text" name="id" defaultValue={actId} />
               <div>
                 <input className="text-2xl block" type="text" name="name" defaultValue={act?.name} />
-                <input className="text-md block" type="text" name="description" defaultValue={act?.description} className="opacity-60" />
+                <input className="text-md block opacity-60" type="text" name="description" defaultValue={act?.description} />
               </div>
 
               <input hidden type="submit" />

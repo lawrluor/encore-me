@@ -15,8 +15,7 @@ export const ActsList = async ({ acts }: Props) => {
 
   return (
     <div className="p-20">
-      <div>
-        <h2 className="text-bold text-xl">ACTS</h2>
+      <div className="flex gap-5">
         <CreateActForm />
       </div>
 
