@@ -20,7 +20,7 @@ export const SetPanelsList = async ({ sets, actId, showCta }: Props) => {
 
   return (
     <Suspense fallback={<p>Loading Set...</p>}>
-      <div className="flex flex-col gap-20">
+      <div className="flex flex-col gap-60">
         {sets.map((set: Set) => <SetPanel songs={set.songs} key={set.id} actId={actId} set={set} />)}
       </div>
     </Suspense>

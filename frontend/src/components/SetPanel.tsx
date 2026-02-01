@@ -26,15 +26,18 @@ export const SetPanel = async ({ songs, actId, set }: Props) => {
   if (!songs) songs = await getSongs('setId', set.id);
 
   return (
-    <div className="gap-10 p-20 bg-gray-900 rounded-md">
-      <header className="mb-30">
+    <div className="rounded-md">
+      <header>
         <form action={updateSetAction.bind(null, set.id, actId)} className="flex justify-between">
           <div>
             <label htmlFor="title" className="sr-only">Title</label>
             <input type="text" id="title" name="title" defaultValue={set.title} className="block text-2xl" />
 
-            <label htmlFor="description" className="sr-only">Description</label>
-            <input id="description" name="description" type="text" defaultValue={set.description} className="block opacity-60" />
+            {set.description && <>
+              <label htmlFor="description" className="sr-only">Description</label>
+              <input id="description" name="description" type="text" defaultValue={set.description} className="block opacity-60" />
+            </>}
+
             <input hidden type="submit" />
           </div>
 
@@ -45,18 +48,20 @@ export const SetPanel = async ({ songs, actId, set }: Props) => {
         </form>
       </header>
 
-      <main className="grid grid-cols-3 gap-10 my-10">
-        <div><p className="opacity-60 text-xs">{COLUMN_NAMES.SONG}</p></div>
-        <div><p className="opacity-60 text-xs">{COLUMN_NAMES.GENRE}</p></div>
-        <div><p className="opacity-60 text-xs">{COLUMN_NAMES.TEMPO}</p></div>
+      {songs.length === 0
+      ?
+      <div className="col-span-3">
+        <p>No songs have been added to this set yet. <Link href={`/Set/${set.id}`} className="underline font-bold text-blue-500 cursor-pointer hover:opacity-75">Add songs</Link></p>
+      </div>
+      :
+      <div className="mt-20">
+        <div className="grid grid-cols-3 gap-10 my-10">
+          <div><p className="opacity-60 text-xs">{COLUMN_NAMES.SONG}</p></div>
+          <div><p className="opacity-60 text-xs">{COLUMN_NAMES.GENRE}</p></div>
+          <div><p className="opacity-60 text-xs">{COLUMN_NAMES.TEMPO}</p></div>
 
-        {songs.length === 0
-          ?
-          <div className="col-span-3">
-            <p>No songs have been added to this set yet. <Link href={`/Set/${set.id}`} className="underline font-bold text-blue-500 cursor-pointer hover:opacity-75">Add songs</Link></p>
-          </div>
-          :
-          songs?.map((song: Song) => {
+          
+          {songs?.map((song: Song) => {
             return <Fragment key={song.id}>
               <div className="flex items-center gap-10">
                 <div className="h-44 w-44 bg-gray-800 rounded-md shrink-0"></div>
@@ -69,18 +74,9 @@ export const SetPanel = async ({ songs, actId, set }: Props) => {
               <div><p>{song.genre}</p></div>
               <div><p>{song.tempo}</p></div>
             </Fragment>
-          })
-        }
-      </main>
-
-      <button type="button">
-        <p className="text-xs opacity-60 hover:opacity-60 hover:cursor-pointer">see more</p>
-        {/*<svg aria-hidden="true" />*/}
-      </button>
-
-      <div>
-        <Link href={`/Set/${set.id}`} className="text-xs opacity-60 hover:opacity-60 hover:cursor-pointer">view set</Link>
-      </div>
+          })}
+        </div>
+      </div>}
     </div>
   )
 }

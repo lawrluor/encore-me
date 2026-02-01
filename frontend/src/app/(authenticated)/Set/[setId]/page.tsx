@@ -1,6 +1,5 @@
 import { CreateSongForm } from '@/components/CreateSongForm';
 import { SongList } from '@/components/SongList';
-import { TopNav } from '@/components/TopNav';
 import { getSongs } from '@/services/songService';
 
 type Props = {
@@ -21,31 +20,33 @@ const Set = async ({ params, searchParams }: Props) => {
 
   const [actSongs, setSongs] = await Promise.all([actSongsPromise, setSongsPromise]);
 
-  return <div>
-    <CreateSongForm actId={actId} setId={setId} />
-    <p>Act: {actId}</p>
-    <p>Set: {setId}</p>
+  return (
+    <main>
+      <CreateSongForm actId={actId} setId={setId} />
+      <p>Act: {actId}</p>
+      <p>Set: {setId}</p>
 
-    <section>
-      <h2>Songs in Set</h2>
-      {setSongs && setSongs.length > 0
-        ?
-        <SongList initialSongs={setSongs} />
-        :
-        <p>No songs in the set yet.</p>
-      }
-    </section>
+      <section>
+        <h2>Songs in Set</h2>
+        {setSongs && setSongs.length > 0
+          ?
+          <SongList initialSongs={setSongs} />
+          :
+          <p>No songs in the set yet.</p>
+        }
+      </section>
 
-    <section>
-      <h2>Recent Songs</h2>
-      {actSongs && actSongs.length > 0
-        ?
-        <SongList initialSongs={actSongs} />
-        :
-        <p>No songs for this act yet.</p>
-      }
-    </section>
-  </div>
+      <section>
+        <h2>Recent Songs</h2>
+        {actSongs && actSongs.length > 0
+          ?
+          <SongList initialSongs={actSongs} />
+          :
+          <p>No songs for this act yet.</p>
+        }
+      </section>
+    </main>
+  )
 }
 
 export default Set;

@@ -14,7 +14,7 @@ export const LastPerformance = async () => {
   const user = await findUserById(authUser.id) as User | null;
 
   return (
-    <div className="p-20 bg-gray-900 rounded-md">
+    <div className="p-20 bg-surface rounded-md">
       {user?.promoted_set ?
         <SetCard
           actId={user.promoted_set.act_id}

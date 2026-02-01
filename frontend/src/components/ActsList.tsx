@@ -14,7 +14,7 @@ export const ActsList = async ({ acts }: Props) => {
   if (!acts) acts = await getActs();
 
   return (
-    <div className="p-20">
+    <div className="p-10 bg-surface rounded-md">
       <div className="flex gap-5">
         <CreateActForm />
       </div>

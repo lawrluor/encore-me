@@ -4,7 +4,7 @@ import { postActAction } from '../actions/actActions';
 
 export const CreateActForm = () => {
   return (
-    <details className="pb-5 w-100%">
+    <details className="ml-10 mb-5 w-100%">
       <summary className="mb-5 marker:hidden list-none flex gap-10 items-center" aria-label="Create New Act">
         <h2 className="text-bold text-xl">ACTS</h2>
         <svg
@@ -27,10 +27,10 @@ export const CreateActForm = () => {
         <div className="w-44 h-44 bg-accent rounded-md shrink-0"></div>
         <Form action={postActAction}>
           <label htmlFor="name" className="sr-only">Name</label>
-          <input id="name" type="text" spellCheck={false} autoComplete="off" name="name" placeholder="Name" required />
+          <input id="name" type="text" spellCheck={false} autoComplete="off" name="name" placeholder="Name" required className="outline-offset-5" />
 
           <label htmlFor="description" className="sr-only">Description (optional)</label>
-          <input id="description" type="text" spellCheck={false} autoComplete="off" name="description" placeholder="Description (optional)" className="text-sm" />
+          <input id="description" type="text" spellCheck={false} autoComplete="off" name="description" placeholder="Description (optional)" className="text-sm outline-offset-5" />
           <input hidden type="submit" />
         </Form>
       </div>
