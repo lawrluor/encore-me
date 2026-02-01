@@ -13,9 +13,8 @@ type Props = {
 }
 
 export const SetCard = ({ actId, set }: Props) => {
-  console.log("actId", actId);
-  const promoteSetWithId = promoteSetAction.bind(null, set.id);
   const deleteSetWithIds = deleteSetAction.bind(null, set.id, actId);
+  const promoteSetWithId = promoteSetAction.bind(null, set.id);
 
   return (
     <div>

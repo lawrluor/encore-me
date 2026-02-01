@@ -36,6 +36,16 @@ const getAllSets = async () => {
   return result.rows;
 };
 
+const checkUserSetAccess = async (userId, setId) => {
+  const result = await sql`
+    SELECT 1 
+    FROM user_acts ua
+    INNER JOIN sets s ON s.act_id = ua.act_id
+    WHERE ua.user_id = ${userId} AND s.id = ${setId}
+  `;
+  return result.rows.length > 0;
+};
+
 const updateSet = async (id, updates) => {
   const { title, description } = updates;
   const result = await sql`
@@ -72,7 +82,8 @@ export {
   getSetById,
   getSetsByActId,
   getAllSets,
+  checkUserSetAccess,
   updateSet,
   deleteSet,
-  deleteAllSets
+  deleteAllSets,
 };

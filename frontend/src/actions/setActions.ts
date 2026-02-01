@@ -2,10 +2,10 @@
 
 import { revalidatePath } from 'next/cache';
 
-import { deleteSet, createSet } from '../lib/db/sets';
+import { checkUserSetAccess, createSet, deleteSet, getSetById } from '../lib/db/sets';
+import { updatePromotedSet } from '../lib/db/users';
 import { validateBody, setSchema } from '../lib/utils/validation';
 import { getAuthUser } from '../services/authService';
-import { promoteSet } from '../services/setService';
 
 type ValidationError = {
   field: string;
@@ -39,6 +39,19 @@ export const postSetAction = async (formData: FormData): Promise<void> => {
 }
 
 export const promoteSetAction = async (setId: string): Promise<void> => {
-  await promoteSet(setId);
-  revalidatePath('/Act');
+  const authUser = await getAuthUser();
+  if (!authUser) throw new Error('Unauthorized');
+
+  if (!setId) throw new Error('Set ID is required');
+
+  // Verify the set exists
+  const set = await getSetById(setId);
+  if (!set) throw new Error('Set not found');
+
+  const hasAccess = await checkUserSetAccess(authUser.id, setId);
+  if (!hasAccess) throw new Error('You do not have access to this set');
+
+  if (await updatePromotedSet(authUser.id, setId)) {
+    revalidatePath('/Home');
+  }
 }
