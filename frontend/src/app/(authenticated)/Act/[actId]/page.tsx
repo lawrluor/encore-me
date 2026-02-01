@@ -46,7 +46,11 @@ const Act = async ({ params }: Props) => {
             <form action={putActAction}>
               <h2 className="sr-only">{act?.name}</h2>
               <input hidden type="text" name="id" defaultValue={actId} />
-              <input className="text-2xl" type="text" name="name" defaultValue={act?.name} />
+              <div>
+                <input className="text-2xl block" type="text" name="name" defaultValue={act?.name} />
+                <input className="text-md block" type="text" name="description" defaultValue={act?.description} className="opacity-60" />
+              </div>
+
               <input hidden type="submit" />
             </form>
 

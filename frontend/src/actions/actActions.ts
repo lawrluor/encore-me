@@ -52,13 +52,13 @@ export const putActAction = async (formData: FormData): Promise<void> => {
   const user = await getAuthUser();
   if (!user) throw new Error('Unauthorized');
 
-  const id = String(formData.get('id'));
+  const id = formData.get('id') ? String(formData.get('id')) : "";
   if (!id) throw new Error('Act ID must not be blank');
 
-  const formName = String(formData.get('name'));
-  if (!formName) throw new Error('Act name must not be blank');
+  const formName = formData.get('name') ? String(formData.get('name')) : "";
+  const formDescription = formData.get('description') ? String(formData.get('description')) : "";
 
-  const validation = validateBody(actSchema, { name: formName });
+  const validation = validateBody(actSchema, { name: formName, description: formDescription });
   if (!validation.valid) throw new Error(`Validation failed: ${validation.errors.map((e: ValidationError) => e.message).join(', ')}`);
   const { name, description } = validation.value;
 
