@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Fragment } from 'react';
 
-import { deleteSetAction, promoteSetAction } from '../actions/setActions';
+import { deleteSetAction, promoteSetAction, updateSetAction } from '../actions/setActions';
 import { Button } from '../components/Button';
 import { getSongs } from '../services/songService';
 import { type Song } from '../types/song';
@@ -31,18 +31,27 @@ export const SetPanel = async ({ songs, actId, set }: Props) => {
   return (
     <div className="gap-10 p-20 bg-gray-900 rounded-md">
       <header className="mb-30">
-        <div className="flex justify-between">
-          <Link className="hover:opacity-80" href={{ pathname: `/Set/${set.id}`, query: { actId } }} draggable={false}><h2 className="text-bold text-2xl">{set.title}</h2></Link>
+        <form action={updateSetAction} className="flex justify-between">
+          <div>
+            <input hidden type="text" name="actId" defaultValue={actId} /> 
+            <input hidden type="text" name="setId" defaultValue={set.id} /> 
+
+            <label htmlFor="title" className="sr-only">Title</label>
+            <input type="text" id="title" name="title" defaultValue={set.title} className="block text-2xl" />
+
+            <label htmlFor="description" className="sr-only">Description</label>
+            <input id="description" name="description" type="text" defaultValue={set.description} className="block opacity-60" />
+            <input hidden type="submit" />
+          </div>
+
           <span>
             <Button onClick={promoteSetWithId}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-diamond-plus-icon lucide-diamond-plus"><path d="M12 8v8" /><path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41L13.7 2.71a2.41 2.41 0 0 0-3.41 0z" /><path d="M8 12h8" /></svg></Button>
             <Button onClick={deleteSetWithId} aria-label="Delete Set"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash-icon lucide-trash"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg></Button>
           </span>
-        </div>
-
-        {set.description && <p>Description: {set.description}</p>}
+        </form>
       </header>
 
-      <main className="grid grid-cols-3 gap-10">
+      <main className="grid grid-cols-3 gap-10 my-10">
         <div><p className="opacity-60 text-xs">{COLUMN_NAMES.SONG}</p></div>
         <div><p className="opacity-60 text-xs">{COLUMN_NAMES.GENRE}</p></div>
         <div><p className="opacity-60 text-xs">{COLUMN_NAMES.TEMPO}</p></div>
@@ -66,8 +75,18 @@ export const SetPanel = async ({ songs, actId, set }: Props) => {
               <div><p>{song.genre}</p></div>
               <div><p>{song.tempo}</p></div>
             </Fragment>
-          })}
+          })
+        }
       </main>
+
+      <button type="button">
+        <p className="text-xs opacity-60 hover:opacity-60 hover:cursor-pointer">see more</p>
+        {/*<svg aria-hidden="true" />*/}
+      </button>
+      
+      <div>
+        <Link href={`/Set/${set.id}`} className="text-xs opacity-60 hover:opacity-60 hover:cursor-pointer">view set</Link>
+      </div>
     </div>
   )
 }

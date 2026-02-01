@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
-import { checkUserSetAccess, createSet, deleteSet, getSetById } from '../lib/db/sets';
+import { checkUserSetAccess, createSet, deleteSet, getSetById, updateSet } from '../lib/db/sets';
 import { updatePromotedSet } from '../lib/db/users';
 import { validateBody, setSchema } from '../lib/utils/validation';
 import { getAuthUser } from '../services/authService';
@@ -54,4 +54,28 @@ export const promoteSetAction = async (setId: string): Promise<void> => {
   if (await updatePromotedSet(authUser.id, setId)) {
     revalidatePath('/Home');
   }
+}
+
+export const updateSetAction = async (formData: FormData): Promise<void> => {
+  const authUser = await getAuthUser();
+  if (!authUser) throw new Error('Unauthorized');
+
+  // extract form data
+  const actId = formData.get('actId') ? String(formData.get('actId')) : "";
+  const setId = formData.get('setId') ? String(formData.get('setId')) : "";
+  const formTitle = formData.get('title') ? String(formData.get('title')) : "";
+  const formDescription = formData.get('description') ? String(formData.get('description')) : "";
+
+  // validate form data
+  const validation = validateBody(setSchema, { actId: actId, title: formTitle, description: formDescription });
+  if (!validation.valid) throw new Error(`Validation failed: ${validation.errors.map((e: ValidationError) => e.message).join(', ')}`);
+  const { title, description } = validation.value;
+
+   // call db
+  const updatedSet = await updateSet(setId, { title, description });
+  if (!updatedSet) throw new Error('Set not found');
+
+  // revalidate
+  revalidatePath(`/Act/${actId}`);
+  revalidatePath(`/Set/${setId}`);
 }
