@@ -12,11 +12,12 @@ type ValidationError = {
   message: string;
 }
 
-export const deleteActAction = async (formData: FormData): Promise<void> => {
-  if (!formData.get('id')) throw new Error('Act ID is required');
-  const id = String(formData.get('id'));
+export const deleteActAction = async (actId: string): Promise<void> => {
+  const authUser = await getAuthUser();
+  if (!authUser) throw new Error('Unauthorized');
+  if (!actId) throw new Error('Act ID is required');
 
-  if (await deleteAct(id)) {
+  if (await deleteAct(actId)) {
     // Since the Act is deleted, navigate away from it and refresh Acts data in home
     // revalidatePath('/Act');
     revalidatePath('/Home');
@@ -48,12 +49,9 @@ export const postActAction = async (formData: FormData): Promise<void> => {
   }
 }
 
-export const putActAction = async (formData: FormData): Promise<void> => {
+export const putActAction = async (actId: string, formData: FormData): Promise<void> => {
   const user = await getAuthUser();
   if (!user) throw new Error('Unauthorized');
-
-  const id = formData.get('id') ? String(formData.get('id')) : "";
-  if (!id) throw new Error('Act ID must not be blank');
 
   const formName = formData.get('name') ? String(formData.get('name')) : "";
   const formDescription = formData.get('description') ? String(formData.get('description')) : "";
@@ -62,12 +60,12 @@ export const putActAction = async (formData: FormData): Promise<void> => {
   if (!validation.valid) throw new Error(`Validation failed: ${validation.errors.map((e: ValidationError) => e.message).join(', ')}`);
   const { name, description } = validation.value;
 
-  const updatedAct = await updateAct(id, { name, description });
+  const updatedAct = await updateAct(actId, { name, description });
   if (updatedAct) {
     // revalidatePath('/Home');
     // revalidatePath('/Act')
-    revalidatePath(`/Act/${id}`);
-    redirect(`/Act/${id}`);
+    revalidatePath(`/Act/${actId}`);
+    redirect(`/Act/${actId}`);
   }
 }
 

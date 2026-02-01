@@ -56,13 +56,11 @@ export const promoteSetAction = async (setId: string): Promise<void> => {
   }
 }
 
-export const updateSetAction = async (formData: FormData): Promise<void> => {
+export const updateSetAction = async (setId: string, actId: string, formData: FormData): Promise<void> => {
   const authUser = await getAuthUser();
   if (!authUser) throw new Error('Unauthorized');
 
   // extract form data
-  const actId = formData.get('actId') ? String(formData.get('actId')) : "";
-  const setId = formData.get('setId') ? String(formData.get('setId')) : "";
   const formTitle = formData.get('title') ? String(formData.get('title')) : "";
   const formDescription = formData.get('description') ? String(formData.get('description')) : "";
 
@@ -71,7 +69,7 @@ export const updateSetAction = async (formData: FormData): Promise<void> => {
   if (!validation.valid) throw new Error(`Validation failed: ${validation.errors.map((e: ValidationError) => e.message).join(', ')}`);
   const { title, description } = validation.value;
 
-   // call db
+  // call db
   const updatedSet = await updateSet(setId, { title, description });
   if (!updatedSet) throw new Error('Set not found');
 

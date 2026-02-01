@@ -25,17 +25,11 @@ const COLUMN_NAMES = {
 export const SetPanel = async ({ songs, actId, set }: Props) => {
   if (!songs) songs = await getSongs('setId', set.id);
 
-  const deleteSetWithId = deleteSetAction.bind(null, set.id, actId);
-  const promoteSetWithId = promoteSetAction.bind(null, set.id);
-
   return (
     <div className="gap-10 p-20 bg-gray-900 rounded-md">
       <header className="mb-30">
-        <form action={updateSetAction} className="flex justify-between">
+        <form action={updateSetAction.bind(null, set.id, actId)} className="flex justify-between">
           <div>
-            <input hidden type="text" name="actId" defaultValue={actId} /> 
-            <input hidden type="text" name="setId" defaultValue={set.id} /> 
-
             <label htmlFor="title" className="sr-only">Title</label>
             <input type="text" id="title" name="title" defaultValue={set.title} className="block text-2xl" />
 
@@ -45,8 +39,8 @@ export const SetPanel = async ({ songs, actId, set }: Props) => {
           </div>
 
           <div className="flex gap-5 items-start">
-            <Button onClick={promoteSetWithId}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-diamond-plus-icon lucide-diamond-plus w-20 h-20"><path d="M12 8v8" /><path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41L13.7 2.71a2.41 2.41 0 0 0-3.41 0z" /><path d="M8 12h8" /></svg></Button>
-            <Button onClick={deleteSetWithId} aria-label="Delete Set"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash-icon lucide-trash w-20 h-20"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg></Button>
+            <Button onClick={promoteSetAction.bind(null, set.id)}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-diamond-plus-icon lucide-diamond-plus w-20 h-20"><path d="M12 8v8" /><path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41L13.7 2.71a2.41 2.41 0 0 0-3.41 0z" /><path d="M8 12h8" /></svg></Button>
+            <Button onClick={deleteSetAction.bind(null, set.id, actId)} aria-label="Delete Set"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash-icon lucide-trash w-20 h-20"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg></Button>
           </div>
         </form>
       </header>
@@ -83,7 +77,7 @@ export const SetPanel = async ({ songs, actId, set }: Props) => {
         <p className="text-xs opacity-60 hover:opacity-60 hover:cursor-pointer">see more</p>
         {/*<svg aria-hidden="true" />*/}
       </button>
-      
+
       <div>
         <Link href={`/Set/${set.id}`} className="text-xs opacity-60 hover:opacity-60 hover:cursor-pointer">view set</Link>
       </div>

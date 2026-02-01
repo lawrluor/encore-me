@@ -43,9 +43,7 @@ const Act = async ({ params }: Props) => {
 
         <section className="p-20 rounded-md flex-[3_1_200px]">
           <div className="flex flex-row items-center gap-5">
-            <form action={putActAction}>
-              <h2 className="sr-only">{act?.name}</h2>
-              <input hidden type="text" name="id" defaultValue={actId} />
+            <form action={putActAction.bind(null, actId)}>
               <div>
                 <label className="sr-only">Name</label>
                 <input className="text-2xl block" type="text" name="name" defaultValue={act?.name} />
@@ -57,7 +55,7 @@ const Act = async ({ params }: Props) => {
               <input hidden type="submit" />
             </form>
 
-            <form action={deleteActAction}>
+            <form action={deleteActAction.bind(null, actId)}>
               <input hidden defaultValue={act?.id} name="id" />
               <FormSubmitter type="submit" className="cursor-pointer hover:opacity-60 flex justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-minus-icon lucide-circle-minus"><circle cx="12" cy="12" r="10" /><path d="M8 12h8" /></svg>

@@ -5,6 +5,7 @@ import React, { useTransition } from 'react';
 export const Button = ({ children, onClick, ...rest }: React.ComponentProps<'button'>) => {
   const [isPending, startTransition] = useTransition();
 
+  // TODO: refactor to make onClick not require browser event paramater
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!onClick) return;
     startTransition(() => onClick(e));

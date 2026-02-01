@@ -20,7 +20,7 @@ export const CreateActForm = () => {
           <circle cx="12" cy="12" r="10" />
           <path d="M8 12h8" />
           <path d="M12 8v8" />
-        </svg> 
+        </svg>
       </summary>
 
       <div className="flex gap-10">
@@ -32,7 +32,6 @@ export const CreateActForm = () => {
           <label htmlFor="description" className="sr-only">Description (optional)</label>
           <input id="description" type="text" spellCheck={false} autoComplete="off" name="description" placeholder="Description (optional)" className="text-sm" />
           <input hidden type="submit" />
-          {/*<button type="submit" className="p-5 bg-accent cursor-pointer">ADD ACT</button>*/}
         </Form>
       </div>
     </details>
