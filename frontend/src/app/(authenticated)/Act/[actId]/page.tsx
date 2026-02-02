@@ -13,7 +13,7 @@ type Props = {
 
 const Act = async ({ params }: Props) => {
   const user = await getAuthUser();
-  if (!user) redirect('/Login');
+  if (!user) redirect('/login');
 
   let { actId } = await params;
   if (!actId) throw new Error("Act must have an ID");

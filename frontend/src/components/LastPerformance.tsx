@@ -4,7 +4,7 @@ import { findUserById } from '../lib/db/users';
 import { getAuthUser } from '../services/authService';
 import { type User } from '../types/user';
 
-import { SetCard } from './SetCard';
+import { SetPanel } from './SetPanel';
 
 export const LastPerformance = async () => {
   const authUser = await getAuthUser();
@@ -16,7 +16,7 @@ export const LastPerformance = async () => {
   return (
     <div className="p-20 bg-surface rounded-md">
       {user?.promoted_set ?
-        <SetCard
+        <SetPanel
           actId={user.promoted_set.act_id}
           set={user.promoted_set}
         />

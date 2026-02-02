@@ -4,7 +4,7 @@ import React from 'react';
 type Props = {
   children: React.ReactNode;
   className?: string;
-  href: string;
+  href: string | { pathname: string; query: Record<string, string> };
 }
 
 export const CustomLink = ({ children, className, href, ...props }: Props) => {

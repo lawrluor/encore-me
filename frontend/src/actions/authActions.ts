@@ -11,12 +11,12 @@ export const loginUserAction = async (formData: FormData) => {
   }
 
   const userData = await loginUser(payload);
-  if (userData) redirect('/Home');
+  if (userData) redirect('/home');
 }
 
 export const logoutUserAction = async () => {
   const result = await logoutUser();
-  if (result) redirect('/Login');
+  if (result) redirect('/login');
 }
 
 export const signupUserAction = async (formData: FormData) => {
@@ -32,5 +32,5 @@ export const signupUserAction = async (formData: FormData) => {
   }
 
   const userData = await signupUser(payload);
-  if (userData) redirect('/Home');
+  if (userData) redirect('/home');
 }

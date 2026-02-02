@@ -19,8 +19,8 @@ export const deleteSetAction = async (setId: string, actId?: string): Promise<vo
   const deletedSet = await deleteSet(setId);
   if (!deletedSet) throw new Error('Set not found');
 
-  if (actId) revalidatePath(`/Act/${actId}`);  // ideally, revalidate exact act
-  else revalidatePath('/Act');
+  if (actId) revalidatePath(`/act/${actId}`);  // ideally, revalidate exact act
+  else revalidatePath('/act');
 }
 
 export const postSetAction = async (formData: FormData): Promise<void> => {
@@ -35,7 +35,7 @@ export const postSetAction = async (formData: FormData): Promise<void> => {
   if (!validation.valid) throw new Error(`Validation failed: ${validation.errors.map((e: ValidationError) => e.message).join(', ')}`);
   const { actId, title, description } = validation.value;
 
-  if (await createSet(actId, title, description)) revalidatePath(`/Act/${actId}`);
+  if (await createSet(actId, title, description)) revalidatePath(`/act/${actId}`);
 }
 
 export const promoteSetAction = async (setId: string): Promise<void> => {
@@ -52,7 +52,7 @@ export const promoteSetAction = async (setId: string): Promise<void> => {
   if (!hasAccess) throw new Error('You do not have access to this set');
 
   if (await updatePromotedSet(authUser.id, setId)) {
-    revalidatePath('/Home');
+    revalidatePath('/home');
   }
 }
 
@@ -74,6 +74,6 @@ export const updateSetAction = async (setId: string, actId: string, formData: Fo
   if (!updatedSet) throw new Error('Set not found');
 
   // revalidate
-  revalidatePath(`/Act/${actId}`);
-  revalidatePath(`/Set/${setId}`);
+  revalidatePath(`/act/${actId}`);
+  revalidatePath(`/set/${setId}`);
 }

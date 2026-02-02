@@ -73,7 +73,7 @@ describe('Act Page', () => {
     jest.clearAllMocks();
   });
 
-  test('redirects to /Login if user is not authenticated', async () => {
+  test('redirects to /login if user is not authenticated', async () => {
     // Arrange
     (getAuthUser as jest.Mock).mockResolvedValue(null);
     const params = Promise.resolve({ actId: 'act-123' });
@@ -82,7 +82,7 @@ describe('Act Page', () => {
     await Act({ params });
 
     // Assert
-    expect(redirect).toHaveBeenCalledWith('/Login');
+    expect(redirect).toHaveBeenCalledWith('/login');
   });
 
   test('throws error if actId is missing', async () => {

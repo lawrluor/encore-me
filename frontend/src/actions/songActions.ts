@@ -19,7 +19,7 @@ export const postSongAction = async (formData: FormData): Promise<void> => {
     revalidatePath(referer);
     redirect(referer)
   } else {
-    redirect('/Act');
+    redirect('/act');
   }
   // Let error bubble up
 }

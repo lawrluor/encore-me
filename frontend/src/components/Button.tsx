@@ -4,7 +4,6 @@ import React, { useTransition } from 'react';
 
 interface Props extends React.ComponentProps<'button'> {
   children: React.ReactNode;
-  onClick: React.MouseEvent<HTMLButtonElement>;
   className?: string;
 }
 

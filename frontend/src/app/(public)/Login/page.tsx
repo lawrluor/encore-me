@@ -7,7 +7,7 @@ import { getAuthUser } from '@/services/authService';
 
 const Login = async () => {
   const user = await getAuthUser();
-  if (user) redirect('/Home');
+  if (user) redirect('/home');
 
   return (
     <main>
@@ -33,7 +33,7 @@ const Login = async () => {
         </Form>
 
         <div className="py-5">
-          <CustomLink href="/Signup">
+          <CustomLink href="/signup">
             <p className="text-sm text-foreground-muted underline">I don&apos;t have an account</p>
           </CustomLink>
         </div>

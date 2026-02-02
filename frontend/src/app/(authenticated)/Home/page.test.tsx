@@ -45,7 +45,7 @@ describe('Home Page', () => {
     await Home();
 
     // Assert
-    expect(redirect).toHaveBeenCalledWith('/Login');
+    expect(redirect).toHaveBeenCalledWith('/login');
   });
 
   test('renders dashboard layout if user is authenticated', async () => {

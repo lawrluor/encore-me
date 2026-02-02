@@ -19,9 +19,9 @@ export const deleteActAction = async (actId: string): Promise<void> => {
 
   if (await deleteAct(actId)) {
     // Since the Act is deleted, navigate away from it and refresh Acts data in home
-    // revalidatePath('/Act');
-    revalidatePath('/Home');
-    redirect('/Home');  // If act is deleted, route path will fail. Navigate away
+    // revalidatePath('/act');
+    revalidatePath('/home');
+    redirect('/home');  // If act is deleted, route path will fail. Navigate away
   }
 
   // Stay on route if failed
@@ -42,10 +42,10 @@ export const postActAction = async (formData: FormData): Promise<void> => {
   const act = await createAct(name, description);
   if (act) {
     await addUserToAct(user.id, act.id, 'creator');
-    revalidatePath('/Home');
-    revalidatePath('/Act');
-    revalidatePath(`/Act/${act.id}`);
-    redirect(`/Act/${act.id}`);  // redirect to new Act page
+    revalidatePath('/home');
+    revalidatePath('/act');
+    revalidatePath(`/act/${act.id}`);
+    redirect(`/act/${act.id}`);  // redirect to new Act page
   }
 }
 
@@ -62,11 +62,7 @@ export const putActAction = async (actId: string, formData: FormData): Promise<v
 
   const updatedAct = await updateAct(actId, { name, description });
   if (updatedAct) {
-    // revalidatePath('/Home');
-    // revalidatePath('/Act')
-    revalidatePath(`/Act/${actId}`);
-    redirect(`/Act/${actId}`);
+    revalidatePath(`/act/${actId}`);
+    redirect(`/act/${actId}`);
   }
 }
-
-

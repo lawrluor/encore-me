@@ -7,7 +7,7 @@ import { getAuthUser } from '@/services/authService';
 
 const Signup = async () => {
   const user = await getAuthUser();
-  if (user) redirect('/Home');
+  if (user) redirect('/home');
 
   return (
     <main>
@@ -42,7 +42,7 @@ const Signup = async () => {
           </div>
         </Form>
 
-        <CustomLink href="/Login">
+        <CustomLink href="/login">
           <p className="text-sm text-foreground-muted underline">I already have an account</p>
         </CustomLink>
       </section>

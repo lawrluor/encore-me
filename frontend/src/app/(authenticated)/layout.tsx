@@ -13,7 +13,7 @@ type Props = {
 
 const Layout = async ({ children }: Props) => {
   const user = await getAuthUser();
-  if (!user) redirect('/Login');
+  if (!user) redirect('/login');
 
   // is dependent on result of getAuthUser(),
   // but only takes a few ms for this function to finish verifying token cryptographically

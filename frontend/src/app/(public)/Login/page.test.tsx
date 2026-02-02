@@ -35,7 +35,7 @@ describe('Login Page', () => {
     jest.clearAllMocks();
   });
 
-  test('redirects to /Home if user is authenticated', async () => {
+  test('redirects to /home if user is authenticated', async () => {
     // Arrange
     (getAuthUser as jest.Mock).mockResolvedValue({ id: '123', email: 'test@example.com' });
 
@@ -44,7 +44,7 @@ describe('Login Page', () => {
     await Login();
 
     // Assert
-    expect(redirect).toHaveBeenCalledWith('/Home');
+    expect(redirect).toHaveBeenCalledWith('/home');
   });
 
   test('renders login form if user is not authenticated', async () => {

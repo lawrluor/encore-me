@@ -52,7 +52,7 @@ export const SetPanel = async ({ songs, actId, set }: Props) => {
       {songs.length === 0
         ?
         <div className="col-span-3">
-          <p>No songs have been added to this set yet. <CustomLink href={`/Set/${set.id}`} className="underline font-bold text-blue-500 cursor-pointer hover:opacity-75">Add songs</CustomLink></p>
+          <p>No songs have been added to this set yet. <CustomLink href={`/set/${set.id}`} className="underline font-bold text-blue-500 cursor-pointer hover:opacity-75">Add songs</CustomLink></p>
         </div>
         :
         <div className="mt-20">
