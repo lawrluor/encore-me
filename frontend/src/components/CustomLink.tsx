@@ -3,9 +3,10 @@ import React from 'react';
 
 type Props = {
   children: React.ReactNode;
+  className?: string;
   href: string;
 }
 
-export const CustomLink = ({ children, href, ...props }: Props) => {
-  return <Link href={href} className="hover:opacity-60 transition-all duration-[0.15s] ease=in" {...props}>{children}</Link>
+export const CustomLink = ({ children, className, href, ...props }: Props) => {
+  return <Link href={href} className={`hover:opacity-60 transition-all duration-[0.15s] ease-in ${className}`} {...props}>{children}</Link>
 }

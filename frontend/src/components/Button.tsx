@@ -2,7 +2,13 @@
 
 import React, { useTransition } from 'react';
 
-export const Button = ({ children, onClick, ...rest }: React.ComponentProps<'button'>) => {
+interface Props extends React.ComponentProps<'button'> {
+  children: React.ReactNode;
+  onClick: React.MouseEvent<HTMLButtonElement>;
+  className?: string;
+}
+
+export const Button = ({ children, onClick, className, ...rest }: Props) => {
   const [isPending, startTransition] = useTransition();
 
   // TODO: refactor to make onClick not require browser event paramater
@@ -12,7 +18,7 @@ export const Button = ({ children, onClick, ...rest }: React.ComponentProps<'but
   }
 
   return (
-    <button type="button" onClick={handleClick} disabled={isPending} className="cursor-pointer hover:opacity-60 disabled:cursor-wait transition-all duration-[0.15s] ease-in" {...rest}>
+    <button type="button" onClick={handleClick} disabled={isPending} className={`cursor-pointer hover:opacity-60 disabled:cursor-wait transition-all duration-[0.15s] ease-in ${className}`} {...rest}>
       {children}
     </button>
   );
