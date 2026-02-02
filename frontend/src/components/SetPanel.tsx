@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import { CustomLink } from './CustomLink';
+
 import { Fragment } from 'react';
 
 import { deleteSetAction, promoteSetAction, updateSetAction } from '../actions/setActions';
@@ -35,7 +36,7 @@ export const SetPanel = async ({ songs, actId, set }: Props) => {
 
             {set.description && <>
               <label htmlFor="description" className="sr-only">Description</label>
-              <input id="description" name="description" type="text" defaultValue={set.description} className="block opacity-60" />
+              <input id="description" name="description" type="text" defaultValue={set.description} className="block text-foreground-muted" />
             </>}
 
             <input hidden type="submit" />
@@ -49,34 +50,34 @@ export const SetPanel = async ({ songs, actId, set }: Props) => {
       </header>
 
       {songs.length === 0
-      ?
-      <div className="col-span-3">
-        <p>No songs have been added to this set yet. <Link href={`/Set/${set.id}`} className="underline font-bold text-blue-500 cursor-pointer hover:opacity-75">Add songs</Link></p>
-      </div>
-      :
-      <div className="mt-20">
-        <div className="grid grid-cols-3 gap-10 my-10">
-          <div><p className="opacity-60 text-xs">{COLUMN_NAMES.SONG}</p></div>
-          <div><p className="opacity-60 text-xs">{COLUMN_NAMES.GENRE}</p></div>
-          <div><p className="opacity-60 text-xs">{COLUMN_NAMES.TEMPO}</p></div>
-
-          
-          {songs?.map((song: Song) => {
-            return <Fragment key={song.id}>
-              <div className="flex items-center gap-10">
-                <div className="h-44 w-44 bg-gray-800 rounded-md shrink-0"></div>
-                <div className="shrink-0">
-                  <p>{song.title}</p>
-                  <p className="text-sm opacity-60">{song.description}</p>
-                </div>
-              </div>
-
-              <div><p>{song.genre}</p></div>
-              <div><p>{song.tempo}</p></div>
-            </Fragment>
-          })}
+        ?
+        <div className="col-span-3">
+          <p>No songs have been added to this set yet. <CustomLink href={`/Set/${set.id}`} className="underline font-bold text-blue-500 cursor-pointer hover:opacity-75">Add songs</CustomLink></p>
         </div>
-      </div>}
+        :
+        <div className="mt-20">
+          <div className="grid grid-cols-3 gap-10 my-10">
+            <div><p className="text-foreground-muted text-xs">{COLUMN_NAMES.SONG}</p></div>
+            <div><p className="text-foreground-muted text-xs">{COLUMN_NAMES.GENRE}</p></div>
+            <div><p className="text-foreground-muted text-xs">{COLUMN_NAMES.TEMPO}</p></div>
+
+
+            {songs?.map((song: Song) => {
+              return <Fragment key={song.id}>
+                <div className="flex items-center gap-10">
+                  <div className="h-44 w-44 bg-gray-800 rounded-md shrink-0"></div>
+                  <div className="shrink-0">
+                    <p>{song.title}</p>
+                    <p className="text-sm text-foreground-muted">{song.description}</p>
+                  </div>
+                </div>
+
+                <div><p>{song.genre}</p></div>
+                <div><p>{song.tempo}</p></div>
+              </Fragment>
+            })}
+          </div>
+        </div>}
     </div>
   )
 }

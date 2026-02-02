@@ -12,7 +12,7 @@ export const Button = ({ children, onClick, ...rest }: React.ComponentProps<'but
   }
 
   return (
-    <button type="button" onClick={handleClick} disabled={isPending} className="cursor-pointer hover:opacity-60 disabled:cursor-wait" {...rest}>
+    <button type="button" onClick={handleClick} disabled={isPending} className="cursor-pointer hover:opacity-60 disabled:cursor-wait transition-all duration-[0.15s] ease-in" {...rest}>
       {children}
     </button>
   );

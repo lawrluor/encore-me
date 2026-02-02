@@ -1,8 +1,8 @@
 import Form from 'next/form';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 import { signupUserAction } from '@/actions/authActions';
+import { CustomLink } from '@/components/CustomLink';
 import { getAuthUser } from '@/services/authService';
 
 const Signup = async () => {
@@ -42,9 +42,9 @@ const Signup = async () => {
           </div>
         </Form>
 
-        <Link href="/Login" className="h-44 cursor-pointer">
-          <p className="opacity-80 text-sm underline">I already have an account</p>
-        </Link>
+        <CustomLink href="/Login">
+          <p className="text-sm text-foreground-muted underline">I already have an account</p>
+        </CustomLink>
       </section>
     </main>
   )

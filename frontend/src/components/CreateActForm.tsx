@@ -10,7 +10,7 @@ export const CreateActForm = () => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
-          className="w-20 h-20 cursor-pointer hover:opacity-60"
+          className="w-20 h-20 cursor-pointer transition-all hover:opacity-60 duration-[0.15s] ease-in"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"

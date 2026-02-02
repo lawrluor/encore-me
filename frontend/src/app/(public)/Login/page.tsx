@@ -1,8 +1,8 @@
 import Form from 'next/form';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 import { loginUserAction } from '@/actions/authActions';
+import { CustomLink } from '@/components/CustomLink';
 import { getAuthUser } from '@/services/authService';
 
 const Login = async () => {
@@ -33,9 +33,9 @@ const Login = async () => {
         </Form>
 
         <div className="py-5">
-          <Link href="/Signup">
-            <p className="opacity-80 text-sm underline">I don&apos;t have an account</p>
-          </Link>
+          <CustomLink href="/Signup">
+            <p className="text-sm text-foreground-muted underline">I don&apos;t have an account</p>
+          </CustomLink>
         </div>
       </section>
     </main>
