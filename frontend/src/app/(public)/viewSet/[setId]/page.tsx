@@ -1,0 +1,41 @@
+import Link from 'next/link';
+
+import { getSetById } from '@/lib/db/sets';
+import { getSongsBySetId } from '@/lib/db/songs';
+import { RequestModal } from '@/components/RequestModal';
+
+type Props = {
+  params: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+const ViewSet = async ({ params }: Props) => {
+  const { setId } = await params;
+  if (!setId) throw new Error("Set id required");
+
+  const [set, songs] = await Promise.all([getSetById(setId), getSongsBySetId(setId)]);
+  if (!set) throw new Error("Set not found");
+
+  return (
+    <main className="w-dvw h-dvh ">
+      <div className="absolute inset-0 m-auto max-w-[min(80dvw,600px)] h-[80dvh] bg-surface translate-x-50% rounded-md">
+        <header className="p-20 bg-graygreen rounded-t-md">
+          <h2 className="text-2xl text-background">{set.title}</h2>
+          <p className="text-foreground-muted">{set.description}</p> 
+        </header>
+
+        <section className="p-20">
+          <RequestModal songs={songs} />
+        </section>
+
+        <section className="absolute w-full bottom-0 p-20">
+          <div className="w-300 mx-auto text-center">
+            <Link href="/terms" className="text-xs text-foreground-muted mr-12.5 hover:opacity-60 transition-all duration-[0.15s] ease-in">terms & conditions</Link>
+            <Link href="/policy" className="text-xs text-foreground-muted hover:opacity-60 transition-all duration-[0.15s] ease-in">privacy policy</Link>
+          </div>
+        </section>
+      </div>
+    </main>
+  )
+}
+
+export default ViewSet;
