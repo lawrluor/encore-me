@@ -1,4 +1,4 @@
-const { sql } = require('./client');
+import { sql } from "./client";
 
 const createSong = async (userId, actId, title, description = '', genre = '', tempo = '') => {
   const result = await sql`
@@ -99,7 +99,7 @@ const removeSongFromSet = async (setId, songId) => {
   return result.rows[0];
 };
 
-module.exports = {
+export {
   createSong,
   findSongById,
   getSongsByUserId,

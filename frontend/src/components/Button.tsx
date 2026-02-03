@@ -17,7 +17,7 @@ export const Button = ({ children, onClick, className, ...rest }: Props) => {
   }
 
   return (
-    <button type="button" onClick={handleClick} disabled={isPending} className={`cursor-pointer hover:opacity-60 disabled:cursor-wait transition-all duration-[0.15s] ease-in ${className}`} {...rest}>
+    <button type="button" onClick={handleClick} disabled={isPending} className={`cursor-pointer hover:opacity-60 disabled:cursor-wait transition-all duration-[0.15s] ease-in shadow-sm ${className}`} {...rest}>
       {children}
     </button>
   );

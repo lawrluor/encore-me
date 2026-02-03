@@ -29,7 +29,7 @@ const findUserByEmail = async (email) => {
   return result.rows[0];
 };
 
-const findUserById = async (id) => {
+const getUserById = async (id) => {
   const result = await sql`
     SELECT 
       u.id, 
@@ -268,7 +268,7 @@ const getUserTree = async (userId) => {
 export {
   createUser,
   findUserByEmail,
-  findUserById,
+  getUserById,
   getAllUsers,
   updateUser,
   deleteUser,
