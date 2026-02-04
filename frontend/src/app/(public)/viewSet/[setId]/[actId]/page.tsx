@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { RequestMenu } from '@/components/RequestModal';
+import { RequestMenu } from '@/components/RequestMenu';
 import { getActById } from '@/lib/db/acts';
 import { getSetById } from '@/lib/db/sets';
 import { getSongsBySetId } from '@/lib/db/songs';

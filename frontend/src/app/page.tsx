@@ -32,42 +32,83 @@ const songs = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
+  {
+    id: 'song_demo_03',
+    title: 'Take Me Home, Country Roads',
+    description: 'Sing-along favorite',
+    genre: 'Country',
+    tempo: 'Mid',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'song_demo_04',
+    title: 'Hey Ya!',
+    description: 'Upbeat acoustic cover',
+    genre: 'Pop',
+    tempo: 'Fast',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'song_demo_05',
+    title: 'Hallelujah',
+    description: 'Crowd-requested ballad',
+    genre: 'Folk',
+    tempo: 'Slow',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
 ];
 
 const Root = async () => {
   return (
     <div className="w-dvw h-dvh">
       <header className="flex flex-col items-center p-20">
-        <h1 className="text-7xl">Encore Me</h1>
-        <p className="text-lg text-foreground-muted">Artists perform. You curate the music.</p>
-
       </header>
 
       <main>
-        <div className="relative w-full h-[450px]">
-          {/* Photo by <a href="https://unsplash.com/@atelierbyvineeth?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">atelierbyvineeth ...</a> on <a href="https://unsplash.com/photos/man-playing-guitar-on-the-street-fR9oVrI74Bg?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> */}
-          <Image src="/images/busking_800w.webp" alt="Guitarist giving a spirited street performance" width="300" height="450" className="absolute right-0 top-0" />
-          <div className="absolute inset-0 bg-gradient-to-r to-background via-accent from-accent opacity-60 w-dvw h-full"></div>
-          <p className="absolute top-0 left-0">Hello</p>
-        </div>
-
-        <section className="py-20">
-          <p className="text-lg">Make a passing moment something more.</p>
-          <p>Create a virtual tip jar</p>
-          <p>Made by musicians for musicians.</p>
-        </section>
-
-        <section className="py-20">
-          <p>Create a set of songs your audience can choose from.</p>
-          <p>Easily share your set with an auto-generated QR Code.</p>
-          <QRCode uri="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAYAAAB1PADUAAAAAklEQVR4AewaftIAAATcSURBVO3BQY4kRxIEQdNA/f/Lun30CwNIpFdzOGsi+CNVS06qFp1ULTqpWnRSteikatFJ1aKTqkUnVYtOqhadVC06qVp0UrXopGrRSdWik6pFn7wE5Dep+SYgk5oJyKTmBsgTaiYgv0nNGydVi06qFp1ULfpkmZpNQP5NQG6ATGomNTdAnlCzCcimk6pFJ1WLTqoWffJlQJ5Q8wSQJ9Q8oWYC8gaQTUCeUPNNJ1WLTqoWnVQt+uQvp2YCMqmZ1ExAngByo2YC8jc5qVp0UrXopGrRJ/9n1Dyh5gkgN0AmNX+Tk6pFJ1WLTqoWffJlan6TmhsgN2pugExqJjVPAJnUPKHmT3JSteikatFJ1aJPlgH5kwCZ1ExAboBMaiYgk5oJyKTmDSB/spOqRSdVi06qFn3ykpr6Z2omIJOaGzX/JSdVi06qFp1ULfrkJSCTmgnIJjWTmm9SMwGZ1ExAbtRMQCY1E5BNar7ppGrRSdWik6pFn/wyNROQSc0NkBs1k5oJyA2QGzUTkEnNDZBJzQTkDTU3QG7UvHFSteikatFJ1aJPlgHZBORGzQ2QSc0NkBsgk5oJyI2aGzVvALlR800nVYtOqhadVC3CH/lFQJ5QcwNkUvMEkBs1E5BJzQ2QSc0NkE1qboBMat44qVp0UrXopGrRJ8uATGomNTdAJiCTmieA3Ki5ATKpmYDcqJmAPKFmAjKpuQFyo2bTSdWik6pFJ1WLPvnDqdmk5gk1N2pugNyomYBMQCY1E5AbNROQCcik5o2TqkUnVYtOqhbhj7wA5Ak1N0Bu1NwAuVHzBpBJzQTkRs0EZFIzAZnU/MlOqhadVC06qVr0yUtqboDcAJnUPAFkUjMBmYDcqJmATGpu1GxScwNkUnMDZFKz6aRq0UnVopOqRZ8sA/IGkBs1b6h5Qs0EZJOaCcik5kbNBORGzTedVC06qVp0UrXok5eA3KiZgExqJiCTmjfU3AB5Qs0bQG7UTEDeUHMDZFLzxknVopOqRSdViz5ZpmYCMqmZgExqJiBvANkEZFIzAZnUTGqeUDMBeQPIpGbTSdWik6pFJ1WL8EdeADKpuQHyhJoJyBNqngAyqXkDyKTmBsik5gbIjZoJyI2aN06qFp1ULTqpWvTJlwGZ1DwB5Ak1E5AbNZOaCcgbaiYgTwB5Qs0EZFLzTSdVi06qFp1ULcIf+Q8DMql5AsikZhOQJ9Q8AeRGzQ2QSc0bJ1WLTqoWnVQt+uQlIL9JzaRmAnKj5g0gvwnIpOYNIJOaTSdVi06qFp1ULfpkmZpNQG6A3KiZgExqboA8oeYJIDdqnlDzbzqpWnRSteikatEnXwbkCTWbgExqnlAzAbkBcqPmBsgbQG7UfNNJ1aKTqkUnVYs++cupeQPIpOYNIE+omYBMaiYgk5oJyI2aN06qFp1ULTqpWvTJX0bNBGRSMwGZ1NwAmdRMQCY1k5ongExqJiCTmgnIjZpNJ1WLTqoWnVQt+uTL1HyTmieA3ACZ1NwAmdQ8AeQJIE+omYB800nVopOqRSdViz5ZBuQ3AZnU3Kh5A8ikZgIyqZmATGomIJOaCcik5gbIpOabTqoWnVQtOqlahD9SteSkatFJ1aKTqkUnVYtOqhadVC06qVp0UrXopGrRSdWik6pFJ1WLTqoWnVQtOqla9D+zAkQ06EnGLwAAAABJRU5ErkJggg==" />
-        </section>
-
-        <section className="py-20">
-          <p>Set a price for each song.</p>
-          <div className="w-[min(80dvw,600px)]">
-            <RequestMenu set={set} songs={songs} mock={true} />
+        <section className="relative w-full h-[450px]">
+          <div className="py-40 px-40">
+            <p className="text-6xl text-foreground mb-20">Turn your listeners into participants</p>
+            <p className="text-xl text-foreground-muted max-w-380">Your music makes them <strong>stop to listen</strong>. We give them another <strong>reason to stay</strong>.
+            </p>
           </div>
+          <Image src="/images/busking_800w.webp" alt="Guitarist giving a spirited street performance" width="300" height="450" className="absolute right-0 top-0" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background to-accent via-background opacity-40 w-dvw h-full"></div>
+        </section>
+
+        {/* <section className="relative w-full h-[450px]">
+          <div className="absolute w-[300px] h-[450px] right-0 top-0">
+            <Image src="/images/busking_800w.webp" alt="Guitarist giving a spirited street performance" width="300" height="450" className="absolute" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background to-accent  opacity-60 w-full h-full"></div>
+          </div>
+        </section> */}
+
+        <section className="py-40 px-40 flex flex-wrap gap-10">
+          <div className="flex flex-1 rounded-md gap-20">
+            {/* <div className="py-20 bg-graygreen rounded-t-md"></div> */}
+            <div className="mb-40">
+              <QRCode className="bg-graygreen" uri="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMSAzMSIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48cGF0aCBzdHJva2U9IiMwMDAwMDAiIGQ9Ik0xIDEuNWg3bTYgMGgxbTEgMGgxbTIgMGgzbTEgMGg3TTEgMi41aDFtNSAwaDFtNiAwaDRtMyAwaDFtMSAwaDFtNSAwaDFNMSAzLjVoMW0xIDBoM20xIDBoMW0xIDBoM20yIDBoMW0xIDBoMm0yIDBoMm0xIDBoMW0xIDBoM20xIDBoMU0xIDQuNWgxbTEgMGgzbTEgMGgxbTEgMGgybTEgMGgxbTIgMGg1bTEgMGgxbTEgMGgxbTEgMGgzbTEgMGgxTTEgNS41aDFtMSAwaDNtMSAwaDFtMSAwaDJtNyAwaDNtMiAwaDFtMSAwaDNtMSAwaDFNMSA2LjVoMW01IDBoMW0xIDBoMW0yIDBoMm0yIDBoMW00IDBoMW0xIDBoMW01IDBoMU0xIDcuNWg3bTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGg3TTkgOC41aDFtMSAwaDFtMSAwaDFtMSAwaDFtMSAwaDFtMiAwaDFNMSA5LjVoMW0xIDBoNW0zIDBoMW0xIDBoMW0yIDBoMW0xIDBoMm0xIDBoMW0xIDBoNU0xIDEwLjVoMW0xIDBoMW0xIDBoMW0yIDBoMm0yIDBoNG0xIDBoMW0yIDBoMW0xIDBoNG0yIDBoMk0xIDExLjVoM20xIDBoMW0xIDBoMm0yIDBoMW0yIDBoM20xIDBoMm02IDBoMk00IDEyLjVoM20yIDBoMW0zIDBoMm0xIDBoMW0yIDBoMW0yIDBoNW0yIDBoMU0yIDEzLjVoMW0zIDBoMm0xIDBoMW0xIDBoMm0yIDBoMW0xIDBoMm0xIDBoM20xIDBoMW0yIDBoMk0yIDE0LjVoMW0zIDBoMW0yIDBoMW0xIDBoMW03IDBoMm0xIDBoMm0xIDBoMm0xIDBoMk0xIDE1LjVoM20yIDBoMm0yIDBoMm00IDBoMW0xIDBoMm0xIDBoMW0xIDBoMU0zIDE2LjVoMW0xIDBoMW0zIDBoMW0xIDBoM20xIDBoMW01IDBoMW0zIDBoMW0yIDBoMU0yIDE3LjVoMm0xIDBoM20xIDBoMW0xIDBoMW00IDBoNW0xIDBoMW0zIDBoMk0xIDE4LjVoMm0xIDBoMW0xIDBoMW0yIDBoMW0zIDBoM200IDBoMW0yIDBoNG0yIDBoMU0xIDE5LjVoMW0xIDBoMW0xIDBoMW0xIDBoM20xIDBoNm0xIDBoMW01IDBoM20xIDBoMU0xIDIwLjVoMW0yIDBoM20xIDBoM20zIDBoMW00IDBoMW0yIDBoMW0yIDBoMm0xIDBoMk0xIDIxLjVoMW0xIDBoMW0zIDBoM20xIDBoMm0yIDBoNG0xIDBoNm0xIDBoMU05IDIyLjVoMW0zIDBoMW01IDBoM20zIDBoMm0yIDBoMU0xIDIzLjVoN20yIDBoMm0xIDBoMW0yIDBoNm0xIDBoMW0xIDBoMm0xIDBoMU0xIDI0LjVoMW01IDBoMW0xIDBoMm0xIDBoMW0yIDBoM20zIDBoMW0zIDBoMW0yIDBoMU0xIDI1LjVoMW0xIDBoM20xIDBoMW0xIDBoM200IDBoNG0xIDBoN00xIDI2LjVoMW0xIDBoM20xIDBoMW0xIDBoMm00IDBoMW00IDBoM20xIDBoMW0xIDBoMW0xIDBoMk0xIDI3LjVoMW0xIDBoM20xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMm0xIDBoMW00IDBoMW0xIDBoMW0xIDBoMk0xIDI4LjVoMW01IDBoMW0zIDBoNG0yIDBoMW0zIDBoNW0yIDBoMU0xIDI5LjVoN20xIDBoMW0xIDBoMW00IDBoMW0xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMW0yIDBoMSIvPjwvc3ZnPgo=" />
+            </div>
+
+            <div>
+              <p className="text-xl">Create a set of songs your audience can choose from.</p>
+              <p className="text-xl">Share it instantly via an auto-generated QR Code.</p>
+            </div>
+          </div>
+
+          <div>
+            <div className="flex-1">
+              <RequestMenu set={set} songs={songs} mock={true} />
+            </div>
+            <p>Set a suggested tip for each song.</p>
+          </div>
+        </section>
+
+        <section className="py-20 px-40">
+          <p className="text-lg text-foreground-muted">Perfect for busking, gigging, and livestreams</p>
+          <p className="text-lg text-foreground-muted">Made by musicians for musicians.</p>
         </section>
       </main>
 

@@ -2,7 +2,7 @@ const allowCors = require('../utils/cors');
 const { sendSuccess, sendError } = require('../utils/response');
 const { generateToken } = require('../utils/auth');
 const bcrypt = require('bcryptjs');
-const { findUserByEmail } = require('../../db/users');
+const { findUserByEmail, updateUserQrCode } = require('../../db/users');
 
 async function handler(req, res) {
   try {
@@ -39,7 +39,9 @@ async function handler(req, res) {
       `authToken=${token}; HttpOnly; ${isProduction ? 'Secure;' : ''} SameSite=Strict; Path=/; Max-Age=604800`
     ]);
 
-    const { password: _, ...userWithoutPassword } = user;
+    const updatedUser = user; // await updateUserQrCode(user.id, user.id);
+    const userToReturn = updatedUser || user;
+    const { password: _, ...userWithoutPassword } = userToReturn;
 
     return sendSuccess(res, {
       user: userWithoutPassword

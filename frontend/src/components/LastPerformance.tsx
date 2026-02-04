@@ -23,7 +23,7 @@ export const LastPerformance = async () => {
         <p className="w-200">Select a set to display when people scan your QR code.</p>
       }
 
-      {user?.qr_code && <QRCode uri={user.qr_code} />}
+      {user?.qr_code && <QRCode uri={user.qr_code} className="bg-graygreen" />}
     </div>
   );
 }

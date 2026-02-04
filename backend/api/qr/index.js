@@ -20,7 +20,16 @@ async function handler(req, res) {
       return sendError(res, 'Text parameter is required', 400);
     }
 
-    const qrDataUrl = await QRCode.toDataURL(text);
+    const svg = await QRCode.toString(text, {
+      type: 'svg',
+      color: {
+        dark: '#000000',
+        light: '#00000000',
+      },
+      margin: 1
+    });
+
+    const qrDataUrl = `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
 
     return sendSuccess(res, { url: qrDataUrl }, 'QR code generated successfully');
   } catch (error) {

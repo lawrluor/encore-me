@@ -1,7 +1,22 @@
-import Image from 'next/image';
+type Props = {
+  uri: string;
+  className?: string;
+}
 
-export const QRCode = ({ uri }: { uri: string }) => {
+export const QRCode = ({ uri, className }: Props) => {
   return (
-    <Image src={uri} alt="User QR Code" width={200} height={200} />
+    <div
+      className={`w-[200px] h-[200px] ${className}`}
+      style={{
+        maskImage: `url("${uri}")`,
+        WebkitMaskImage: `url("${uri}")`,
+        maskSize: 'contain',
+        WebkitMaskSize: 'contain',
+        maskRepeat: 'no-repeat',
+        WebkitMaskRepeat: 'no-repeat',
+        maskPosition: 'center',
+        WebkitMaskPosition: 'center',
+      }}
+    />
   )
 }

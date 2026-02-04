@@ -1,6 +1,19 @@
 const { sql } = require('./client');
 const QRCode = require('qrcode');
 
+const generateQrCode = async (text) => {
+  const svg = await QRCode.toString(text, {
+    type: 'svg',
+    color: {
+      dark: '#000000',
+      light: '#00000000',
+    },
+    margin: 1
+  });
+
+  return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
+};
+
 const createUser = async (email, hashedPassword, name = '') => {
   const result = await sql`
     INSERT INTO users (email, password, name)
@@ -9,7 +22,7 @@ const createUser = async (email, hashedPassword, name = '') => {
   `;
 
   const newUser = result.rows[0];
-  const qrCodeDataUrl = await QRCode.toDataURL(newUser.id);
+  const qrCodeDataUrl = await generateQrCode(newUser.id);
 
   const updatedResult = await sql`
     UPDATE users
@@ -123,6 +136,18 @@ const updatePromotedSet = async (userId, setId) => {
       updated_at = CURRENT_TIMESTAMP
     WHERE id = ${userId}
     RETURNING id, email, name, promoted_set_id, qr_code, created_at, updated_at
+  `;
+  return result.rows[0];
+};
+
+const updateUserQrCode = async (userId, text) => {
+  const qrCodeDataUrl = await generateQrCode(text);
+  const result = await sql`
+    UPDATE users
+    SET qr_code = ${qrCodeDataUrl},
+        updated_at = CURRENT_TIMESTAMP
+    WHERE id = ${userId}
+    RETURNING id, email, name, qr_code, created_at, updated_at
   `;
   return result.rows[0];
 };
@@ -273,5 +298,6 @@ module.exports = {
   deleteUser,
   deleteAllUsers,
   updatePromotedSet,
+  updateUserQrCode,
   getUserTree
 };
