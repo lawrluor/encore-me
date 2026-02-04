@@ -6,7 +6,7 @@ type Props = {
 export const QRCode = ({ uri, className }: Props) => {
   return (
     <div
-      className={`w-[200px] h-[200px] ${className}`}
+      className={`w-[200px] h-[200px] shadow-md ${className}`}
       style={{
         maskImage: `url("${uri}")`,
         WebkitMaskImage: `url("${uri}")`,

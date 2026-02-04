@@ -11,8 +11,8 @@ type Props = {
 
 export const RequestMenu = ({ set, songs, mock = false }: Props) => {
   return (
-    <div className="relative bg-surface">
-      <header className="p-20 bg-graygreen rounded-t-md">
+    <div className="relative bg-gradient-to-b from-surface-muted to-surface shadow-md rounded-md">
+      <header className="p-20 bg-gradient-to-b from-lightgraygreen to-graygreen rounded-t-md">
         <h2 className="text-2xl text-background">{set.title}</h2>
         {/* <p className="text-foreground-muted">{set.description}</p> */}
         {/* <p className="text-foreground-muted">{act.name}</p> */}

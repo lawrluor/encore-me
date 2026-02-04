@@ -28,6 +28,7 @@
   --color-surface-muted: hsl(var(--surface-muted));
   --color-graygreen: hsl(var(--graygreen));
   --color-lightgraygreen: hsl(var(--lightgraygreen));
+  --font-brand: var(--plaster);
   --font-sans: var(--inter);
 }
 

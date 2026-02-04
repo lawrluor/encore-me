@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Plaster } from "next/font/google";
 
 import "./globals.css";
 
@@ -9,15 +9,21 @@ const inter = Inter({
   weight: ["400"],
 });
 
+const plaster = Plaster({
+  variable: "--plaster",
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
 export const metadata: Metadata = {
-  title: "Encore Me",
+  title: "Encore",
   description: "For audiences to share a stage with live musicians",
 };
 
 export default function RootLayout({ children }: Readonly<{ children?: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${inter.variable} antialiased`}>
+      <body className={`${inter.className} ${inter.variable} ${plaster.variable} antialiased`}>
         {children}
       </body>
     </html>

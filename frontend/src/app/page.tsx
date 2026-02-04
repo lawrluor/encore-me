@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { Button } from '../components/Button';
+import { Brand } from '../components/Brand';
 import { CustomLink } from '../components/CustomLink';
 import { Footer } from '../components/Footer';
 import { QRCode } from '../components/QRCode';
@@ -66,8 +66,12 @@ const songs = [
 const Root = async () => {
   return (
     <div className="w-dvw h-dvh">
+      <header className="p-40">
+        <Brand />
+      </header>
+
       <main>
-        <header className="relative w-full h-[450px]">
+        <section className="relative w-full h-[450px]">
           <div className="py-40 px-40">
             <p className="text-6xl text-foreground mb-20">Turn your listeners into participants</p>
 
@@ -75,13 +79,13 @@ const Root = async () => {
             </p>
 
             <div className="flex gap-10">
-              <CustomLink href="/about" className="bg-transparent text-sm text-foreground-muted border-1 border-foreground-muted py-4 px-8 rounded-md">LEARN MORE</CustomLink>
-              <CustomLink href="/signup" className="bg-accent text-sm text-background p-8 rounded-md">GET STARTED</CustomLink>
+              <CustomLink href="/about" className="bg-transparent text-sm text-foreground-muted border-1 border-foreground-muted p-8 rounded-md">LEARN MORE</CustomLink>
+              <CustomLink href="/signup" className="bg-accent text-sm text-background p-8 rounded-md border-1 border-accent">GET STARTED</CustomLink>
             </div>
           </div>
-          <Image src="/images/busking_800w.webp" alt="Guitarist giving a spirited street performance" width="300" height="450" className="absolute right-0 top-0" />
+          <Image src="/images/busking_800w.webp" alt="Guitarist giving a spirited street performance. via Unsplash by atelierbyvineeth" width="300" height="450" className="absolute right-0 top-0" />
           <div className="absolute inset-0 bg-gradient-to-r from-background to-accent via-transparent opacity-40 w-dvw h-full pointer-events-none"></div>
-        </header>
+        </section>
 
         {/* <section className="relative w-full h-[450px]">
           <div className="absolute w-[300px] h-[450px] right-0 top-0">
@@ -97,7 +101,7 @@ const Root = async () => {
 
           <div>
             <p className="text-2xl">Create a set of songs your audience can choose from.</p>
-            <p className="text-xl text-foreground-muted">Set a suggested tip for each song.</p>
+            <p className="text-xl text-foreground-muted">Set a suggested tip for each request.</p>
           </div>
         </section>
 
