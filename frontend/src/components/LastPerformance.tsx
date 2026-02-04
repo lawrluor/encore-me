@@ -1,9 +1,8 @@
-import Image from 'next/image';
-
 import { getUserById } from '../lib/db/users';
 import { getAuthUser } from '../services/authService';
 import { type User } from '../types/user';
 
+import { QRCode } from './QRCode';
 import { SetPanel } from './SetPanel';
 
 export const LastPerformance = async () => {
@@ -24,9 +23,7 @@ export const LastPerformance = async () => {
         <p className="w-200">Select a set to display when people scan your QR code.</p>
       }
 
-      {user?.qr_code && (
-        <Image src={user.qr_code} alt="User QR Code" width={200} height={200} />
-      )}
+      {user?.qr_code && <QRCode uri={user.qr_code} />}
     </div>
   );
 }
