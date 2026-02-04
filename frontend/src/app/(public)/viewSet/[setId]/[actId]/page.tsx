@@ -30,7 +30,7 @@ const ViewSet = async ({ params }: Props) => {
         </header>
 
         <section className="p-20">
-          <RequestMenu songs={songs} />
+          <RequestMenu set={set} songs={songs} />
         </section>
 
         <section className="absolute w-full bottom-0 p-20">
