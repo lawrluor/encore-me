@@ -11,40 +11,36 @@ const Signup = async () => {
 
   return (
     <main>
-      <header className="p-10">
-        <h1 className="text-3xl">Sign Up</h1>
-      </header>
-
-      <section className="p-10">
-        <Form action={signupUserAction} className="w-1/4">
-          <div className="py-5">
+      <section className="p-40">
+        <Form action={signupUserAction} className="flex flex-col gap-20">
+          <div>
             <label htmlFor="name" className="opacity-80">Name</label>
-            <input id="name" name="name" type="text" spellCheck={false} autoComplete="off" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" required />
+            <input id="name" name="name" type="text" spellCheck={false} autoComplete="off" className="block h-44 w-full border-b-1 border-foreground-muted" required />
           </div>
 
-          <div className="py-5">
+          <div>
             <label htmlFor="email" className="opacity-80">Email</label>
-            <input id="email" name="email" type="email" spellCheck={false} autoComplete="off" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" required />
+            <input id="email" name="email" type="email" spellCheck={false} autoComplete="off" className="block h-44 w-full border-b-1 border-foreground-muted" required />
           </div>
 
-          <div className="py-5">
+          <div>
             <label htmlFor="password" className="opacity-80">Password</label>
-            <input id="password" name="password" type="password" spellCheck={false} autoComplete="off" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" required />
+            <input id="password" name="password" type="password" spellCheck={false} autoComplete="off" className="block h-44 w-full border-b-1 border-foreground-muted" required />
           </div>
 
-          <div className="py-5">
+          <div>
             <label htmlFor="passwordConfirm" className="opacity-80">Confirm Password</label>
-            <input id="passwordConfirm" name="passwordConfirm" type="password" spellCheck={false} autoComplete="off" className="block h-44 w-full p-10 border-1 border-white border-solid rounded-sm" required />
+            <input id="passwordConfirm" name="passwordConfirm" type="password" spellCheck={false} autoComplete="off" className="block h-44 w-full border-b-1 border-foreground-muted" required />
           </div>
 
-          <div className="py-5">
+          <div>
             <button id="submit" type="submit" className={`min-h-44 p-10 rounded-sm bg-accent cursor-pointer hover:opacity-60 transition:all duration-[0.15s] ease-in disabled:cursor-wait disabled:opacity-60`}>CREATE ACCOUNT</button>
           </div>
-        </Form>
 
-        <CustomLink href="/login">
-          <p className="text-sm text-foreground-muted underline">I already have an account</p>
-        </CustomLink>
+          <CustomLink href="/login">
+            <p className="text-sm text-foreground-muted underline">I already have an account</p>
+          </CustomLink>
+        </Form>
       </section>
     </main>
   )

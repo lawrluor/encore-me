@@ -23,7 +23,7 @@ const Layout = async ({ children }: Props) => {
   return (
     <div className="min-h-dvh flex flex-col">
       <header>
-        <TopNav />
+        <TopNav authenticated={true} border={true} />
       </header>
 
       <section className="flex flex-auto gap-20 p-20 overflow-hidden">

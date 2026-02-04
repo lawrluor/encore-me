@@ -73,17 +73,16 @@ const Root = async () => {
       <main>
         <section className="relative w-full h-[450px]">
           <div className="py-40 px-40">
-            <p className="text-6xl text-foreground mb-20">Turn your listeners into participants</p>
+            <p className="text-6xl text-foreground mb-20">Turn your listeners into participants.</p>
 
-            <p className="text-xl text-foreground-muted max-w-380 mb-20">Your music makes them <strong>stop to listen</strong>. We give them another <strong>reason to stay</strong>.
-            </p>
+            <p className="text-xl text-foreground-muted max-w-380 mb-20">Your music makes them <strong>stop to listen</strong>. We give them another <strong>reason to stay</strong>.</p>
 
             <div className="flex gap-10">
               <CustomLink href="/about" className="bg-transparent text-sm text-foreground-muted border-1 border-foreground-muted p-8 rounded-md">LEARN MORE</CustomLink>
               <CustomLink href="/signup" className="bg-accent text-sm text-background p-8 rounded-md border-1 border-accent">GET STARTED</CustomLink>
             </div>
           </div>
-          <Image src="/images/busking_800w.webp" alt="Guitarist giving a spirited street performance. via Unsplash by atelierbyvineeth" width="300" height="450" className="absolute right-0 top-0" />
+          <Image src="/images/busking_800w.webp" alt="Guitarist giving a spirited street performance. via Unsplash by atelierbyvineeth" width="300" height="450" className="absolute right-0 top-0 max-md:hidden" />
           <div className="absolute inset-0 bg-gradient-to-r from-background to-accent via-transparent opacity-40 w-dvw h-full pointer-events-none"></div>
         </section>
 
