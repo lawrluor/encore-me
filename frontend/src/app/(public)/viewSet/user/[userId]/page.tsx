@@ -25,15 +25,7 @@ const ViewSet = async ({ params }: Props) => {
   return (
     <main className="w-dvw h-dvh ">
       <div className="absolute inset-0 m-auto max-w-[min(80dvw,600px)] h-[80dvh] bg-surface translate-x-50% rounded-md">
-        <header className="p-20 bg-graygreen rounded-t-md">
-          <h2 className="text-2xl text-background">{set.title}</h2>
-          {/* <p className="text-foreground-muted">{set.description}</p> */}
-          {/* <p className="text-foreground-muted">{act.name}</p> */}
-        </header>
-
-        <section className="p-20">
-          <RequestMenu songs={songs} />
-        </section>
+        <RequestMenu set={set} songs={songs} />
 
         <section className="absolute w-full bottom-0 p-20">
           <div className="w-300 mx-auto text-center">
