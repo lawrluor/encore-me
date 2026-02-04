@@ -6,7 +6,7 @@ export const CreateActForm = () => {
   return (
     <details className="ml-10 mb-5 w-100%">
       <summary className="mb-5 marker:hidden list-none flex gap-10 items-center" aria-label="Create New Act">
-        <h2 className="text-bold text-xl">ACTS</h2>
+        <h2 className="text-bold text-xl">Acts</h2>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"

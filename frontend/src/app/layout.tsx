@@ -16,7 +16,7 @@ const plaster = Plaster({
 });
 
 export const metadata: Metadata = {
-  title: "Encore",
+  title: "Encore Me",
   description: "For audiences to share a stage with live musicians",
 };
 

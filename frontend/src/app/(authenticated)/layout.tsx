@@ -26,7 +26,7 @@ const Layout = async ({ children }: Props) => {
         <TopNav />
       </header>
 
-      <section className="flex flex-auto gap-10 p-10 overflow-hidden">
+      <section className="flex flex-auto gap-20 p-20 overflow-hidden">
         <aside className="flex-[1_0_0] ">
           <ActsList />
         </aside>

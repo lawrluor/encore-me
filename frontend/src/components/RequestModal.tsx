@@ -25,7 +25,7 @@ export const RequestModal = ({ songs, mock = false }: Props) => {
     setSelectedSong(null);
   };
 
-  return (<div className="flex flex-col gap-10 shadow-md">
+  return (<div className="flex flex-col gap-10">
     {songs.map((song: Song) =>
       <div key={song.id} className="grid grid-cols-2">
         <p className="truncate">{song.title}</p>
