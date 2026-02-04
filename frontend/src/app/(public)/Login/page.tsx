@@ -13,7 +13,7 @@ const Login = async () => {
   return (
     <main>
       <section className="p-40">
-        <Form action={loginUserAction} className="w-1/4 flex flex-col gap-20">
+        <Form action={loginUserAction} className="flex flex-col gap-20">
           <div>
             <label htmlFor="email" className="opacity-80">Email</label>
             <input id="email" name="email" type="email" defaultValue={process.env.NEXT_PUBLIC_USER_EMAIL || ''} spellCheck={false} autoComplete="off" className="block h-44 w-full border-b-1 border-white" />

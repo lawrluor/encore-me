@@ -1,10 +1,10 @@
 import Image from 'next/image';
 
-import { Brand } from '../components/Brand';
 import { CustomLink } from '../components/CustomLink';
 import { Footer } from '../components/Footer';
 import { QRCode } from '../components/QRCode';
 import { RequestMenu } from '../components/RequestMenu';
+import { TopNav } from '../components/TopNav';
 
 const set = {
   id: 'set_demo_01',
@@ -66,8 +66,8 @@ const songs = [
 const Root = async () => {
   return (
     <div className="w-dvw h-dvh">
-      <header className="p-40">
-        <Brand />
+      <header>
+        <TopNav authenticated={false} border={false} />
       </header>
 
       <main>

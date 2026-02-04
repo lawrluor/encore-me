@@ -36,11 +36,13 @@ const Signup = async () => {
           <div>
             <button id="submit" type="submit" className={`min-h-44 p-10 rounded-sm bg-accent cursor-pointer hover:opacity-60 transition:all duration-[0.15s] ease-in disabled:cursor-wait disabled:opacity-60`}>CREATE ACCOUNT</button>
           </div>
+        </Form>
 
+        <div className="py-5">
           <CustomLink href="/login">
             <p className="text-sm text-foreground-muted underline">I already have an account</p>
           </CustomLink>
-        </Form>
+        </div>
       </section>
     </main>
   )
