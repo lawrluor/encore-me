@@ -71,9 +71,9 @@ const Root = async () => {
       </header>
 
       <main>
-        <section className="relative w-full aspect-40/16">
-          <div className="absolute py-40 px-40 z-10">
-            <div>
+        <section className="relative w-full aspect-40/16 ">
+          <div className="relative py-40 px-40 z-10">
+            <div className="h-full">
               <div>
                 <p className="text-6xl text-foreground mb-20 w-[min(80dvw,600px)]">Turn your listeners into participants.</p>
                 <p className="text-xl text-foreground-muted max-w-380 mb-20">Your music makes them <strong>stop to listen</strong>. We give them another <strong>reason to stay</strong>.</p>
@@ -85,7 +85,7 @@ const Root = async () => {
               </div>
             </div>
           </div>
-          <Image src="/images/busking_ensemble_1600w.webp" alt="Trumpeter and pianist giving an engaging street performance" width="1200" height="600" className="absolute right-0 top-0 w-4/5" />
+          <Image src="/images/busking_ensemble_1600w.webp" alt="Trumpeter and pianist giving an engaging street performance" width="1200" height="600" className="absolute right-0 top-0 w-4/5 hidden min-sm:block" />
           <div className="absolute right-0 top-0 bg-gradient-to-r from-background/100 to-accent/50 via-background/90 via-30% h-full pointer-events-none w-4/5"></div>
         </section>
 
@@ -96,7 +96,7 @@ const Root = async () => {
           </div>
         </section> */}
 
-        <section className="py-80 px-40 flex flex-wrap gap-40">
+        <section className="py-40 px-40 flex flex-wrap gap-40 min-md:py-80">
           <div>
             <RequestMenu set={set} songs={songs} mock={true} />
           </div>
