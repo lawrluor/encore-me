@@ -9,7 +9,7 @@ module.exports = {
         inter: ['var(--inter)'],
         plaster: ['var(--plaster)']
       }
-    },
+    }
   },
   plugins: [],
 }

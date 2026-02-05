@@ -13,27 +13,27 @@ const Login = async () => {
   return (
     <main>
       <section className="p-40">
-        <Form action={loginUserAction} className="flex flex-col gap-20">
+        <Form action={loginUserAction} className="flex flex-col gap-20 bg-surface rounded-md p-20 w-[min(80dvw,380px)]">
           <div>
             <label htmlFor="email" className="opacity-80">Email</label>
-            <input id="email" name="email" type="email" defaultValue={process.env.NEXT_PUBLIC_USER_EMAIL || ''} spellCheck={false} autoComplete="off" className="block h-44 w-full border-b-1 border-white" />
+            <input id="email" name="email" type="email" defaultValue={process.env.NEXT_PUBLIC_USER_EMAIL || ''} spellCheck={false} autoComplete="off" className="block h-44 w-full border-b-1 border-foreground-muted" />
           </div>
 
           <div>
             <label htmlFor="password" className="opacity-80">Password</label>
-            <input id="password" name="password" type="password" defaultValue={process.env.NEXT_PUBLIC_USER_PASSWORD || ''} spellCheck={false} autoComplete="off" className="block h-44 w-full border-b-1 border-white" />
+            <input id="password" name="password" type="password" defaultValue={process.env.NEXT_PUBLIC_USER_PASSWORD || ''} spellCheck={false} autoComplete="off" className="block h-44 w-full border-b-1 border-foreground-muted" />
           </div>
 
           <div>
-            <button id="submit" type="submit" className={`min-h-44 p-10 rounded-sm bg-accent cursor-pointer hover:opacity-60 transition:all duration-[0.15s] ease-in disabled:cursor-wait disabled:opacity-60`}>LOG IN</button>
+            <button id="submit" type="submit" className={`min-h-44 p-10 rounded-sm bg-accent text-surface cursor-pointer hover:opacity-60 transition:all duration-[0.15s] ease-in disabled:cursor-wait disabled:opacity-60`}>LOG IN</button>
+          </div>
+
+          <div className="mt-[calc(-10px)]">
+            <CustomLink href="/signup">
+              <p className="text-sm text-foreground-muted underline">I don&apos;t have an account</p>
+            </CustomLink>
           </div>
         </Form>
-
-        <div className="py-5">
-          <CustomLink href="/signup">
-            <p className="text-sm text-foreground-muted underline">I don&apos;t have an account</p>
-          </CustomLink>
-        </div>
       </section>
     </main>
   )

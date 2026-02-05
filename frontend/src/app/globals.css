@@ -1,14 +1,19 @@
 @import "tailwindcss";
 
+* {
+  box-sizing: border-box;
+}
+
+/* Only support dark mode at the moment */
 :root {
-  --background: 0 0% 100%;
-  --foreground: 0 0% 9%;
-  --foreground-muted: 0 0% 5%;
-  --foreground-xmuted: 0 0% 2.5%;
+  --background: 0 0% 4%;
+  --foreground: 0 0% 90%;
+  --foreground-muted: 0 0% 50%;
+  --foreground-xmuted: 0 0% 25%;
+  --surface: 0 0% 7%;
+  --surface-muted: 0 0% 10%;
   --accent: 41 96% 49%;
   --accent-muted: 41 100% 23%;
-  --surface: 0 0% 97%;
-  --surface-muted: 0 0% 94%;
   --graygreen: 144 9% 76%;
   --lightgraygreen: 78 27% 91%;
   --spacing: 1px;
@@ -16,6 +21,17 @@
   scrollbar-color: transparent transparent;
   -webkit-scrollbar: none;
 }
+
+/* @media (prefers-color-scheme: light) {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+    --foreground-muted: 0 0% 5%;
+    --foreground-xmuted: 0 0% 2.5%;
+    --surface: 0 0% 97%;
+    --surface-muted: 0 0% 94%;
+  }
+} */
 
 @theme inline {
   --color-background: hsl(var(--background));
@@ -32,17 +48,6 @@
   --font-sans: var(--inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 90%;
-    --foreground-muted: 0 0% 50%;
-    --foreground-xmuted: 0 0% 25%;
-    --surface: 0 0% 7%;
-    --surface-muted: 0 0% 10%;
-  }
-}
-
 body {
   background: hsl(var(--background));
   color: hsl(var(--foreground));
@@ -50,8 +55,9 @@ body {
   min-height: 100dvh;
 }
 
-input {
-  width: auto;
+:focus {
+  outline: 1px hsl(var(--accent)) solid;
+  outline-offset: 2px;
 }
 
 /*summary::marker {

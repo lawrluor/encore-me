@@ -13,6 +13,8 @@ export const ActsList = async ({ acts }: Props) => {
   // if not an array, must have been undefined and we must fetch it
   if (!acts) acts = await getActs();
 
+  // Better to create new variable than reassign props, which should be treated as immutable
+  // resolvedActs = acts ?? await getActs();
   return (
     <div className="p-10 bg-surface rounded-md">
       <div className="flex gap-5">
