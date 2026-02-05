@@ -8,5 +8,5 @@ type Props = {
 }
 
 export const CustomLink = ({ children, className, href, ...props }: Props) => {
-  return <Link href={href} className={`inline-block hover:opacity-60 transition-all duration-[0.15s] ease-in shadow-xs ${className}`} {...props}>{children}</Link>
+  return <Link href={href} className={`block hover:opacity-60 transition-all duration-[0.15s] ease-in shadow-xs ${className}`} {...props}>{children}</Link>
 }
