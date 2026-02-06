@@ -5,6 +5,7 @@
 }
 
 /* Only support dark mode at the moment */
+
 :root {
   --background: 0 0% 4%;
   --foreground: 0 0% 90%;

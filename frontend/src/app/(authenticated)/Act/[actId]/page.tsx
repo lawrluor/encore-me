@@ -27,8 +27,8 @@ const Act = async ({ params }: Props) => {
   if (!act) throw new Error("Act not found");
 
   return (
-    <main className="bg-surface p-20 rounded-md">
-      <div className="mb-10">
+    <main className="flex flex-col gap-20">
+      <div className="bg-surface rounded-md">
         {actId && <CreateSetForm actId={act.id} />}
       </div>
 

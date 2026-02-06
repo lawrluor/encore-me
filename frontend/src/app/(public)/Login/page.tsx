@@ -38,7 +38,7 @@ const Login = async () => {
 
           <div className="mt-[calc(-10px)] flex justify-end">
             <CustomLink href="/signup">
-              <p className="text-xs text-foreground-muted underline">Sign up</p>
+              <p className="text-xs text-foreground-muted underline">Sign up instead</p>
             </CustomLink>
           </div>
         </Form>

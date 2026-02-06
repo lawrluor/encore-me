@@ -16,7 +16,7 @@ export const CreateSetForm = ({ actId }: Props) => {
   const [description, setDescription] = useState("");
 
   return (
-    <details>
+    <details className="p-20">
       <summary className="cursor-pointer hover:opacity-60">Create Set</summary>
 
       <Form action={postSetAction}>
