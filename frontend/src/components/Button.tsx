@@ -17,7 +17,7 @@ export const Button = ({ children, type = "button", onClick, className = "", ...
   }
 
   return (
-    <button type={type} onClick={handleClick} disabled={isPending} className={`cursor-pointer hover:opacity-60 disabled:cursor-wait transition-all duration-[0.15s] ease-in shadow-sm ${className}`} {...rest}>
+    <button type={type} onClick={handleClick} disabled={isPending} className={`cursor-pointer hover:opacity-60 disabled:cursor-wait transition-all duration-[0.15s] ease-in shadow-2xl ${className}`} {...rest}>
       {children}
     </button>
   );

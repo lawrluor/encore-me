@@ -21,6 +21,7 @@
   scrollbar-width: 0;
   scrollbar-color: transparent transparent;
   -webkit-scrollbar: none;
+  scroll-behavior: smooth;
 }
 
 /* @media (prefers-color-scheme: light) {
@@ -56,7 +57,7 @@ body {
   min-height: 100dvh;
 }
 
- 
+
 /*:focus {
   outline: 1px hsl(var(--accent)) solid;
   outline-offset: 2px;

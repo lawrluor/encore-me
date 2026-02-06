@@ -28,7 +28,7 @@ const Act = async ({ params }: Props) => {
 
   return (
     <main className="flex flex-col gap-20">
-      <div className="bg-surface rounded-md">
+      <div>
         {actId && <CreateSetForm actId={act.id} />}
       </div>
 

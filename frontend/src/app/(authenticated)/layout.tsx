@@ -3,6 +3,7 @@ import React from 'react';
 
 import { ActsList } from '@/components/ActsList';
 import { Footer } from '@/components/Footer';
+import { Rule } from '@/components/Rule';
 import { TopNav } from '@/components/TopNav';
 import { getUserTree } from '@/lib/db/users';
 import { getAuthUser } from '@/services/authService';
@@ -26,7 +27,7 @@ const Layout = async ({ children }: Props) => {
         <TopNav authenticated={true} border={true} />
       </header>
 
-      <section className="flex flex-auto gap-20 p-20 overflow-hidden">
+      <div className="flex flex-auto gap-20 p-20 overflow-hidden">
         <aside className="flex-[1_0_0] ">
           <ActsList />
         </aside>
@@ -34,7 +35,7 @@ const Layout = async ({ children }: Props) => {
         <section className="flex-[3_0_0] ">
           {children}
         </section>
-      </section>
+      </div>
 
       <footer>
         <Footer />

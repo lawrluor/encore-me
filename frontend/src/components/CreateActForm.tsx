@@ -4,13 +4,13 @@ import { postActAction } from '../actions/actActions';
 
 export const CreateActForm = () => {
   return (
-    <details className="ml-10 w-full">
-      <summary className="mb-5 list-none flex gap-10 items-center" aria-label="Create New Act">
-        <h2 className="text-xl">Acts</h2>
+    <details className="ml-10 w-full group">
+      <summary className="mb-5 list-none flex gap-8 items-center" aria-label="Create New Act">
+        <p className="font-bold text-lg text-foreground-muted group-open:text-foreground">ACTS</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
-          className="w-20 h-20 cursor-pointer transition-all hover:opacity-60 duration-[0.15s] ease-in"
+          className="w-18 h-18 cursor-pointer transition-all hover:opacity-60 duration-[0.15s] ease-in text-foreground-muted group-open:hidden"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
@@ -21,6 +21,8 @@ export const CreateActForm = () => {
           <path d="M8 12h8" />
           <path d="M12 8v8" />
         </svg>
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-18 h-18 lucide lucide-circle-minus-icon lucide-circle-minus group-open:block hidden cursor-pointer transition-all hover:opacity-60 duration-[0.15s] ease-in "><circle cx="12" cy="12" r="10" /><path d="M8 12h8" /></svg>
       </summary>
 
       {/* padding simulates what an Act in the ActsListDraggables would have,
