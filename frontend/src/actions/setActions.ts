@@ -23,17 +23,16 @@ export const deleteSetAction = async (setId: string, actId?: string): Promise<vo
   else revalidatePath('/act');
 }
 
-export const postSetAction = async (formData: FormData): Promise<void> => {
+export const postSetAction = async (actId: string, formData: FormData): Promise<void> => {
   const authUser = await getAuthUser();
   if (!authUser) throw new Error('Unauthorized');
 
-  const formActId = String(formData.get('actId'));
   const formTitle = String(formData.get('title'));
   const formDescription = formData.get('description') ? String(formData.get('description')) : '';
 
-  const validation = validateBody(setSchema, { actId: formActId, title: formTitle, description: formDescription });
+  const validation = validateBody(setSchema, { actId: actId, title: formTitle, description: formDescription });
   if (!validation.valid) throw new Error(`Validation failed: ${validation.errors.map((e: ValidationError) => e.message).join(', ')}`);
-  const { actId, title, description } = validation.value;
+  const { title, description } = validation.value;
 
   if (await createSet(actId, title, description)) revalidatePath(`/act/${actId}`);
 }
