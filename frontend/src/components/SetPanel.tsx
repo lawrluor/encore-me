@@ -1,4 +1,3 @@
-import Form from 'next/form';
 import { Fragment } from 'react';
 
 import { deleteSetAction, promoteSetAction, updateSetAction, postSetAction } from '../actions/setActions';
@@ -48,20 +47,20 @@ export const SetPanel = async ({ songs, actId, set, isCreateMode = false }: Prop
               {isCreateMode ? (
                 <>
                   <Button type="submit" className="p-10 bg-accent text-surface rounded-md" formAction={postSetAction.bind(null, actId)}>
-                  <div className="flex gap-5 items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-save w-16 h-16">
-                      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" /><polyline points="17 21 17 13 7 13 7 21" /><polyline points="7 3 7 8 15 8" /></svg>
-                    <span>SAVE</span>
-                  </div>
-                </Button>
+                    <div className="flex gap-5 items-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-save w-16 h-16">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" /><polyline points="17 21 17 13 7 13 7 21" /><polyline points="7 3 7 8 15 8" /></svg>
+                      <span>SAVE</span>
+                    </div>
+                  </Button>
                   {/*<Button type={"submit"} formAction={postSetAction.bind(null, actId)}>Save</Button>*/}
                 </>
               ) : (

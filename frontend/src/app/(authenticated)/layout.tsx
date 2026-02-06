@@ -3,7 +3,6 @@ import React from 'react';
 
 import { ActsList } from '@/components/ActsList';
 import { Footer } from '@/components/Footer';
-import { Rule } from '@/components/Rule';
 import { TopNav } from '@/components/TopNav';
 import { getUserTree } from '@/lib/db/users';
 import { getAuthUser } from '@/services/authService';
