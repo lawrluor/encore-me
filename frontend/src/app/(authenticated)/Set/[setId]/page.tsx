@@ -21,10 +21,8 @@ const Set = async ({ params, searchParams }: Props) => {
   const [actSongs, setSongs] = await Promise.all([actSongsPromise, setSongsPromise]);
 
   return (
-    <main>
+    <main className="p-20 bg-surface rounded-md">
       <CreateSongForm actId={actId} setId={setId} />
-      <p>Act: {actId}</p>
-      <p>Set: {setId}</p>
 
       <section>
         <h2>Songs in Set</h2>

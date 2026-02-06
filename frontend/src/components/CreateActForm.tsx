@@ -4,9 +4,9 @@ import { postActAction } from '../actions/actActions';
 
 export const CreateActForm = () => {
   return (
-    <details className="ml-10 mb-5 w-100%">
-      <summary className="mb-5 marker:hidden list-none flex gap-10 items-center" aria-label="Create New Act">
-        <h2 className="text-bold text-xl">Acts</h2>
+    <details className="ml-10 w-full">
+      <summary className="mb-5 list-none flex gap-10 items-center" aria-label="Create New Act">
+        <h2 className="text-xl">Acts</h2>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -23,7 +23,9 @@ export const CreateActForm = () => {
         </svg>
       </summary>
 
-      <div className="flex gap-10">
+      {/* padding simulates what an Act in the ActsListDraggables would have,
+      accounting for double padding for middle elements and less for start and ending ones */}
+      <div className="flex gap-10 pt-10 pb-5">
         <div className="w-44 h-44 bg-accent rounded-md shrink-0"></div>
         <Form action={postActAction}>
           <label htmlFor="name" className="sr-only">Name</label>

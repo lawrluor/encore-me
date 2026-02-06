@@ -26,6 +26,6 @@ export const FormSubmitButton = ({ title }: FormSubmitButtonProps) => {
   const { pending } = useFormStatus();
 
   return (
-    <button type="submit" disabled={pending} className="p-5 bg-accent-muted cursor-pointer hover:opacity-60 disabled:opacity-60 disabled:cursor-wait">{title}</button>
+    <button type="submit" disabled={pending} className="h-44 px-10 bg-accent text-surface rounded-md cursor-pointer hover:opacity-60 disabled:opacity-60 disabled:cursor-wait">{title}</button>
   )
 }

@@ -56,8 +56,7 @@ export const SetPanel = async ({ songs, actId, set }: Props) => {
         {songs.length === 0
           ?
           <div className="col-span-3">
-            <p>No songs have been added to this set yet. <CustomLink href={`/set/${set.id}`} className="inline underline text-accent cursor-pointer hover:opacity-60">Add songs</CustomLink>
-            </p>
+            <p>No songs have been added to this set yet. <CustomLink href={`/set/${set.id}`} className="inline text-accent text-sm font-bold cursor-pointer hover:opacity-60">ADD SONGS</CustomLink></p>
           </div>
           :
           <div>
@@ -83,7 +82,7 @@ export const SetPanel = async ({ songs, actId, set }: Props) => {
               })}
             </div>
 
-            <CustomLink href={`/set/${set.id}`} className="underline text-accent float-right text-sm cursor-pointer hover:opacity-60">add more songs</CustomLink>
+            <CustomLink href={`/set/${set.id}`} className="text-accent font-bold float-right text-sm cursor-pointer hover:opacity-60">ADD SONGS</CustomLink>
           </div>}
       </section>
     </div>

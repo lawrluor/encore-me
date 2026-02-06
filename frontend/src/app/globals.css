@@ -56,10 +56,11 @@ body {
   min-height: 100dvh;
 }
 
-:focus {
+ 
+/*:focus {
   outline: 1px hsl(var(--accent)) solid;
   outline-offset: 2px;
-}
+} */
 
 /*summary::marker {
   content: " +";
