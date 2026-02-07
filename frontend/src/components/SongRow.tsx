@@ -1,8 +1,9 @@
 
-import { postSongAction, updateSongAction } from '../actions/songActions';
+import { deleteSongAction, postSongAction, updateSongAction } from '../actions/songActions';
 import { type Song } from '../types/song';
 
 import { Button } from './Button';
+import { SongRowOptions } from './SongRowOptions';
 
 type Props = {
   actId: string;
@@ -13,7 +14,7 @@ type Props = {
 
 export const SongRow = ({ actId, setId, song, createMode = false }: Props) => {
   return (
-    <form className="contents" action={createMode ? postSongAction.bind(null, actId, setId) : updateSongAction.bind(null, song.id)}>
+    <form className="grid grid-cols-3 gap-10 mb-10 relative">
       <div className="flex items-center gap-10">
         <div className="h-44 w-44 bg-gray-800 rounded-md shrink-0"></div>
         <div className="shrink-0">
@@ -24,7 +25,7 @@ export const SongRow = ({ actId, setId, song, createMode = false }: Props) => {
             name="title"
             defaultValue={song.title}
             placeholder={createMode ? "New song title" : ""}
-            className="block bg-transparent placeholder:text-foreground-muted/50"
+            className="block bg-transparent placeholder:text-foreground-muted/50 border-transparent border-b-1 hover:border-foreground-muted/50 transition-all duration-[0.25s] ease-in"
             required
           />
 
@@ -35,7 +36,7 @@ export const SongRow = ({ actId, setId, song, createMode = false }: Props) => {
             name="description"
             defaultValue={song.description}
             placeholder={createMode ? "Description" : ""}
-            className="block text-sm text-foreground-muted bg-transparent placeholder:text-foreground-muted/50"
+            className="block text-sm text-foreground-muted bg-transparent placeholder:text-foreground-muted/50 border-transparent border-b-1 hover:border-foreground-muted/50 transition-all duration-[0.25s] ease-in"
           />
         </div>
       </div>
@@ -48,9 +49,10 @@ export const SongRow = ({ actId, setId, song, createMode = false }: Props) => {
           name="genre"
           defaultValue={song.genre}
           placeholder={createMode ? "Genre" : ""}
-          className="block bg-transparent placeholder:text-foreground-muted/50"
+          className="block bg-transparent placeholder:text-foreground-muted/50 border-transparent border-b-1 hover:border-b-foreground-muted/50 transition-all duration-[0.25s] ease-in"
         />
       </div>
+
       <div>
         <label htmlFor={`${song.title}-tempo`} className="sr-only">Tempo</label>
         <input
@@ -59,15 +61,19 @@ export const SongRow = ({ actId, setId, song, createMode = false }: Props) => {
           name="tempo"
           defaultValue={song.tempo}
           placeholder={createMode ? "Tempo" : ""}
-          className="block bg-transparent placeholder:text-foreground-muted/50"
+          className="block bg-transparent placeholder:text-foreground-muted/50 border-transparent border-b-1 hover:border-foreground-muted/50 transition-all duration-[0.25s] ease-in"
         />
+      </div>
+
+      <div className="absolute right-0">
+        {!createMode && <SongRowOptions songTitle={song.title} deleteAction={deleteSongAction.bind(null, actId, song.id)} />}
       </div>
 
       {createMode
         ?
-        <Button type="submit" className="sr-only">Create Song</Button>
+        <Button type="submit" formAction={postSongAction.bind(null, actId, setId)} className="sr-only">Create Song</Button>
         :
-        <Button type="submit" className="sr-only">Update Song</Button>
+        <Button type="submit" formAction={updateSongAction.bind(null, song.id)} className="sr-only">Update Song</Button>
       }
     </form>
   )

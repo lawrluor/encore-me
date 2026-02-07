@@ -9,7 +9,7 @@ import { FormSubmitButton } from './FormSubmitter';
 export const CreateSongForm = ({ actId, setId }: { actId?: string, setId?: string }) => {
   return <section className="flex flex-col gap-20 w-[min(80dvw,380px)]">
     <h2 className="text-2xl">Create Song</h2>
-    <Form action={postSongAction} className="flex flex-col gap-20">
+    <Form action={postSongAction.bind(null, actId ?? '', setId ?? '')} className="flex flex-col gap-20">
       {setId && <input hidden={true} name="setId" value={setId} readOnly />}
       {actId && <input hidden={true} name="actId" value={actId} readOnly />}
 

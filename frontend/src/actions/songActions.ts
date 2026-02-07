@@ -6,18 +6,41 @@ import { redirect } from 'next/navigation';
 
 import { isUserMemberOfAct } from '../lib/db/acts';
 import { getSetById } from '../lib/db/sets';
-import { addSongToSet, createSong, updateSong } from '../lib/db/songs';
+import { addSongToSet, createSong, deleteSong, updateSong } from '../lib/db/songs';
 import { getAuthUser } from '../services/authService';
 
-// Wrapper for postSong to actually navigate after successful post
+export const deleteSongAction = async (actId: string, songId: string) => {
+  const authUser = await getAuthUser();
+  if (!authUser) throw new Error("Login required.");
+
+  // Validate that user has access to delete this song from the set
+  const isMember = await isUserMemberOfAct(authUser.id, actId);
+  if (!isMember) throw new Error('Forbidden: You must be a member of this act');
+
+  // Note: This will delete ALL instances of the song, not just remove song from set
+  // TODO: possibly, add a removeSongFromSet db function and manage differently
+  await deleteSong(songId, authUser.id);
+
+  // Redirect. If error thrown at any point, we stay on same page or are navigated to error boundary
+  const headersList = await headers();
+  const referer = headersList.get('referer');
+  if (referer) {
+    revalidatePath(referer);
+    redirect(referer)
+  } else {
+    redirect('/act');
+  }
+}
+
 export const postSongAction = async (actId: string, setId: string, formData: FormData): Promise<void> => {
   const authUser = await getAuthUser();
   if (!authUser) throw new Error('Unauthorized');
 
-  const title = formData.get('title')?.toString().trim();
-  const description = formData.get('description')?.toString() ?? '';
-  const genre = formData.get('genre')?.toString() ?? '';
-  const tempo = formData.get('tempo')?.toString() ?? '';
+  // validate form fields
+  const title = formData.get('title')?.toString().trim() ?? '';
+  const description = formData.get('description')?.toString().trim() ?? '';
+  const genre = formData.get('genre')?.toString().trim() ?? '';
+  const tempo = formData.get('tempo')?.toString().trim() ?? '';
 
   if (!title) throw new Error('Title is required');
 
@@ -34,9 +57,10 @@ export const postSongAction = async (actId: string, setId: string, formData: For
     finalActId = set.act_id;
   } else if (actId) {
     const isMember = await isUserMemberOfAct(authUser.id, actId);
-    if (!isMember) throw new Error('Unauthorized: You must be a member of this act');
+    if (!isMember) throw new Error('Forbidden: You must be a member of this act');
   }
 
+  // First, create the Song - it will exist as a Song of the Act that is unassigned to a Set
   const newSong = await createSong(authUser.id, finalActId || null, title, description, genre, tempo);
   if (!newSong) throw new Error('Song creation failed');
 
@@ -44,7 +68,7 @@ export const postSongAction = async (actId: string, setId: string, formData: For
     await addSongToSet(setId, newSong.id);
   }
 
-  // Because this is a server action, we can't call history.back(),
+  // Because this is a server action, we can't call something like history.back(),
   //   there is no knowledge of client route history
   //   Instead, retrieve the URL we came from, and redirect back there
   const headersList = await headers();
@@ -53,9 +77,8 @@ export const postSongAction = async (actId: string, setId: string, formData: For
     revalidatePath(referer);
     redirect(referer)
   } else {
-    redirect('/act');
+    redirect(`/act/${finalActId}`);
   }
-  // Let error bubble up
 }
 
 export const updateSongAction = async (songId: string, formData: FormData): Promise<void> => {
