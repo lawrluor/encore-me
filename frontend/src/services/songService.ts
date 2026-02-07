@@ -64,3 +64,35 @@ export const postSong = async (formData: FormData): Promise<boolean> => {
 
   return payload.success;
 }
+
+export const updateSong = async (songId: string, formData: FormData): Promise<boolean> => {
+  const cookieStorage = await cookies();
+
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/songs/${songId}`, {
+    method: 'PUT',
+    headers: {
+      'Cookie': cookieStorage.toString(),
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      title: formData.get('title'),
+      description: formData.get('description'),
+      genre: formData.get('genre'),
+      tempo: formData.get('tempo')
+    })
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    console.error(error);
+    throw new Error(error.status, error.message);
+  }
+
+  const payload = await response.json();
+  if (!payload || !payload.success) {
+    console.error(payload);
+    throw new Error(`Response unsuccessful: ${JSON.stringify(payload)}`);
+  }
+
+  return payload.success;
+}
