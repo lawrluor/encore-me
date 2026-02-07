@@ -30,7 +30,7 @@ export const SetPanel = async ({ songs, actId, set, isCreateMode = false }: Prop
   return (
     <div className={`p-20 bg-surface ${isCreateMode ? 'rounded-b-md' : 'rounded-md'}`}>
       <header>
-        <form>
+        <form method="POST">
           <div className="flex justify-between">
             <div>
               <h2>
@@ -78,63 +78,36 @@ export const SetPanel = async ({ songs, actId, set, isCreateMode = false }: Prop
       <Rule className="my-20" />
 
       <section>
-        {isCreateMode ? (
-          <div>
-            {/* <div className="text-foreground-muted text-sm">
-                Save this set to start adding songs.
-              </div> */}
-
-            {/*<Button type="submit" title="Save" className="p-10 bg-accent text-surface rounded-md">
-                <div className="flex gap-5 items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-save w-16 h-16">
-                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" /><polyline points="17 21 17 13 7 13 7 21" /><polyline points="7 3 7 8 15 8" /></svg>
-                  <span>SAVE</span>
-                </div>
-              </Button>*/}
-            {/* <p>No songs have been added to this set yet. <CustomLink href={`/set/${set.id}`} className="inline text-accent text-sm font-bold cursor-pointer hover:opacity-60">ADD SONGS</CustomLink></p> */}
+        <div>
+          <div className="grid grid-cols-4 gap-10 mb-10">
+            <div className="col-span-2"><p className="text-foreground-muted text-xs">{COLUMN_NAMES.SONG}</p></div>
+            <div className="col-span-1 hidden md:block"><p className="text-foreground-muted text-xs">{COLUMN_NAMES.GENRE}</p></div>
+            <div className="col-span-1 hidden md:block"><p className="text-foreground-muted text-xs">{COLUMN_NAMES.TEMPO}</p></div>
           </div>
-        ) : (
-          <>
-            <div>
-              <div className="grid grid-cols-3 gap-10 mb-10">
-                <div><p className="text-foreground-muted text-xs">{COLUMN_NAMES.SONG}</p></div>
-                <div><p className="text-foreground-muted text-xs">{COLUMN_NAMES.GENRE}</p></div>
-                <div><p className="text-foreground-muted text-xs">{COLUMN_NAMES.TEMPO}</p></div>
-              </div>
 
-              <div>
-                {resolvedSongs?.map((song: Song) => (
-                  <SongRow key={song.id} setId={set.id} actId={actId} song={song} />
-                ))}
-                <SongRow
-                  key="new-song"
-                  setId={set.id}
-                  actId={actId}
-                  createMode={true}
-                  song={{
-                    id: '',
-                    title: '',
-                    description: '',
-                    genre: '',
-                    tempo: '',
-                    created_at: '',
-                    updated_at: ''
-                  }}
-                />
-              </div>
+          <div>
+            {resolvedSongs?.map((song: Song) => (
+              <SongRow key={song.id} setId={set.id} actId={actId} song={song} />
+            ))}
+            <SongRow
+              key="new-song"
+              setId={set.id}
+              actId={actId}
+              createMode={true}
+              song={{
+                id: '',
+                title: '',
+                description: '',
+                genre: '',
+                tempo: '',
+                created_at: '',
+                updated_at: ''
+              }}
+            />
+          </div>
 
-              <CustomLink href={`/set/${set.id}`} className="text-accent font-bold float-right text-sm cursor-pointer hover:opacity-60">ADD SONGS</CustomLink>
-            </div>
-          </>
-        )}
+          {!isCreateMode && <CustomLink href={`/set/${set.id}`} className="text-accent font-bold float-right text-sm cursor-pointer hover:opacity-60">ADD SONGS</CustomLink>}
+        </div>
       </section>
     </div >
   )

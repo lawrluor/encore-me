@@ -31,7 +31,7 @@ const Layout = async ({ children }: Props) => {
           <ActsList />
         </aside>
 
-        <section className="flex-[3_0_0] ">
+        <section className="flex-[3_0_0] overflow-hidden">
           {children}
         </section>
       </div>
