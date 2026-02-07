@@ -103,42 +103,36 @@ export const SetPanel = async ({ songs, actId, set, isCreateMode = false }: Prop
           </div>
         ) : (
           <>
-            {resolvedSongs.length === 0
-              ?
-              <div className="col-span-3">
-                <p>No songs have been added to this set yet. <CustomLink href={`/set/${set.id}`} className="inline text-accent text-sm font-bold cursor-pointer hover:opacity-60">ADD SONGS</CustomLink></p>
+            <div>
+              <div className="grid grid-cols-3 gap-10 mb-10">
+                <div><p className="text-foreground-muted text-xs">{COLUMN_NAMES.SONG}</p></div>
+                <div><p className="text-foreground-muted text-xs">{COLUMN_NAMES.GENRE}</p></div>
+                <div><p className="text-foreground-muted text-xs">{COLUMN_NAMES.TEMPO}</p></div>
               </div>
-              :
+
               <div>
-                <div className="grid grid-cols-3 gap-10 mb-10">
-                  <div><p className="text-foreground-muted text-xs">{COLUMN_NAMES.SONG}</p></div>
-                  <div><p className="text-foreground-muted text-xs">{COLUMN_NAMES.GENRE}</p></div>
-                  <div><p className="text-foreground-muted text-xs">{COLUMN_NAMES.TEMPO}</p></div>
-                </div>
+                {resolvedSongs?.map((song: Song) => (
+                  <SongRow key={song.id} setId={set.id} actId={actId} song={song} />
+                ))}
+                <SongRow
+                  key="new-song"
+                  setId={set.id}
+                  actId={actId}
+                  createMode={true}
+                  song={{
+                    id: '',
+                    title: '',
+                    description: '',
+                    genre: '',
+                    tempo: '',
+                    created_at: '',
+                    updated_at: ''
+                  }}
+                />
+              </div>
 
-                <div>
-                  {resolvedSongs?.map((song: Song) => (
-                    <SongRow key={song.id} setId={set.id} actId={actId} song={song} />
-                  ))}
-                  <SongRow
-                    key="new-song"
-                    setId={set.id}
-                    actId={actId}
-                    createMode={true}
-                    song={{
-                      id: '',
-                      title: '',
-                      description: '',
-                      genre: '',
-                      tempo: '',
-                      created_at: '',
-                      updated_at: ''
-                    }}
-                  />
-                </div>
-
-                <CustomLink href={`/set/${set.id}`} className="text-accent font-bold float-right text-sm cursor-pointer hover:opacity-60">ADD SONGS</CustomLink>
-              </div>}
+              <CustomLink href={`/set/${set.id}`} className="text-accent font-bold float-right text-sm cursor-pointer hover:opacity-60">ADD SONGS</CustomLink>
+            </div>
           </>
         )}
       </section>
