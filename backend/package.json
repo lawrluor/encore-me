@@ -4,7 +4,7 @@
   "description": "Backend API using Vercel Serverless Functions",
   "main": "index.js",
   "scripts": {
-    "dev": "vercel dev --listen 4200",
+    "dev": "vercel dev --yes --listen 4200",
     "build": "vercel build",
     "deploy": "vercel --prod",
     "test": "jest",

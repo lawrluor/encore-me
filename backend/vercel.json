@@ -18,10 +18,6 @@
       "use": "@vercel/node"
     },
     {
-      "src": "api/users/promoted-set.js",
-      "use": "@vercel/node"
-    },
-    {
       "src": "api/acts/index.js",
       "use": "@vercel/node"
     },
@@ -70,10 +66,6 @@
     {
       "source": "/api/users/me",
       "destination": "/api/users/me.js"
-    },
-    {
-      "source": "/api/users/promoted-set",
-      "destination": "/api/users/promoted-set.js"
     },
     {
       "source": "/api/users/:id/tree",
