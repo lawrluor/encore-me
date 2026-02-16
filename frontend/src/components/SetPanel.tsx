@@ -1,5 +1,5 @@
 import { deleteSetAction, promoteSetAction, updateSetAction, postSetAction } from '../actions/setActions';
-import { Button } from '../components/Button';
+import { FormSubmitter } from '../components/FormSubmitter';
 import { getSongs } from '../services/songService';
 import { type Song } from '../types/song';
 
@@ -41,13 +41,13 @@ export const SetPanel = async ({ songs, actId, set, isCreateMode = false }: Prop
               <label htmlFor="description" className="sr-only">Description</label>
               <input id="description" name="description" type="text" defaultValue={set.description} placeholder="Add a description..." className="block text-foreground-muted bg-transparent w-full placeholder:text-foreground-muted/50" />
 
-              {!isCreateMode && <Button type={"submit"} className="sr-only" formAction={updateSetAction.bind(null, set.id, actId)}>Update Set</Button>}
+              {!isCreateMode && <FormSubmitter type={"submit"} className="sr-only" formAction={updateSetAction.bind(null, set.id, actId)}>Update Set</FormSubmitter>}
             </div>
 
             <div className="flex gap-5 items-start">
               {isCreateMode ? (
                 <>
-                  <Button type="submit" className="p-10 bg-accent text-surface rounded-md" formAction={postSetAction.bind(null, actId)}>
+                  <FormSubmitter className="p-10 bg-accent text-surface rounded-md" formAction={postSetAction.bind(null, actId)}>
                     <div className="flex gap-5 items-center">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -61,13 +61,13 @@ export const SetPanel = async ({ songs, actId, set, isCreateMode = false }: Prop
                         <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" /><polyline points="17 21 17 13 7 13 7 21" /><polyline points="7 3 7 8 15 8" /></svg>
                       <span>SAVE</span>
                     </div>
-                  </Button>
-                  {/*<Button type={"submit"} formAction={postSetAction.bind(null, actId)}>Save</Button>*/}
+                  </FormSubmitter>
+                  {/*<FormSubmitter type={"submit"} formAction={postSetAction.bind(null, actId)}>Save</FormSubmitter>*/}
                 </>
               ) : (
                 <>
-                  <Button type={"submit"} formAction={promoteSetAction.bind(null, set.id)}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-diamond-plus-icon lucide-diamond-plus w-18 h-18 text-foreground-muted"><path d="M12 8v8" /><path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41L13.7 2.71a2.41 2.41 0 0 0-3.41 0z" /><path d="M8 12h8" /></svg></Button>
-                  <Button type={"submit"} formAction={deleteSetAction.bind(null, set.id, actId)} aria-label="Delete Set"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash-icon lucide-trash w-18 h-18 text-foreground-muted"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg></Button>
+                  <FormSubmitter formAction={promoteSetAction.bind(null, set.id)} aria-label="Promote Set"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-diamond-plus-icon lucide-diamond-plus w-18 h-18 text-foreground-muted"><path d="M12 8v8" /><path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41L13.7 2.71a2.41 2.41 0 0 0-3.41 0z" /><path d="M8 12h8" /></svg></FormSubmitter>
+                  <FormSubmitter formAction={deleteSetAction.bind(null, set.id, actId)} aria-label="Delete Set"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash-icon lucide-trash w-18 h-18 text-foreground-muted"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg></FormSubmitter>
                 </>
               )}
             </div>

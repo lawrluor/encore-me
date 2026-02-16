@@ -1,9 +1,9 @@
-import Form from 'next/form';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
 import { loginUserAction } from '@/actions/authActions';
 import { CustomLink } from '@/components/CustomLink';
+import { FormSubmitButton } from '@/components/FormSubmitter';
 import { getAuthUser } from '@/services/authService';
 
 const Login = async () => {
@@ -21,7 +21,7 @@ const Login = async () => {
       </header>
 
       <section className="bg-surface rounded-md ml-40 min-sm:rounded-none min-sm:rounded-r-md  min-sm:ml-0">
-        <Form action={loginUserAction} className="flex flex-col gap-20 p-20 w-[min(80dvw,390px)] h-[min(50dvh,600px)] shadow-md">
+        <form className="flex flex-col gap-20 p-20 w-[min(80dvw,390px)] h-[min(50dvh,600px)] shadow-md">
           <div>
             <label htmlFor="email" className="text-foreground-muted">Email</label>
             <input id="email" name="email" type="email" defaultValue={process.env.NEXT_PUBLIC_USER_EMAIL || ''} spellCheck={false} autoComplete="off" className="block h-44 w-full border-b-1 border-foreground-muted" />
@@ -33,7 +33,7 @@ const Login = async () => {
           </div>
 
           <div className="mt-20">
-            <button id="submit" type="submit" className={`min-h-44 p-10 rounded-sm bg-accent text-surface cursor-pointer hover:opacity-60 transition:all duration-[0.15s] ease-in disabled:cursor-wait disabled:opacity-60 float-right`}>LOG IN</button>
+            <FormSubmitButton formAction={loginUserAction} className={`min-h-44 p-10 rounded-sm bg-accent text-surface cursor-pointer hover:opacity-60 transition:all duration-[0.15s] ease-in disabled:cursor-wait disabled:opacity-60 float-right`}>LOG IN</FormSubmitButton>
           </div>
 
           <div className="mt-[calc(-10px)] flex justify-end">
@@ -41,7 +41,7 @@ const Login = async () => {
               <p className="text-xs text-foreground-muted underline">Sign up instead</p>
             </CustomLink>
           </div>
-        </Form>
+        </form>
       </section>
     </main>
   )

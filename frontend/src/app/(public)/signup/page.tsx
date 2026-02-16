@@ -1,9 +1,9 @@
-import Form from 'next/form';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
 import { signupUserAction } from '@/actions/authActions';
 import { CustomLink } from '@/components/CustomLink';
+import { FormSubmitButton } from '@/components/FormSubmitter';
 import { getAuthUser } from '@/services/authService';
 
 const Signup = async () => {
@@ -20,7 +20,7 @@ const Signup = async () => {
         </div>
       </header>
 
-      <Form action={signupUserAction} className="flex flex-col gap-20 bg-surface rounded-md p-20 w-[min(80dvw,390px)] shadow-md min-sm:rounded-l-none">
+      <form className="flex flex-col gap-20 bg-surface rounded-md p-20 w-[min(80dvw,390px)] shadow-md min-sm:rounded-l-none">
         <div>
           <label htmlFor="name" className="text-foreground-muted">Name</label>
           <input id="name" name="name" type="text" spellCheck={false} autoComplete="off" className="block h-44 w-full border-b-1 border-foreground-muted" required />
@@ -42,7 +42,7 @@ const Signup = async () => {
         </div>
 
         <div className="mt-20">
-          <button id="submit" type="submit" className={`min-h-44 p-10 rounded-sm bg-accent text-surface cursor-pointer hover:opacity-60 transition:all duration-[0.15s] ease-in disabled:cursor-wait disabled:opacity-60 float-right`}>CREATE ACCOUNT</button>
+          <FormSubmitButton formAction={signupUserAction} className={`min-h-44 p-10 rounded-sm bg-accent text-surface cursor-pointer hover:opacity-60 transition:all duration-[0.15s] ease-in disabled:cursor-wait disabled:opacity-60 float-right`}>CREATE ACCOUNT</FormSubmitButton>
         </div>
 
         <div className="mt-[calc(-10px)] flex justify-end">
@@ -50,7 +50,7 @@ const Signup = async () => {
             <p className="text-xs text-foreground-muted underline">I already have an account</p>
           </CustomLink>
         </div>
-      </Form>
+      </form>
     </main>
   )
 }

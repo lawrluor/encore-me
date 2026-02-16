@@ -1,3 +1,5 @@
+// for any client buttons not in forms (type="button")
+
 'use client';
 
 import React, { useTransition } from 'react';
@@ -7,7 +9,7 @@ interface Props extends React.ComponentProps<'button'> {
   className?: string;
 }
 
-export const Button = ({ children, type = "button", onClick, className = "", ...rest }: Props) => {
+export const Button = ({ children, onClick, className = "", ...rest }: Props) => {
   const [isPending, startTransition] = useTransition();
 
   // TODO: refactor to make onClick not require browser event paramater
@@ -17,7 +19,7 @@ export const Button = ({ children, type = "button", onClick, className = "", ...
   }
 
   return (
-    <button type={type} onClick={handleClick} disabled={isPending} className={`cursor-pointer hover:opacity-60 disabled:cursor-wait transition-all duration-[0.15s] ease-in shadow-2xl ${className}`} {...rest}>
+    <button type="button" onClick={handleClick} disabled={isPending} className={`cursor-pointer hover:opacity-60 disabled:cursor-wait transition-all duration-[0.15s] ease-in shadow-2xl ${className}`} {...rest}>
       {children}
     </button>
   );

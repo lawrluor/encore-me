@@ -1,8 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import { deleteActAction, putActAction } from '@/actions/actActions';
-import { Button } from '@/components/Button';
-import { FormSubmitter } from '@/components/FormSubmitter';
+import { FormSubmitButton } from '@/components/FormSubmitter';
 import { getUserTree } from '@/lib/db/users';
 import { getAct } from '@/services/actService';
 import { getAuthUser } from '@/services/authService';
@@ -28,13 +27,13 @@ const EditAct = async ({ params }: Props) => {
   if (!act) throw new Error("Act not found");
 
   return (
-    <main>
+    <main className="bg-surface p-20 rounded-md">
       <div className="gap-10">
         <h2 className="text-2xl block pb-20">Edit Act</h2>
       </div>
 
       <div className="flex gap-5">
-        <form action={putActAction.bind(null, act.id)}>
+        <form>
           <div className="flex flex-col gap-20">
             <div>
               <label className="text-foreground-muted">Name</label>
@@ -47,14 +46,14 @@ const EditAct = async ({ params }: Props) => {
             </div>
           </div>
 
-          <Button type="submit" className="text-foreground">Save</Button>
-        </form>
+          <div className="flex py-20 gap-10">
+            <FormSubmitButton formAction={deleteActAction.bind(null, act.id)} className="bg-surface text-foreground-muted border-foreground-muted border-1">
+              {/* <svg aria-label="Delete Act" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash-icon lucide-trash relative top-4"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg> */}
+              Delete
+            </FormSubmitButton>
 
-        <form action={deleteActAction.bind(null, act.id)}>
-          <FormSubmitter type="submit" className="cursor-pointer hover:opacity-60">
-            {/* <svg aria-label="Delete Act" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash-icon lucide-trash relative top-4"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg> */}
-            Delete Act
-          </FormSubmitter>
+            <FormSubmitButton formAction={putActAction.bind(null, act.id)} className="text-surface">Save</FormSubmitButton>
+          </div>
         </form>
       </div>
     </main>

@@ -1,3 +1,5 @@
+// For buttons inside forms (with type="submit")
+
 'use client';
 
 import React from 'react';
@@ -10,22 +12,23 @@ interface FormSubmitterProps extends React.ComponentProps<'button'> {
   className?: string;
 }
 
-type FormSubmitButtonProps = {
-  title: string;
+interface FormSubmitButtonProps extends React.ComponentProps<'button'> {
+  children: React.ReactNode;
+  className?: string;
 }
 
 export const FormSubmitter = ({ children, className = "", ...props }: FormSubmitterProps) => {
   const { pending } = useFormStatus();
 
   return (
-    <button type="submit" {...props} disabled={pending} className={`disabled:cursor-wait disabled:opacity-60 ${className}`}>{children}</button>
+    <button type="submit" {...props} disabled={pending} className={`cursor-pointer hover:opacity-60 disabled:cursor-wait disabled:opacity-60 ${className}`}>{children}</button>
   )
 }
 
-export const FormSubmitButton = ({ title }: FormSubmitButtonProps) => {
+export const FormSubmitButton = ({ children, className = "", ...props }: FormSubmitButtonProps) => {
   const { pending } = useFormStatus();
 
   return (
-    <button type="submit" disabled={pending} className="h-44 px-10 bg-accent text-surface rounded-md cursor-pointer hover:opacity-60 disabled:opacity-60 disabled:cursor-wait">{title}</button>
+    <button type="submit" disabled={pending} {...props} className={`h-44 px-10 bg-accent rounded-md cursor-pointer hover:opacity-60 disabled:opacity-60 disabled:cursor-wait ${className}`}>{children}</button>
   )
 }

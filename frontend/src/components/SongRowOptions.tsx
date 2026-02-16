@@ -7,7 +7,7 @@ import { Button } from './Button';
 type Props = {
   songTitle: string;
   deleteAction: () => Promise<void>;
-  editAction: () => Promise<void>;
+  editAction: (formData: FormData) => Promise<void>;
 }
 
 export const SongRowOptions = ({ deleteAction, editAction, songTitle }: Props) => {

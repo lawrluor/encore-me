@@ -33,7 +33,9 @@ export const CreateSongForm = ({ actId, setId }: { actId?: string, setId?: strin
         <input id="tempo" name="tempo" type="text" spellCheck={false} autoComplete="off" className="block h-44 border-b-1 border-foreground-muted" />
       </div>
 
-      <FormSubmitButton title="CREATE" />
+      <FormSubmitButton>
+        <p>CREATE</p>
+      </FormSubmitButton>
     </Form>
   </section>
 }
