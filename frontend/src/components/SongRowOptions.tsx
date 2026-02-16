@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 
-import { Button } from './Button';
+import { ButtonWithTransition } from './ButtonWithTransition';
 
 type Props = {
   songTitle: string;
@@ -15,9 +15,9 @@ export const SongRowOptions = ({ deleteAction, editAction, songTitle }: Props) =
 
   return (
     <div className="relative">
-      <Button type="button" onClick={() => dialogRef?.current?.showModal()} aria-controls={`${songTitle}-options`} className="p-2 hover:bg-surface-muted rounded-full transition-colors">
+      <ButtonWithTransition type="button" onClick={() => dialogRef?.current?.showModal()} aria-controls={`${songTitle}-options`} className="p-2 hover:bg-surface-muted rounded-full transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-ellipsis-icon lucide-ellipsis w-18 h-18 text-foreground-muted"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
-      </Button>
+      </ButtonWithTransition>
 
       <dialog
         id={`${songTitle}-options`}
@@ -35,16 +35,16 @@ export const SongRowOptions = ({ deleteAction, editAction, songTitle }: Props) =
 
           <div className="p-4 flex flex-col gap-2">
             {/* Navigate to edit song page instead */}
-            <Button
+            <ButtonWithTransition
               type="submit"
               formAction={editAction}
               className="w-full flex items-center justify-start px-12 py-8 text-sm text-foreground-muted hover:text-foreground hover:bg-surface-muted rounded-md transition-colors shadow-none hover:opacity-100"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-icon lucide-pencil h-16 w-16 mr-8"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /><path d="m15 5 4 4" /></svg>
               <p>Edit Song</p>
-            </Button>
+            </ButtonWithTransition>
 
-            <Button
+            <ButtonWithTransition
               type="submit"
               onClick={() => {
                 deleteAction();
@@ -54,16 +54,16 @@ export const SongRowOptions = ({ deleteAction, editAction, songTitle }: Props) =
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-16 h-16 mr-8"><path d="M3 6h18" /><path d="M19 6v14c0 1-0 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /></svg>
               <p className="truncate">Delete Song</p>
-            </Button>
+            </ButtonWithTransition>
 
-            <Button
+            <ButtonWithTransition
               type="button"
               onClick={() => dialogRef?.current?.close()}
               className="w-full flex items-center justify-start px-12 py-8 text-sm text-foreground-muted hover:bg-surface-muted hover:text-foreground rounded-md transition-colors shadow-none hover:opacity-100"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-16 h-16 mr-8"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
               Cancel
-            </Button>
+            </ButtonWithTransition>
           </div>
         </div>
       </dialog>

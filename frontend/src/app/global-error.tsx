@@ -2,7 +2,7 @@
 
 import { Inter } from "next/font/google";
 
-import { Button } from "../components/Button";
+import { ButtonWithTransition } from "../components/ButtonWithTransition";
 import "./globals.css";
 
 const inter = Inter({
@@ -24,7 +24,7 @@ export default function GlobalError({
         <main className="flex flex-col items-center justify-center h-screen">
           <h2>Something went wrong. Please try again later.</h2>
           <div className="mt-10">
-            <Button className="h-44 bg-accent rounded-sm px-10" onClick={() => reset()}>Try again</Button>
+            <ButtonWithTransition className="h-44 bg-accent rounded-sm px-10" onClick={() => reset()}>Try again</ButtonWithTransition>
           </div>
         </main>
       </body>

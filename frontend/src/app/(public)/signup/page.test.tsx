@@ -63,7 +63,6 @@ describe('Signup Page', () => {
     expect(screen.getByLabelText(/^password$/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/confirm password/i)).toBeInTheDocument();
 
-    // Button
     expect(screen.getByRole('button', { name: /create account/i })).toBeInTheDocument();
 
     // Link

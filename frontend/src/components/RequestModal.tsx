@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 
-import { Button } from './Button';
+import { ButtonWithTransition } from './ButtonWithTransition';
 
 import { type Song } from '@/types/song';
 
@@ -29,7 +29,7 @@ export const RequestModal = ({ songs, mock = false }: Props) => {
     {songs.map((song: Song) =>
       <div key={song.id} className="grid grid-cols-2">
         <p className="truncate">{song.title}</p>
-        <Button className="justify-self-end text-sm py-4 px-8 rounded-md border-1 border-foreground-muted text-foreground-muted hover:bg-graygreen hover:text-foreground hover:border-graygreen hover:text-surface hover:opacity-100" onClick={() => handleClick(song)}>REQUEST</Button>
+        <ButtonWithTransition className="justify-self-end text-sm py-4 px-8 rounded-md border-1 border-foreground-muted text-foreground-muted hover:bg-graygreen hover:text-foreground hover:border-graygreen hover:text-surface hover:opacity-100" onClick={() => handleClick(song)}>REQUEST</ButtonWithTransition>
       </div>)
     }
 
@@ -37,8 +37,8 @@ export const RequestModal = ({ songs, mock = false }: Props) => {
       <section className="absolute w-1/2 h-1/2 m-auto inset-0 flex flex-col items-center justify-center">
         <p className="text-foreground">Request {selectedSong?.title}?</p>
         <div className="flex gap-10">
-          <Button className="p-10 rounded-md border-1 border-foreground-muted text-foreground-muted" onClick={handleClose}>Cancel</Button>
-          <Button className="bg-graygreen p-10 rounded-md">Confirm</Button>
+          <ButtonWithTransition className="p-10 rounded-md border-1 border-foreground-muted text-foreground-muted" onClick={handleClose}>Cancel</ButtonWithTransition>
+          <ButtonWithTransition className="bg-graygreen p-10 rounded-md">Confirm</ButtonWithTransition>
         </div>
       </section>
     </dialog>}

@@ -2,7 +2,7 @@
 import { deleteSongAction, postSongAction, updateSongAction } from '../actions/songActions';
 import { type Song } from '../types/song';
 
-import { Button } from './Button';
+import { FormSubmitButton } from './FormSubmitter';
 import { SongRowOptions } from './SongRowOptions';
 
 type Props = {
@@ -71,9 +71,9 @@ export const SongRow = ({ actId, setId, song, createMode = false }: Props) => {
 
       {createMode
         ?
-        <Button type="submit" formAction={postSongAction.bind(null, actId, setId)} className="sr-only">Create Song</Button>
+        <FormSubmitButton formAction={postSongAction.bind(null, actId, setId)} className="sr-only">Create Song</FormSubmitButton>
         :
-        <Button type="submit" formAction={updateSongAction.bind(null, song.id)} className="sr-only">Update Song</Button>
+        <FormSubmitButton formAction={updateSongAction.bind(null, song.id)} className="sr-only">Update Song</FormSubmitButton>
       }
     </form>
   )

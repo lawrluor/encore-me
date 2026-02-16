@@ -9,7 +9,7 @@ interface Props extends React.ComponentProps<'button'> {
   className?: string;
 }
 
-export const Button = ({ children, onClick, className = "", ...rest }: Props) => {
+export const ButtonWithTransition = ({ children, onClick, className = "", ...rest }: Props) => {
   const [isPending, startTransition] = useTransition();
 
   // TODO: refactor to make onClick not require browser event paramater
