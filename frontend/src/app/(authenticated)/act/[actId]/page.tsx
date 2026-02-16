@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import { CreateSetForm } from '@/components/CreateSetForm';
+import { CreateSongForm } from '@/components/CreateSongForm';
 import { SetPanelsList } from '@/components/SetPanelsList';
 import { getUserTree } from '@/lib/db/users';
 import { getAct } from '@/services/actService';
@@ -28,7 +29,7 @@ const Act = async ({ params }: Props) => {
 
   return (
     <main className="flex flex-col gap-20">
-      <div>
+      <div className="flex flex-col gap-20">
         {actId && <CreateSetForm actId={act.id} />}
       </div>
 
