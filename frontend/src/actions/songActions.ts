@@ -10,8 +10,9 @@ import { addSongToSet, createSong, deleteSong, updateSong } from '../lib/db/song
 import { getAuthUser } from '../services/authService';
 
 export const deleteSongAction = async (actId: string, songId: string) => {
-  const authUser = await getAuthUser();
-  if (!authUser) throw new Error("Login required.");
+  const auth = await getAuthUser();
+  if (auth.status !== 'authenticated') throw new Error("Login required.");
+  const authUser = auth.user;
 
   // Validate that user has access to delete this song from the set
   const isMember = await isUserMemberOfAct(authUser.id, actId);
@@ -33,8 +34,9 @@ export const deleteSongAction = async (actId: string, songId: string) => {
 }
 
 export const postSongAction = async (actId: string, setId: string, formData: FormData): Promise<void> => {
-  const authUser = await getAuthUser();
-  if (!authUser) throw new Error('Unauthorized');
+  const auth = await getAuthUser();
+  if (auth.status !== 'authenticated') throw new Error('Unauthorized');
+  const authUser = auth.user;
 
   // validate form fields
   const title = formData.get('title')?.toString().trim() ?? '';
@@ -82,8 +84,9 @@ export const postSongAction = async (actId: string, setId: string, formData: For
 }
 
 export const updateSongAction = async (songId: string, formData: FormData): Promise<void> => {
-  const authUser = await getAuthUser();
-  if (!authUser) throw new Error('Unauthorized');
+  const auth = await getAuthUser();
+  if (auth.status !== 'authenticated') throw new Error('Unauthorized');
+  const authUser = auth.user;
 
   const title = formData.get('title')?.toString();
   const description = formData.get('description')?.toString();

@@ -41,7 +41,7 @@ describe('Login Page', () => {
 
     // Act
     // Since Login is an async Server Component, we await it directly
-    await Login();
+    await Login({ searchParams: Promise.resolve({}) });
 
     // Assert
     expect(redirect).toHaveBeenCalledWith('/home');
@@ -52,7 +52,7 @@ describe('Login Page', () => {
     (getAuthUser as jest.Mock).mockResolvedValue(null);
 
     // Act
-    const jsx = await Login();
+    const jsx = await Login({ searchParams: Promise.resolve({}) });
     render(jsx);
 
     // Assert
@@ -74,7 +74,7 @@ describe('Login Page', () => {
     };
 
     // Act
-    const jsx = await Login();
+    const jsx = await Login({ searchParams: Promise.resolve({}) });
     render(jsx);
 
     // Assert

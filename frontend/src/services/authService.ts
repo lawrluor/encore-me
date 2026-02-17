@@ -1,23 +1,33 @@
-import { jwtVerify } from 'jose';
+import { jwtVerify, errors } from 'jose';
 import { cookies } from 'next/headers';
 
-export const getAuthUser = async (): Promise<{ id: string, email: string } | null> => {
+type AuthUser = { id: string; email: string };
+
+export type AuthResult =
+  | { status: 'authenticated'; user: AuthUser }
+  | { status: 'unauthenticated' }
+  | { status: 'expired' };
+
+export const getAuthUser = async (): Promise<AuthResult> => {
   const cookieStore = await cookies();
   const token = cookieStore.get('authToken')?.value;
 
-  if (!token) return null;  // not authenticated
+  if (!token) return { status: 'unauthenticated' };
 
   try {
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
     const { payload } = await jwtVerify(token, secret);
 
-    // Map JWT payload (userId) to expected application user format (id)
     return {
-      id: payload.userId as string,
-      email: payload.email as string
+      status: 'authenticated',
+      user: {
+        id: payload.userId as string,
+        email: payload.email as string
+      }
     };
-  } catch {
-    return null;  // invalid or expired token
+  } catch (e) {
+    if (e instanceof errors.JWTExpired) return { status: 'expired' };
+    return { status: 'unauthenticated' };
   }
 }
 
@@ -47,7 +57,8 @@ export const loginUser = async (data: { email: string, password: string }) => {
   // We need to parse this or simply set it blindly if the names match.
 
   // A robust way to forward it:
-  const token = setCookieHeader?.split(';')[0]?.split('=')?.[1] || ''; // Very rough parsing
+  const tokenPart = setCookieHeader?.split(';')[0] ?? '';
+  const token = tokenPart.includes('=') ? tokenPart.substring(tokenPart.indexOf('=') + 1) : '';
 
   // BETTER WAY: Use the exact name your backend uses
   (await cookies()).set('authToken', token, {
@@ -110,7 +121,8 @@ export const signupUser = async (payload: { name: string, email: string, passwor
   // We need to parse this or simply set it blindly if the names match.
 
   // A robust way to forward it:
-  const token = setCookieHeader?.split(';')[0]?.split('=')?.[1] || ''; // Very rough parsing
+  const tokenPart = setCookieHeader?.split(';')[0] ?? '';
+  const token = tokenPart.includes('=') ? tokenPart.substring(tokenPart.indexOf('=') + 1) : '';
 
   // Match backend cookie name
   (await cookies()).set('authToken', token, {

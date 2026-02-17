@@ -12,8 +12,10 @@ type Props = {
 }
 
 const Layout = async ({ children }: Props) => {
-  const user = await getAuthUser();
-  if (!user) redirect('/login');
+  const auth = await getAuthUser();
+  if (auth.status === 'expired') redirect('/login?error=session_expired');
+  if (auth.status !== 'authenticated') redirect('/login');
+  const user = auth.user;
 
   // is dependent on result of getAuthUser(),
   // but only takes a few ms for this function to finish verifying token cryptographically

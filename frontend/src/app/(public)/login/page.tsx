@@ -6,9 +6,14 @@ import { CustomLink } from '@/components/CustomLink';
 import { FormSubmitButton } from '@/components/FormSubmitter';
 import { getAuthUser } from '@/services/authService';
 
-const Login = async () => {
-  const user = await getAuthUser();
-  if (user) redirect('/home');
+type Props = {
+  searchParams: Promise<{ error?: string }>;
+}
+
+const Login = async ({ searchParams }: Props) => {
+  const auth = await getAuthUser();
+  if (auth.status === 'authenticated') redirect('/home');
+  const { error } = await searchParams;
 
   return (
     <main className="flex py-40">
@@ -21,6 +26,9 @@ const Login = async () => {
       </header>
 
       <section className="bg-surface rounded-md ml-40 min-sm:rounded-none min-sm:rounded-r-md  min-sm:ml-0">
+        {error === 'session_expired' && (
+          <p className="px-20 pt-20 text-sm text-red-500">Your session has expired. Please log in again.</p>
+        )}
         <form className="flex flex-col gap-20 p-20 w-[min(80dvw,390px)] h-[min(50dvh,600px)] shadow-md">
           <div>
             <label htmlFor="email" className="text-foreground-muted">Email</label>

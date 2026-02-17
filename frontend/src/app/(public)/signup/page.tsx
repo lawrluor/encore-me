@@ -7,8 +7,8 @@ import { FormSubmitButton } from '@/components/FormSubmitter';
 import { getAuthUser } from '@/services/authService';
 
 const Signup = async () => {
-  const user = await getAuthUser();
-  if (user) redirect('/home');
+  const auth = await getAuthUser();
+  if (auth.status === 'authenticated') redirect('/home');
 
   return (
     <main className="flex items-stretch px-40 py-40">

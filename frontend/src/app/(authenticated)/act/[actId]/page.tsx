@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation';
 
 import { CreateSetForm } from '@/components/CreateSetForm';
-import { CreateSongForm } from '@/components/CreateSongForm';
 import { SetPanelsList } from '@/components/SetPanelsList';
 import { getUserTree } from '@/lib/db/users';
 import { getAct } from '@/services/actService';
@@ -13,8 +12,10 @@ type Props = {
 }
 
 const Act = async ({ params }: Props) => {
-  const user = await getAuthUser();
-  if (!user) redirect('/login');
+  const auth = await getAuthUser();
+  if (auth.status === 'expired') redirect('/login?error=session_expired');
+  if (auth.status !== 'authenticated') redirect('/login');
+  const user = auth.user;
 
   let { actId } = await params;
   if (!actId) throw new Error("Act must have an ID");

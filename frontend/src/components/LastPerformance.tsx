@@ -6,8 +6,9 @@ import { QRCode } from './QRCode';
 import { SetPanel } from './SetPanel';
 
 export const LastPerformance = async () => {
-  const authUser = await getAuthUser();
-  if (!authUser) return null;  // not authenticated. User should have been redirected by parent component
+  const auth = await getAuthUser();
+  if (auth.status !== 'authenticated') return null;  // not authenticated. User should have been redirected by parent component
+  const authUser = auth.user;
 
   // Fetch full user data including promoted_set and qr_code directly from DB
   const user = await getUserById(authUser.id) as User | null;

@@ -13,8 +13,9 @@ type ValidationError = {
 }
 
 export const deleteActAction = async (actId: string): Promise<void> => {
-  const authUser = await getAuthUser();
-  if (!authUser) throw new Error('Unauthorized');
+  const auth = await getAuthUser();
+  if (auth.status !== 'authenticated') throw new Error('Unauthorized');
+
   if (!actId) throw new Error('Act ID is required');
 
   if (await deleteAct(actId)) {
@@ -28,8 +29,9 @@ export const deleteActAction = async (actId: string): Promise<void> => {
 }
 
 export const postActAction = async (formData: FormData): Promise<void> => {
-  const user = await getAuthUser();
-  if (!user) throw new Error('Unauthorized');
+  const auth = await getAuthUser();
+  if (auth.status !== 'authenticated') throw new Error('Unauthorized');
+  const user = auth.user;
 
   const formName = String(formData.get('name'));
   const formDescription = formData.get('description') ? String(formData.get('description')) : '';
@@ -50,8 +52,8 @@ export const postActAction = async (formData: FormData): Promise<void> => {
 }
 
 export const putActAction = async (actId: string, formData: FormData): Promise<void> => {
-  const user = await getAuthUser();
-  if (!user) throw new Error('Unauthorized');
+  const auth = await getAuthUser();
+  if (auth.status !== 'authenticated') throw new Error('Unauthorized');
 
   const formName = formData.get('name') ? String(formData.get('name')) : "";
   const formDescription = formData.get('description') ? String(formData.get('description')) : "";

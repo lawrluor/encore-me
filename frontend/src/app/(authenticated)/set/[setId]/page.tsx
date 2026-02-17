@@ -20,7 +20,7 @@ const SetPage = async ({ params, searchParams }: Props) => {
   const actSongsPromise = getSongs('actId', actId);
   const setSongsPromise = getSongs('setId', setId);
   const setPromise = getSetById(setId);
-  const actPromise = null
+  const actPromise = getActById(actId);
 
   const [actSongs, setSongs, set, act] = await Promise.all([actSongsPromise, setSongsPromise, setPromise, actPromise]);
 

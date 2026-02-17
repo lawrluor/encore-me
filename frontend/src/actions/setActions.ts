@@ -13,8 +13,8 @@ type ValidationError = {
 }
 
 export const deleteSetAction = async (setId: string, actId?: string): Promise<void> => {
-  const authUser = await getAuthUser();
-  if (!authUser) throw new Error('Unauthorized');
+  const auth = await getAuthUser();
+  if (auth.status !== 'authenticated') throw new Error('Unauthorized');
 
   const deletedSet = await deleteSet(setId);
   if (!deletedSet) throw new Error('Set not found');
@@ -24,8 +24,8 @@ export const deleteSetAction = async (setId: string, actId?: string): Promise<vo
 }
 
 export const postSetAction = async (actId: string, formData: FormData): Promise<void> => {
-  const authUser = await getAuthUser();
-  if (!authUser) throw new Error('Unauthorized');
+  const auth = await getAuthUser();
+  if (auth.status !== 'authenticated') throw new Error('Unauthorized');
 
   const formTitle = String(formData.get('title'));
   const formDescription = formData.get('description') ? String(formData.get('description')) : '';
@@ -38,8 +38,9 @@ export const postSetAction = async (actId: string, formData: FormData): Promise<
 }
 
 export const promoteSetAction = async (setId: string): Promise<void> => {
-  const authUser = await getAuthUser();
-  if (!authUser) throw new Error('Unauthorized');
+  const auth = await getAuthUser();
+  if (auth.status !== 'authenticated') throw new Error('Unauthorized');
+  const authUser = auth.user;
 
   if (!setId) throw new Error('Set ID is required');
 
@@ -56,8 +57,8 @@ export const promoteSetAction = async (setId: string): Promise<void> => {
 }
 
 export const updateSetAction = async (setId: string, actId: string, formData: FormData): Promise<void> => {
-  const authUser = await getAuthUser();
-  if (!authUser) throw new Error('Unauthorized');
+  const auth = await getAuthUser();
+  if (auth.status !== 'authenticated') throw new Error('Unauthorized');
 
   // extract form data
   const formTitle = formData.get('title') ? String(formData.get('title')) : "";
