@@ -9,24 +9,23 @@ type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-const SetPage = async ({ params, searchParams }: Props) => {
-  const setIdPromise = params;
-  const actIdPromise = searchParams;
-  const promises = await Promise.all([setIdPromise, actIdPromise]);  // returns object with fields
+// TODO: Make more efficient using denormalized queries? 
+// Also, change songService to query db directly rather than make API calls
+const SetPage = async ({ params }: Props) => {
+  const { setId } = await params;
+  const set = await getSetById(setId);
+  if (!set) throw new Error("Set not found");
 
-  // narrow type to only allow string or undefined
-  const setId = typeof promises[0].setId === "string" ? promises[0].setId : "";
-  const actId = typeof promises[1].actId === "string" ? promises[1].actId : "";
-  const actSongsPromise = getSongs('actId', actId);
-  const setSongsPromise = getSongs('setId', setId);
-  const setPromise = getSetById(setId);
-  const actPromise = getActById(actId);
+  const [setSongs, actSongs] = await Promise.all([
+    getSongs('setId', setId),
+    getSongs('actId', set.act_id)
+  ]);
 
-  const [actSongs, setSongs, set, act] = await Promise.all([actSongsPromise, setSongsPromise, setPromise, actPromise]);
+  const act = await getActById(set.act_id);
 
   return (
     <main className="flex flex-col gap-20 rounded-md bg-surface p-20">
-      <CreateSongForm actId={actId} setId={setId} />
+      <CreateSongForm actId={act?.id} setId={setId} />
 
       <section className="rounded-md bg-surface p-16 shadow-sm">
         <header className="mb-12">
@@ -45,9 +44,10 @@ const SetPage = async ({ params, searchParams }: Props) => {
         <header className="mb-12">
           <h2 className="text-lg">Other Songs in {act?.title || 'Act'}</h2>
         </header>
+
         {actSongs && actSongs.length > 0
           ?
-          <SongList initialSongs={actSongs} />
+          <SongList initialSongs={actSongs.filter((actSong) => !setSongs.some((setSong) => setSong.id === actSong.id))} />
           :
           <p className="rounded-sm bg-surface-muted/40 p-12 text-sm text-foreground-muted">No songs for this act yet.</p>
         }

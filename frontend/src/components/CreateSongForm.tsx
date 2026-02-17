@@ -39,7 +39,7 @@ export const CreateSongForm = ({ actId, setId }: { actId?: string, setId?: strin
           <path d="M8 12h8" />
         </svg>
 
-        <p className="font-bold text-lg text-foreground-muted group-open:text-foreground">CREATE SONG</p>
+        <p className="font-bold text-lg text-foreground-muted group-open:text-foreground">ADD SONG</p>
       </summary>
 
       <section className="flex flex-col gap-20 rounded-b-md bg-surface p-20">

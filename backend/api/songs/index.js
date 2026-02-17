@@ -15,7 +15,7 @@ async function handler(req, res) {
     }
 
     if (req.method === 'GET') {
-      const { actId, setId } = req.query || {};
+      const { actId, setId, userId } = req.query || {};
 
       // Query by actId
       if (actId) {
@@ -41,9 +41,7 @@ async function handler(req, res) {
         return sendSuccess(res, setSongs, 'Songs retrieved successfully');
       }
 
-      // Default: query by userId
-      const userSongs = await getSongsByUserId(user.userId);
-      return sendSuccess(res, userSongs, 'Songs retrieved successfully');
+      return sendError(res, 'Missing required parameter: actId or setId', 400);
     }
 
     if (req.method === 'POST') {
