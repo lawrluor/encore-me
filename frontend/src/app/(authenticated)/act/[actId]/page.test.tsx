@@ -88,7 +88,7 @@ describe('Act Page', () => {
   test('throws error if actId is missing', async () => {
     // Arrange
     (getAuthUser as jest.Mock).mockResolvedValue(mockUser);
-    const params = Promise.resolve({});
+    const params = Promise.resolve({ actId: "" });
 
     // Act & Assert
     await expect(Act({ params })).rejects.toThrow("Act must have an ID");

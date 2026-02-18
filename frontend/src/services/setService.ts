@@ -10,7 +10,6 @@ type PostSetPayload = {
 
 export const getSets = async (actId: string): Promise<Set[]> => {
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sets?actId=${actId}`;
-
   const cookieStorage = await cookies();
 
   const response = await fetch(endpoint, {

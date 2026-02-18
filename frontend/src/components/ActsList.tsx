@@ -1,17 +1,18 @@
 import { ActsListDraggables } from '../components/ActsListDraggables';
 import { CreateActForm } from '../components/CreateActForm';
-import { getActs } from '../services/actService';
+import { getActsByUserId } from '../lib/db/acts';
 import { type Act } from '../types/act';
 
 type Props = {
   acts?: Act[];
+  userId: string;
 }
 
-export const ActsList = async ({ acts }: Props) => {
+export const ActsList = async ({ acts, userId }: Props) => {
   // acts must be an array or undefined
   // if acts is an array at all, it must have come from user tree data
   // if not an array, must have been undefined and we must fetch it
-  if (!acts) acts = await getActs();
+  if (!acts) acts = await getActsByUserId(userId);
 
   // Better to create new variable than reassign props, which should be treated as immutable
   // resolvedActs = acts ?? await getActs();

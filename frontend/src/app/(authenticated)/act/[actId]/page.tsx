@@ -2,13 +2,13 @@ import { redirect } from 'next/navigation';
 
 import { CreateSetForm } from '@/components/CreateSetForm';
 import { SetPanelsList } from '@/components/SetPanelsList';
+import { getActById } from '@/lib/db/acts';
 import { getUserTree } from '@/lib/db/users';
-import { getAct } from '@/services/actService';
 import { getAuthUser } from '@/services/authService';
 import { type Act } from '@/types/act';
 
 type Props = {
-  params: Promise<{ [key: string]: string | string[] | undefined }>;
+  params: Promise<{ actId: string }>;
 }
 
 const Act = async ({ params }: Props) => {
@@ -24,8 +24,8 @@ const Act = async ({ params }: Props) => {
   const userTree = await getUserTree(user.id);
   if (!userTree) throw new Error("Error fetching data for user");
 
-  let act = userTree.acts.find((act: Act) => act.id === actId);
-  if (!act) act = await getAct(actId);  // fallback if Act not in user tree
+  let act = userTree.acts.find((act: Act) => act.id === actId) ?? null;
+  if (!act) act = await getActById(actId);  // fallback if Act not in user tree
   if (!act) throw new Error("Act not found");
 
   return (

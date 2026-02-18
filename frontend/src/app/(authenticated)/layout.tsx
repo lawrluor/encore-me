@@ -30,7 +30,7 @@ const Layout = async ({ children }: Props) => {
 
       <div className="flex flex-auto gap-20 p-20 overflow-hidden">
         <aside className="flex-[1_0_0] ">
-          <ActsList />
+          <ActsList acts={userTree.acts} userId={user.id} />
         </aside>
 
         <section className="flex-[3_0_0] overflow-hidden">

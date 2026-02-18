@@ -2,8 +2,8 @@ import { redirect } from 'next/navigation';
 
 import { deleteActAction, putActAction } from '@/actions/actActions';
 import { FormSubmitButton } from '@/components/FormSubmitter';
+import { getActById } from '@/lib/db/acts';
 import { getUserTree } from '@/lib/db/users';
-import { getAct } from '@/services/actService';
 import { getAuthUser } from '@/services/authService';
 import { type Act } from '@/types/act';
 
@@ -24,8 +24,8 @@ const EditAct = async ({ params }: Props) => {
   const userTree = await getUserTree(user.id);
   if (!userTree) throw new Error("Error fetching data for user");
 
-  let act = userTree.acts.find((act: Act) => act.id === actId);
-  if (!act) act = await getAct(actId);  // fallback if Act not in user tree
+  let act = userTree.acts.find((act: Act) => act.id === actId) ?? null;
+  if (!act) act = await getActById(actId);  // fallback if Act not in user tree
   if (!act) throw new Error("Act not found");
 
   return (

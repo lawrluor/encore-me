@@ -1,6 +1,6 @@
 import { deleteSetAction, promoteSetAction, updateSetAction, postSetAction } from '../actions/setActions';
 import { FormSubmitter } from '../components/FormSubmitter';
-import { getSongs } from '../services/songService';
+import { getSongsBySetId } from '../lib/db/songs';
 import { type Song } from '../types/song';
 
 import { CustomLink } from './CustomLink';
@@ -25,7 +25,7 @@ const COLUMN_NAMES = {
 } as const;
 
 export const SetPanel = async ({ songs, actId, set, isCreateMode = false }: Props) => {
-  const resolvedSongs = isCreateMode ? [] : (songs || await getSongs('setId', set.id));
+  const resolvedSongs = isCreateMode ? [] : (songs || await getSongsBySetId(set.id));
 
   return (
     <div className={`p-20 bg-surface ${isCreateMode ? 'rounded-b-md' : 'rounded-md'}`}>
