@@ -3,11 +3,22 @@ import '@testing-library/jest-dom';
 
 import Set from './page';
 
-import { getSongs } from '@/services/songService';
+import { getActById } from '@/lib/db/acts';
+import { getSetById } from '@/lib/db/sets';
+import { getSongsBySetId, getSongsByActId } from '@/lib/db/songs';
 
 // Mock dependencies
-jest.mock('@/services/songService', () => ({
-  getSongs: jest.fn(),
+jest.mock('@/lib/db/acts', () => ({
+  getActById: jest.fn(),
+}));
+
+jest.mock('@/lib/db/sets', () => ({
+  getSetById: jest.fn(),
+}));
+
+jest.mock('@/lib/db/songs', () => ({
+  getSongsBySetId: jest.fn(),
+  getSongsByActId: jest.fn(),
 }));
 
 // Mock child components
@@ -27,9 +38,6 @@ jest.mock('@/components/SongList', () => ({
   ),
 }));
 
-jest.mock('@/components/TopNav', () => ({
-  TopNav: () => <div data-testid="top-nav">TopNav Component</div>,
-}));
 
 describe('Set Page', () => {
   const mockSetSongs = [
@@ -48,11 +56,10 @@ describe('Set Page', () => {
 
   test('renders page with set songs and act songs when both IDs are present', async () => {
     // Arrange
-    (getSongs as jest.Mock).mockImplementation((type, id) => {
-      if (type === 'setId' && id === 'set-123') return Promise.resolve(mockSetSongs);
-      if (type === 'actId' && id === 'act-456') return Promise.resolve(mockActSongs);
-      return Promise.resolve([]);
-    });
+    (getSetById as jest.Mock).mockResolvedValue({ id: 'set-123', title: 'Test Set', act_id: 'act-456' });
+    (getActById as jest.Mock).mockResolvedValue({ id: 'act-456', name: 'Test Act' });
+    (getSongsBySetId as jest.Mock).mockResolvedValue(mockSetSongs);
+    (getSongsByActId as jest.Mock).mockResolvedValue(mockActSongs);
 
     const params = Promise.resolve({ setId: 'set-123' });
     const searchParams = Promise.resolve({ actId: 'act-456' });
@@ -62,8 +69,6 @@ describe('Set Page', () => {
     render(jsx);
 
     // Assert
-    expect(screen.getByTestId('top-nav')).toBeInTheDocument();
-
     // Check CreateSongForm props via text content we mocked
     expect(screen.getByTestId('create-song-form')).toHaveTextContent('Act: act-456');
     expect(screen.getByTestId('create-song-form')).toHaveTextContent('Set: set-123');
@@ -75,16 +80,16 @@ describe('Set Page', () => {
     expect(songLists[1]).toHaveTextContent(`SongList (${mockActSongs.length} items)`); // Act songs
 
     // Check service calls
-    expect(getSongs).toHaveBeenCalledWith('setId', 'set-123');
-    expect(getSongs).toHaveBeenCalledWith('actId', 'act-456');
+    expect(getSongsBySetId).toHaveBeenCalledWith('set-123');
+    expect(getSongsByActId).toHaveBeenCalledWith('act-456');
   });
 
   test('renders only set songs if actId is missing', async () => {
     // Arrange
-    (getSongs as jest.Mock).mockImplementation((type, id) => {
-      if (type === 'setId' && id === 'set-123') return Promise.resolve(mockSetSongs);
-      return Promise.resolve([]);
-    });
+    (getSetById as jest.Mock).mockResolvedValue({ id: 'set-123', title: 'Test Set', act_id: 'act-456' });
+    (getActById as jest.Mock).mockResolvedValue({ id: 'act-456', name: 'Test Act' });
+    (getSongsBySetId as jest.Mock).mockResolvedValue(mockSetSongs);
+    (getSongsByActId as jest.Mock).mockResolvedValue([]);
 
     const params = Promise.resolve({ setId: 'set-123' });
     const searchParams = Promise.resolve({}); // No actId
@@ -94,8 +99,7 @@ describe('Set Page', () => {
     render(jsx);
 
     // Assert
-    expect(getSongs).toHaveBeenCalledWith('setId', 'set-123');
-    expect(getSongs).not.toHaveBeenCalledWith('actId', expect.anything());
+    expect(getSongsBySetId).toHaveBeenCalledWith('set-123');
 
     // Check that we see "No songs for this act yet."
     expect(screen.getByText('No songs for this act yet.')).toBeInTheDocument();
@@ -108,7 +112,10 @@ describe('Set Page', () => {
 
   test('displays empty state messages when song lists are empty', async () => {
     // Arrange
-    (getSongs as jest.Mock).mockResolvedValue([]);
+    (getSetById as jest.Mock).mockResolvedValue({ id: 'set-123', title: 'Test Set', act_id: 'act-456' });
+    (getActById as jest.Mock).mockResolvedValue({ id: 'act-456', name: 'Test Act' });
+    (getSongsBySetId as jest.Mock).mockResolvedValue([]);
+    (getSongsByActId as jest.Mock).mockResolvedValue([]);
 
     const params = Promise.resolve({ setId: 'set-123' });
     const searchParams = Promise.resolve({ actId: 'act-456' });

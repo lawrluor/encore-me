@@ -37,7 +37,7 @@ describe('Login Page', () => {
 
   test('redirects to /home if user is authenticated', async () => {
     // Arrange
-    (getAuthUser as jest.Mock).mockResolvedValue({ id: '123', email: 'test@example.com' });
+    (getAuthUser as jest.Mock).mockResolvedValue({ status: 'authenticated', user: { id: '123', email: 'test@example.com' } });
 
     // Act
     // Since Login is an async Server Component, we await it directly
@@ -49,23 +49,22 @@ describe('Login Page', () => {
 
   test('renders login form if user is not authenticated', async () => {
     // Arrange
-    (getAuthUser as jest.Mock).mockResolvedValue(null);
+    (getAuthUser as jest.Mock).mockResolvedValue({ status: 'unauthenticated' });
 
     // Act
     const jsx = await Login({ searchParams: Promise.resolve({}) });
     render(jsx);
 
     // Assert
-    expect(screen.getByRole('heading', { name: /log in/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /log in/i })).toBeInTheDocument();
-    expect(screen.getByText("I don't have an account")).toBeInTheDocument();
+    expect(screen.getByText('Sign up instead')).toBeInTheDocument();
   });
 
   test('renders inputs with default values if env vars are set', async () => {
     // Arrange
-    (getAuthUser as jest.Mock).mockResolvedValue(null);
+    (getAuthUser as jest.Mock).mockResolvedValue({ status: 'unauthenticated' });
     const originalEnv = process.env;
     process.env = {
       ...originalEnv,

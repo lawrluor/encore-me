@@ -37,7 +37,7 @@ describe('Signup Page', () => {
 
   test('redirects to /home if user is authenticated', async () => {
     // Arrange
-    (getAuthUser as jest.Mock).mockResolvedValue({ id: '123', email: 'test@example.com' });
+    (getAuthUser as jest.Mock).mockResolvedValue({ status: 'authenticated', user: { id: '123', email: 'test@example.com' } });
 
     // Act
     await Signup();
@@ -48,24 +48,18 @@ describe('Signup Page', () => {
 
   test('renders signup form if user is not authenticated', async () => {
     // Arrange
-    (getAuthUser as jest.Mock).mockResolvedValue(null);
+    (getAuthUser as jest.Mock).mockResolvedValue({ status: 'unauthenticated' });
 
     // Act
     const jsx = await Signup();
     render(jsx);
 
-    // Assert
-    expect(screen.getByRole('heading', { name: /sign up/i })).toBeInTheDocument();
-
-    // Inputs
+    // Assert - no heading in signup page, check inputs and button
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/^email$/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/^password$/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/confirm password/i)).toBeInTheDocument();
-
     expect(screen.getByRole('button', { name: /create account/i })).toBeInTheDocument();
-
-    // Link
     expect(screen.getByText("I already have an account")).toBeInTheDocument();
   });
 });

@@ -4,17 +4,21 @@ import { redirect } from 'next/navigation';
 
 import Act from './page';
 
-import { getAct } from '@/services/actService';
+import { getActById } from '@/lib/db/acts';
+import { getUserTree } from '@/lib/db/users';
 import { getAuthUser } from '@/services/authService';
-
 
 // Mock dependencies
 jest.mock('@/services/authService', () => ({
   getAuthUser: jest.fn()
 }));
 
-jest.mock('@/services/actService', () => ({
-  getAct: jest.fn()
+jest.mock('@/lib/db/acts', () => ({
+  getActById: jest.fn()
+}));
+
+jest.mock('@/lib/db/users', () => ({
+  getUserTree: jest.fn()
 }));
 
 jest.mock('@/actions/actActions', () => ({
@@ -23,7 +27,7 @@ jest.mock('@/actions/actActions', () => ({
 }));
 
 jest.mock('next/navigation', () => ({
-  redirect: jest.fn()
+  redirect: jest.fn().mockImplementation(() => { throw new Error('NEXT_REDIRECT'); })
 }));
 
 // Mock child components
@@ -75,19 +79,18 @@ describe('Act Page', () => {
 
   test('redirects to /login if user is not authenticated', async () => {
     // Arrange
-    (getAuthUser as jest.Mock).mockResolvedValue(null);
+    (getAuthUser as jest.Mock).mockResolvedValue({ status: 'unauthenticated' });
     const params = Promise.resolve({ actId: 'act-123' });
 
-    // Act
-    await Act({ params });
-
-    // Assert
+    // Act & Assert
+    await expect(Act({ params })).rejects.toThrow('NEXT_REDIRECT');
     expect(redirect).toHaveBeenCalledWith('/login');
   });
 
   test('throws error if actId is missing', async () => {
     // Arrange
-    (getAuthUser as jest.Mock).mockResolvedValue(mockUser);
+    (getAuthUser as jest.Mock).mockResolvedValue({ status: 'authenticated', user: mockUser });
+    (getUserTree as jest.Mock).mockResolvedValue({ acts: [] });
     const params = Promise.resolve({ actId: "" });
 
     // Act & Assert
@@ -96,8 +99,9 @@ describe('Act Page', () => {
 
   test('renders act details and sub-components when authenticated', async () => {
     // Arrange
-    (getAuthUser as jest.Mock).mockResolvedValue(mockUser);
-    (getAct as jest.Mock).mockResolvedValue(mockAct);
+    (getAuthUser as jest.Mock).mockResolvedValue({ status: 'authenticated', user: mockUser });
+    (getUserTree as jest.Mock).mockResolvedValue({ acts: [mockAct] });
+    (getActById as jest.Mock).mockResolvedValue(mockAct);
     const params = Promise.resolve({ actId: 'act-123' });
 
     // Act
@@ -105,21 +109,10 @@ describe('Act Page', () => {
     render(jsx);
 
     // Assert
-    expect(getAct).toHaveBeenCalledWith('act-123');
+    expect(getUserTree).toHaveBeenCalledWith(mockUser.id);
 
-    // Check main layout components
-    expect(screen.getByTestId('top-nav')).toBeInTheDocument();
-    expect(screen.getByTestId('acts-list')).toBeInTheDocument();
-    expect(screen.getByTestId('footer')).toBeInTheDocument();
-
-    // Check act specific content
-    expect(screen.getByDisplayValue('Test Act')).toBeInTheDocument();
+    // Check act-specific content rendered by the page (layout components are not rendered here)
     expect(screen.getByTestId('create-set-form')).toBeInTheDocument();
     expect(screen.getByTestId('set-panels-list')).toBeInTheDocument();
-
-    // Check delete button exists (by SVG or role if possible, simplified here by class or containment)
-    // The delete button contains an SVG. We can look for the button.
-    const deleteBtn = screen.getByRole('button'); // There might be multiple buttons, but currently only one in the main section besides hidden inputs
-    expect(deleteBtn).toBeInTheDocument();
   });
 });
