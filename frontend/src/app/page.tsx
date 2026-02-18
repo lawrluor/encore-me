@@ -85,7 +85,7 @@ const Root = async () => {
               </div>
             </div>
           </div>
-          <Image src="/images/busking_ensemble_1600w.webp" alt="Trumpeter and pianist giving an engaging street performance" width="1200" height="600" className="absolute right-0 top-0 w-4/5 hidden min-sm:block" />
+          <Image loading="eager" src="/images/busking_ensemble_1600w.webp" alt="Trumpeter and pianist giving an engaging street performance" width="1200" height="600" className="absolute right-0 top-0 w-4/5 hidden min-sm:block" />
           <div className="absolute right-0 top-0 bg-gradient-to-r from-background/100 to-accent/50 via-background/90 via-30% h-full pointer-events-none w-4/5"></div>
         </section>
 
