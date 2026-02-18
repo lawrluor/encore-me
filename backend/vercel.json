@@ -2,10 +2,6 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.js",
-      "use": "@vercel/node"
-    },
-    {
       "src": "api/auth/login.js",
       "use": "@vercel/node"
     },
@@ -48,13 +44,13 @@
     {
       "src": "api/users/tree.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "api/users/index.js",
+      "use": "@vercel/node"
     }
   ],
   "rewrites": [
-    {
-      "source": "/",
-      "destination": "/api/index.js"
-    },
     {
       "source": "/api/auth/login",
       "destination": "/api/auth/login.js"
@@ -62,6 +58,10 @@
     {
       "source": "/api/auth/logout",
       "destination": "/api/auth/logout.js"
+    },
+    {
+      "source": "/api/users",
+      "destination": "/api/users/index.js"
     },
     {
       "source": "/api/users/me",

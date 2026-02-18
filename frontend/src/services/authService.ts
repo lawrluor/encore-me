@@ -1,6 +1,8 @@
 import { jwtVerify, errors } from 'jose';
 import { cookies } from 'next/headers';
 
+import { safeParseJson } from '@/lib/utils/fetch';
+
 type AuthUser = { id: string; email: string };
 
 export type AuthResult =
@@ -42,10 +44,8 @@ export const loginUser = async (data: { email: string, password: string }) => {
   })
 
   if (!response.ok) {
-    const errorPayload = await response.json();
-    console.error('Error in loginUser():', errorPayload);
-
-    // only throw for unexpected errors, not for logic erros
+    const errorPayload = await safeParseJson(response);
+    console.error('Error in loginUser():', errorPayload ?? `HTTP ${response.status}`);
     return null;
   }
 
@@ -80,9 +80,9 @@ export const logoutUser = async () => {
   });
 
   if (!response.ok) {
-    const errorPayload = await response.json();
-    console.error('Error in logoutUser():', errorPayload);
-    throw new Error(errorPayload.message || `Logout failed: ${response.status}`, { cause: errorPayload });
+    const errorPayload = await safeParseJson(response);
+    console.error('Error in logoutUser():', errorPayload ?? `HTTP ${response.status}`);
+    throw new Error(errorPayload?.message || `Logout failed: ${response.status}`, { cause: errorPayload });
   }
 
   const result = await response.json();
@@ -105,9 +105,9 @@ export const signupUser = async (payload: { name: string, email: string, passwor
   });
 
   if (!response.ok) {
-    const errorPayload = await response.json();
-    console.error('Error in signupUser():', errorPayload);
-    throw new Error(errorPayload.message || `Signup failed: ${response.status}`, { cause: errorPayload });
+    const errorPayload = await safeParseJson(response);
+    console.error('Error in signupUser():', errorPayload ?? `HTTP ${response.status}`);
+    throw new Error(errorPayload?.message || `Signup failed: ${response.status}`, { cause: errorPayload });
   }
 
   const result = await response.json();
