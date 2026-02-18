@@ -6,7 +6,7 @@ import { getUserById } from '@/lib/db/users';
 import { type Song } from '@/types/song';
 
 type Props = {
-  params: Promise<{ [key: string]: string | string[] | undefined }>;
+  params: Promise<{ userId: string }>;
 }
 
 const ViewSet = async ({ params }: Props) => {

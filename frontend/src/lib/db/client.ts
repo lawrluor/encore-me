@@ -1,6 +1,6 @@
 import { sql } from '@vercel/postgres';  // auto configs from .env
 
-const query = async (text, params) => {
+const query = async (text: string, params?: unknown[]) => {
   try {
     const result = await sql.query(text, params);
     return result;

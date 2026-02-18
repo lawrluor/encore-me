@@ -1,8 +1,17 @@
 import QRCode from 'qrcode';
 
+import { type Act } from '../../types/act';
+import { type User } from '../../types/user';
+
 import { sql } from './client';
 
-const createUser = async (email, hashedPassword, name = '') => {
+type UserTree = User & {
+  acts: Act[];
+  is_admin: boolean;
+  promoted_set_id: string | null;
+};
+
+const createUser = async (email: string, hashedPassword: string, name = ''): Promise<User> => {
   const result = await sql`
     INSERT INTO users (email, password, name)
     VALUES (${email}, ${hashedPassword}, ${name})
@@ -10,26 +19,26 @@ const createUser = async (email, hashedPassword, name = '') => {
   `;
 
   const newUser = result.rows[0];
-  const qrCodeDataUrl = await QRCode.toDataURL(newUser.id);
+  const qrCodeDataUrl = await QRCode.toDataURL(newUser?.id);
 
   const updatedResult = await sql`
     UPDATE users
     SET qr_code = ${qrCodeDataUrl}
-    WHERE id = ${newUser.id}
+    WHERE id = ${newUser?.id}
     RETURNING id, email, name, qr_code, created_at, updated_at
   `;
 
-  return updatedResult.rows[0];
+  return updatedResult.rows[0] as User;
 };
 
-const findUserByEmail = async (email) => {
+const findUserByEmail = async (email: string): Promise<(User & { password: string }) | null> => {
   const result = await sql`
     SELECT * FROM users WHERE email = ${email}
   `;
-  return result.rows[0];
+  return (result.rows[0] as (User & { password: string })) ?? null;
 };
 
-const getUserById = async (id) => {
+const getUserById = async (id: string): Promise<User | null> => {
   const result = await sql`
     SELECT 
       u.id, 
@@ -53,7 +62,6 @@ const getUserById = async (id) => {
   const user = result.rows[0];
   if (!user) return null;
 
-  // Restructure to nest promoted set data
   const {
     promoted_set_id,
     promoted_set_title,
@@ -74,49 +82,49 @@ const getUserById = async (id) => {
       created_at: promoted_set_created_at,
       updated_at: promoted_set_updated_at
     } : null
-  };
+  } as User;
 };
 
-const getAllUsers = async () => {
+const getAllUsers = async (): Promise<User[]> => {
   const result = await sql`
     SELECT id, email, name, promoted_set_id, qr_code, created_at, updated_at 
     FROM users 
     ORDER BY created_at DESC
   `;
-  return result.rows;
+  return result.rows as User[];
 };
 
-const updateUser = async (id, updates) => {
+const updateUser = async (id: string, updates: { email?: string; name?: string }): Promise<User | null> => {
   const { email, name } = updates;
   const result = await sql`
     UPDATE users 
     SET 
-      email = COALESCE(${email}, email),
-      name = COALESCE(${name}, name),
+      email = COALESCE(${email ?? null}, email),
+      name = COALESCE(${name ?? null}, name),
       updated_at = CURRENT_TIMESTAMP
     WHERE id = ${id}
     RETURNING id, email, name, promoted_set_id, qr_code, created_at, updated_at
   `;
-  return result.rows[0];
+  return (result.rows[0] as User) ?? null;
 };
 
-const deleteUser = async (id) => {
+const deleteUser = async (id: string): Promise<{ id: string } | null> => {
   const result = await sql`
     DELETE FROM users WHERE id = ${id}
     RETURNING id
   `;
-  return result.rows[0];
+  return (result.rows[0] as { id: string }) ?? null;
 };
 
-const deleteAllUsers = async () => {
+const deleteAllUsers = async (): Promise<{ id: string }[]> => {
   const result = await sql`
     DELETE FROM users
     RETURNING id
   `;
-  return result.rows;
+  return result.rows as { id: string }[];
 };
 
-const updatePromotedSet = async (userId, setId) => {
+const updatePromotedSet = async (userId: string, setId: string): Promise<User | null> => {
   const result = await sql`
     UPDATE users 
     SET 
@@ -125,10 +133,10 @@ const updatePromotedSet = async (userId, setId) => {
     WHERE id = ${userId}
     RETURNING id, email, name, promoted_set_id, qr_code, created_at, updated_at
   `;
-  return result.rows[0];
+  return (result.rows[0] as User) ?? null;
 };
 
-const getUserTree = async (userId) => {
+const getUserTree = async (userId: string): Promise<UserTree | null> => {
   const result = await sql`
     WITH user_acts_data AS (
       SELECT 
@@ -262,7 +270,7 @@ const getUserTree = async (userId) => {
     GROUP BY u.id, u.email, u.name, u.is_admin, u.qr_code, u.promoted_set_id, u.created_at, u.updated_at
   `;
 
-  return result.rows[0];
+  return (result.rows[0] as UserTree) ?? null;
 };
 
 export {

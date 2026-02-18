@@ -1,10 +1,9 @@
-import { CustomLink } from './CustomLink';
-
 import { Suspense } from 'react';
 
-import { getSets } from '../services/setService';
+import { getSetsByActId } from '../lib/db/sets';
 import { type Set } from '../types/set';
 
+import { CustomLink } from './CustomLink';
 import { SetPanel } from './SetPanel';
 
 type Props = {
@@ -16,7 +15,7 @@ type Props = {
 export const SetPanelsList = async ({ sets, actId, showCta }: Props) => {
   // if sets undefined, query them here given the actId
   // otherwise, they were passed directly from the Act from user tree data
-  if (!sets) sets = await getSets(actId);
+  if (!sets) sets = await getSetsByActId(actId);
   if (sets.length === 0) return <p className="p-20 bg-surface text-center rounded-sm">No sets created yet. {showCta && <CustomLink href={`/act/${actId}`} className="underline font-bold text-blue-500 cursor-pointer hover:opacity-75">Create a new set</CustomLink>}</p>;
 
   return (

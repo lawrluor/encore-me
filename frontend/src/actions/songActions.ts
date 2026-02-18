@@ -26,8 +26,9 @@ export const deleteSongAction = async (actId: string, songId: string) => {
   const headersList = await headers();
   const referer = headersList.get('referer');
   if (referer) {
-    revalidatePath(referer);
-    redirect(referer)
+    const refererPath = new URL(referer).pathname;
+    revalidatePath(refererPath);
+    redirect(refererPath);
   } else {
     redirect('/act');
   }
@@ -76,8 +77,9 @@ export const postSongAction = async (actId: string, setId: string, formData: For
   const headersList = await headers();
   const referer = headersList.get('referer');
   if (referer) {
-    revalidatePath(referer);
-    redirect(referer)
+    const refererPath = new URL(referer).pathname;
+    revalidatePath(refererPath);
+    redirect(refererPath);
   } else {
     redirect(`/act/${finalActId}`);
   }
@@ -99,8 +101,9 @@ export const updateSongAction = async (songId: string, formData: FormData): Prom
   const headersList = await headers();
   const referer = headersList.get('referer');
   if (referer) {
-    revalidatePath(referer);
-    redirect(referer)
+    const refererPath = new URL(referer).pathname;
+    revalidatePath(refererPath);
+    redirect(refererPath)
   } else {
     redirect('/act');
   }

@@ -4,12 +4,9 @@ import { RequestMenu } from '@/components/RequestMenu';
 import { getActById } from '@/lib/db/acts';
 import { getSetById } from '@/lib/db/sets';
 import { getSongsBySetId } from '@/lib/db/songs';
-import { type Act } from '@/types/act';
-import { type Set } from '@/types/set';
-import { type Song } from '@/types/song';
 
 type Props = {
-  params: Promise<{ [key: string]: string | string[] | undefined }>;
+  params: Promise<{ setId: string; actId: string }>;
 }
 
 const ViewSet = async ({ params }: Props) => {
@@ -17,7 +14,7 @@ const ViewSet = async ({ params }: Props) => {
   if (!setId) throw new Error("Set ID required");
   if (!actId) throw new Error("Act ID required");
 
-  const [set, songs, act] = await Promise.all([getSetById(setId), getSongsBySetId(setId), getActById(actId)]) as [Set, Song[], Act];
+  const [set, songs, act] = await Promise.all([getSetById(setId), getSongsBySetId(setId), getActById(actId)]);
   if (!set) throw new Error("Set not found");
 
   return (
@@ -26,7 +23,7 @@ const ViewSet = async ({ params }: Props) => {
         <header className="p-20 bg-graygreen rounded-t-md">
           <h2 className="text-2xl text-background">{set.title}</h2>
           {/* <p className="text-foreground-muted">{set.description}</p> */}
-          <p className="text-foreground-muted">{act.name}</p>
+          {act && <p className="text-foreground-muted">{act.name}</p>}
         </header>
 
         <section className="p-20">

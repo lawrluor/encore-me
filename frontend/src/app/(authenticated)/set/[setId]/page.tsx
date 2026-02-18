@@ -2,7 +2,7 @@ import { CreateSongForm } from '@/components/CreateSongForm';
 import { SongList } from '@/components/SongList';
 import { getActById } from '@/lib/db/acts';
 import { getSetById } from '@/lib/db/sets';
-import { getSongs } from '@/services/songService';
+import { getSongsBySetId, getSongsByActId } from '@/lib/db/songs';
 
 type Props = {
   params: Promise<{ setId: string }>;
@@ -17,8 +17,8 @@ const SetPage = async ({ params }: Props) => {
   if (!set) throw new Error("Set not found");
 
   const [setSongs, actSongs] = await Promise.all([
-    getSongs('setId', setId),
-    getSongs('actId', set.act_id)
+    getSongsBySetId(setId),
+    getSongsByActId(set.act_id)
   ]);
 
   const act = await getActById(set.act_id);
@@ -42,7 +42,7 @@ const SetPage = async ({ params }: Props) => {
 
       <section className="rounded-md bg-surface p-16 shadow-sm">
         <header className="mb-12">
-          <h2 className="text-lg">Other Songs in {act?.title || 'Act'}</h2>
+          <h2 className="text-lg">Other Songs in {act?.name || 'Act'}</h2>
         </header>
 
         {actSongs && actSongs.length > 0
