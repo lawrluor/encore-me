@@ -2,11 +2,12 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { redirect } from 'next/navigation';
 
-import Act from './page';
 
 import { getActById } from '@/lib/db/acts';
 import { getUserTree } from '@/lib/db/users';
 import { getAuthUser } from '@/services/authService';
+
+import Act from './page';
 
 // Mock dependencies
 jest.mock('@/services/authService', () => ({

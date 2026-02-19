@@ -2,9 +2,10 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { redirect } from 'next/navigation';
 
+import { getAuthUser } from '@/services/authService';
+
 import Signup from './page';
 
-import { getAuthUser } from '@/services/authService';
 
 // Mock dependencies
 jest.mock('@/services/authService', () => ({

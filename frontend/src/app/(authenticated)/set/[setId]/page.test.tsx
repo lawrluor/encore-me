@@ -1,11 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import Set from './page';
 
 import { getActById } from '@/lib/db/acts';
 import { getSetById } from '@/lib/db/sets';
 import { getSongsBySetId, getSongsByActId } from '@/lib/db/songs';
+
+import Set from './page';
 
 // Mock dependencies
 jest.mock('@/lib/db/acts', () => ({

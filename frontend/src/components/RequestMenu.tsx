@@ -1,7 +1,8 @@
-import { RequestModal } from './RequestModal';
 
 import { type Set } from '@/types/set';
 import { type Song } from '@/types/song';
+
+import { RequestModal } from './RequestModal';
 
 type Props = {
   set: Set;

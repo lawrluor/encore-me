@@ -2,9 +2,9 @@
 
 import { useRef, useState } from 'react';
 
-import { ButtonWithTransition } from './ButtonWithTransition';
-
 import { type Song } from '@/types/song';
+
+import { ButtonWithTransition } from './ButtonWithTransition';
 
 type Props = {
   songs: Song[];
