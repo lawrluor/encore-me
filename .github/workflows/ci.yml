@@ -2,9 +2,11 @@ on:
   push: 
     paths: 
       - 'frontend/**'
+      - '.github/workflows/ci.yml'
   pull_request:
     paths: 
       - 'frontend/**'
+      - '.github/workflows/ci.yml'
       
 jobs:
   test:
