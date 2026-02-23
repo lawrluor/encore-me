@@ -2,7 +2,16 @@
 
 import { ButtonWithTransition } from "@/components/ButtonWithTransition";
 
-const ErrorBoundary = ({ error, reset }: { error: Error & { digest?: string }, reset: () => void }) => {
+interface ErrorDigest extends Error {
+  digest?: string;
+}
+
+interface Props {
+  error: ErrorDigest;
+  reset: () => void;
+}
+
+const ErrorBoundary = ({ error, reset }: Props) => {
   console.error(error);
 
   return (
