@@ -1,3 +1,5 @@
+'server only';
+
 import { type Song } from '../../types/song';
 
 import { sql } from './client';

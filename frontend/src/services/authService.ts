@@ -1,3 +1,5 @@
+'server only';
+
 import { jwtVerify, errors } from 'jose';
 import { cookies } from 'next/headers';
 

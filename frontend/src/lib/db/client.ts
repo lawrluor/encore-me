@@ -1,3 +1,5 @@
+'server only';
+
 import { sql } from '@vercel/postgres';  // auto configs from .env
 
 const query = async (text: string, params?: unknown[]) => {

@@ -1,3 +1,5 @@
+'server only';
+
 import { type Act } from '../../types/act';
 
 import { sql } from './client';

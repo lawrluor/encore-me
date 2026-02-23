@@ -1,3 +1,5 @@
+'server only';
+
 import QRCode from 'qrcode';
 
 import { type Act } from '../../types/act';

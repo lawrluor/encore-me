@@ -1,3 +1,5 @@
+'server only';
+
 import { type Set } from '../../types/set';
 
 import { sql } from './client';
