@@ -1,4 +1,4 @@
-'server only';
+import 'server-only';
 
 import { sql } from '@vercel/postgres';  // auto configs from .env
 
