@@ -5,18 +5,24 @@
 }
 
 /* Only support dark mode at the moment */
-
+/* `--` creates new css variables, or overrides tailwind defaults */
 :root {
+  color-scheme: dark;
+
+  /* Variable colors, differ across light and dark */
   --background: 0 0% 4%;
   --foreground: 0 0% 90%;
   --foreground-muted: 0 0% 50%;
   --foreground-xmuted: 0 0% 25%;
   --surface: 0 0% 7%;
   --surface-muted: 0 0% 10%;
+
+  /* Core app colors, same across light and dark */
   --accent: 41 96% 49%;
   --accent-muted: 41 100% 23%;
   --graygreen: 144 9% 76%;
   --lightgraygreen: 78 27% 91%;
+
   --spacing: 1px;
   scrollbar-width: 0;
   scrollbar-color: transparent transparent;
@@ -24,7 +30,8 @@
   scroll-behavior: smooth;
 }
 
-/* @media (prefers-color-scheme: light) {
+/* Override variable colors for light mode */
+@media (prefers-color-scheme: light) {
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 9%;
@@ -33,7 +40,7 @@
     --surface: 0 0% 97%;
     --surface-muted: 0 0% 94%;
   }
-} */
+}
 
 @theme inline {
   --color-background: hsl(var(--background));
@@ -46,6 +53,7 @@
   --color-surface-muted: hsl(var(--surface-muted));
   --color-graygreen: hsl(var(--graygreen));
   --color-lightgraygreen: hsl(var(--lightgraygreen));
+
   --font-brand: var(--plaster);
   --font-sans: var(--inter);
 }
