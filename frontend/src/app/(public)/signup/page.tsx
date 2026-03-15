@@ -13,7 +13,7 @@ const Signup = async () => {
   return (
     <main className="flex items-stretch px-40 py-40">
       <header className="relative text-surface w-[min(80dvw,260px)] hidden min-sm:block rounded-l-md overflow-hidden">
-        <Image src="/images/busking_800w.webp" alt="Guitarist giving an initimate live performance" width="800" height="1200" className="absolute h-full w-full object-cover" />
+        <Image src="/images/busking_800w.webp" alt="Guitarist giving an initimate live performance" width="800" height="1200" sizes="(max-width: 640px) 0vw, 260px" className="absolute h-full w-full object-cover" />
         <div className="absolute h-full w-full bg-gradient-to-br from-background/95 to-accent/20 p-20">
           <p className="text-5xl text-foreground">Your audience is waiting</p>
           {/* <p className="text-2xl text-foreground-muted">Join artists</p> */}

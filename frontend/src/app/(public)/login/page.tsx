@@ -18,7 +18,7 @@ const Login = async ({ searchParams }: Props) => {
   return (
     <main className="flex py-40">
       <header className="relative ml-40 text-surface w-[min(80dvw,260px)] h-[min(50dvh,600px)] hidden min-sm:block rounded-l-md overflow-hidden">
-        <Image src="/images/busking_drums_800w.webp" alt="Close-up of a drummer performing from the drummer's point of view" width="800" height="1200" className="absolute h-full w-full object-cover" />
+        <Image src="/images/busking_drums_800w.webp" alt="Close-up of a drummer performing from the drummer's point of view" width="800" height="1200" sizes="(max-width: 640px) 0vw, 260px" className="absolute h-full w-full object-cover" />
         <div className="absolute h-full w-full bg-gradient-to-br from-background/90 to-accent/20 p-20">
           <p className="text-5xl text-foreground">Ready for your next gig?</p>
           {/* <p className="text-2xl text-foreground-muted">Join artists</p> */}
